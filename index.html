@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista de enlaces desde CSV remoto</title>
+</head>
+<body>
+
+<h2>Lista de enlaces desde CSV remoto</h2>
+
+<ul id="lista-enlaces"></ul>
+
+<script>
+    // URL del archivo CSV remoto
+    var csvUrl = 'https://raw.githubusercontent.com/javiercasal/lista/main/libros';
+
+    // Realizamos una solicitud fetch para obtener el contenido del archivo CSV
+    fetch(csvUrl)
+        .then(response => response.text()) // Convertimos la respuesta a texto
+        .then(csvData => {
+            // Convertimos la cadena CSV en un array de filas
+            var csvRows = csvData.trim().split('\n');
+
+            // Creamos la lista de enlaces
+            var lista = document.getElementById('lista-enlaces');
+
+            // Recorremos las filas CSV
+            csvRows.forEach(function(row) {
+                // Dividimos la fila en columnas
+                var columns = row.split(',');
+
+                // Creamos el elemento <li> para esta fila
+                var listItem = document.createElement('li');
+
+                // Creamos el enlace y lo agregamos al elemento <li>
+                var link = document.createElement('a');
+                link.href = columns[0].replace(/"/g, ''); // Eliminamos comillas del enlace
+                link.textContent = columns[0].replace(/"/g, ''); // Eliminamos comillas del texto del enlace
+                listItem.appendChild(link);
+
+                // Agregamos los textos restantes como <span> al elemento <li>
+                for (var i = 1; i < columns.length; i++) {
+                    var span = document.createElement('span');
+                    span.textContent = columns[i].replace(/"/g, ''); // Eliminamos comillas de los textos
+                    listItem.appendChild(span);
+                }
+
+                // Agregamos el elemento <li> a la lista
+                lista.appendChild(listItem);
+            });
+        })
+        .catch(error => {
+            console.error('Error al obtener el archivo CSV:', error);
+        });
+</script>
+
+</body>
+</html>
