@@ -35,16 +35,16 @@
 
                 // Creamos el enlace y lo agregamos al elemento <li>
                 var link = document.createElement('a');
-                link.href = columns[0].replace(/"/g, ''); // Eliminamos comillas del enlace
-                link.textContent = columns[0].replace(/"/g, ''); // Eliminamos comillas del texto del enlace
+                link.href = columns[0];
+                link.textContent = concat(columns[1], " || ", columns[2]);
                 listItem.appendChild(link);
 
                 // Agregamos los textos restantes como <span> al elemento <li>
-                for (var i = 1; i < columns.length; i++) {
-                    var span = document.createElement('span');
-                    span.textContent = columns[i].replace(/"/g, ''); // Eliminamos comillas de los textos
-                    listItem.appendChild(span);
-                }
+                //for (var i = 1; i < columns.length; i++) {
+                //    var span = document.createElement('span');
+                //    span.textContent = columns[i].replace(/"/g, ''); // Eliminamos comillas de los textos
+                //    listItem.appendChild(span);
+                //}
 
                 // Agregamos el elemento <li> a la lista
                 lista.appendChild(listItem);
