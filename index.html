@@ -1,59 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lista de enlaces desde CSV remoto</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⭐</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .filter-container {
+            padding: 10px;
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .filter-container input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .link-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .link-item {
+            display: flex;
+            align-items: stretch;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            background: #fff;
+            transition: background 0.3s;
+        }
+        .link-item:hover {
+            background: #f0f0f0;
+        }
+        .link-thumbnail {
+            margin-right: 15px;
+            flex-shrink: 0;
+            width: 100px;
+            height: 100px;
+        }
+        .link-thumbnail img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .link-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .link-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 0;
+        }
+        .link-description {
+            font-size: 0.9em;
+            color: #555;
+            margin: 5px 0;
+        }
+        .link-url {
+            font-size: 0.9em;
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .link-url:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        async function loadCSVAndGenerateList() {
+            const response = await fetch('https://raw.githubusercontent.com/javiercasal/lista/main/libros');
+            const csvData = await response.text();
+
+            const items = parseCSV(csvData);
+            const listContainer = document.querySelector('.link-list');
+
+            listContainer.innerHTML = '';
+
+            items.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.className = 'link-item';
+
+                listItem.innerHTML = `
+                    <div class="link-thumbnail">
+                        <img src="${item.image}" alt="Miniatura">
+                    </div>
+                    <div class="link-content">
+                        <p class="link-title">${item.title}</p>
+                        <p class="link-description">${item.description}</p>
+                        <a class="link-url" href="${item.link}" target="_blank">${item.link}</a>
+                    </div>
+                `;
+
+                listContainer.appendChild(listItem);
+            });
+        }
+
+        function parseCSV(csv) {
+            const rows = csv.split('\n').filter(row => row.trim() !== '');
+            const headers = rows[0].split(',');
+            
+            return rows.slice(1).map(row => {
+                const values = row.split(',');
+                const item = {};
+                headers.forEach((header, index) => {
+                    item[header.trim()] = values[index]?.trim();
+                });
+                return item;
+            });
+        }
+
+        function filterLinks() {
+            const filter = document.getElementById('filter-input').value.toLowerCase();
+            const items = document.querySelectorAll('.link-item');
+
+            items.forEach(item => {
+                const title = item.querySelector('.link-title').textContent.toLowerCase();
+                const description = item.querySelector('.link-description').textContent.toLowerCase();
+                const url = item.querySelector('.link-url').textContent.toLowerCase();
+
+                if (title.includes(filter) || description.includes(filter) || url.includes(filter)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadCSVAndGenerateList);
+    </script>
 </head>
 <body>
-
-<h2>Lista de enlaces desde CSV remoto</h2>
-
-<ul id="lista-enlaces"></ul>
-
-<script>
-    // URL del archivo CSV remoto
-    var csvUrl = 'https://raw.githubusercontent.com/javiercasal/lista/main/libros';
-
-    // Realizamos una solicitud fetch para obtener el contenido del archivo CSV
-    fetch(csvUrl)
-        .then(response => response.text()) // Convertimos la respuesta a texto
-        .then(csvData => {
-            // Convertimos la cadena CSV en un array de filas
-            var csvRows = csvData.trim().split('\n');
-
-            // Creamos la lista de enlaces
-            var lista = document.getElementById('lista-enlaces');
-
-            // Recorremos las filas CSV
-            csvRows.forEach(function(row) {
-                // Dividimos la fila en columnas
-                var columns = row.split(',');
-
-                // Creamos el elemento <li> para esta fila
-                var listItem = document.createElement('li');
-
-                // Creamos el enlace y lo agregamos al elemento <li>
-                var link = document.createElement('a');
-                link.href = columns[0];
-                link.textContent = columns[1] + " || " + columns[2];
-                listItem.appendChild(link);
-
-                // Agregamos los textos restantes como <span> al elemento <li>
-                //for (var i = 1; i < columns.length; i++) {
-                //    var span = document.createElement('span');
-                //    span.textContent = columns[i].replace(/"/g, ''); // Eliminamos comillas de los textos
-                //    listItem.appendChild(span);
-                //}
-
-                // Agregamos el elemento <li> a la lista
-                lista.appendChild(listItem);
-            });
-        })
-        .catch(error => {
-            console.error('Error al obtener el archivo CSV:', error);
-        });
-</script>
-
+    <div class="filter-container">
+        <input type="text" id="filter-input" onkeyup="filterLinks()" placeholder="Filtrar...">
+    </div>
+    <ul class="link-list">
+        <!-- Items will be loaded here dynamically -->
+    </ul>
 </body>
 </html>
