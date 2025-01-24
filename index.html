@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>⭐</title>
     <style>
+    .header {
+        text-align: center;
+        padding: 20px;
+        background-color: #fff;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .logo {
+        width: 100px;
+        height: auto;
+        display: block;
+        margin: 0 auto 10px;
+    }
+
+    .header-text {
+        font-size: 1.5em;
+        color: #333;
+        margin: 0;
+    }
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
@@ -55,6 +74,7 @@
             width: 100%;
             object-fit: cover;
             border-radius: 5px;
+            display: block;
         }
         .link-content {
             flex: 1;
@@ -80,7 +100,54 @@
         .link-url:hover {
             text-decoration: underline;
         }
+        /* FAB (Floating Action Button) */
+        .fab {
+            position: fixed;
+            bottom: 20px; /* Distancia desde el borde inferior */
+            right: 20px;  /* Distancia desde el borde derecho */
+            width: 60px;
+            height: 60px;
+            background-color: #ffffff; /* Color de fondo */
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            z-index: 1000;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .fab:hover {
+            background-color: #0056b3; /* Color al pasar el mouse */
+            transform: scale(1.1); /* Efecto de escalado */
+        }
+
+        .fab img {
+            width: 60px; /* Tamaño de la imagen */
+            height: 60px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
     </style>
+</head>
+<body>
+    <header class="header">
+        <img src="https://marketplace.canva.com/EAFXZWQp_i8/1/0/1600w/canva-logo-hamburguesa-comida-r%C3%A1pida-simple-negro-caODv8sJaCg.jpg" alt="Logo" class="logo">
+        <h1 class="header-text">Bienvenido a mi Lista</h1>
+    </header>
+    <div class="filter-container">
+        <input type="text" id="filter-input" onkeyup="filterLinks()" placeholder="Filtrar...">
+    </div>
+    <ul class="link-list">
+        <!-- Items will be loaded here dynamically -->
+    </ul>
+
+    <!-- Floating Action Button -->
+    <a href="https://api.whatsapp.com/send/?phone=5491161688747" class="fab" target="_blank">
+        <img src="https://cdn-icons-png.freepik.com/512/3670/3670051.png" alt="FAB Icon">
+    </a>
+
     <script>
         async function loadCSVAndGenerateList() {
             const response = await fetch('https://raw.githubusercontent.com/javiercasal/lista/main/libros');
@@ -97,7 +164,7 @@
 
                 listItem.innerHTML = `
                     <div class="link-thumbnail">
-                        <img src="${item.image}" alt="Miniatura">
+                        <img data-src="${item.image}" alt="Miniatura" class="lazy">
                     </div>
                     <div class="link-content">
                         <p class="link-title">${item.title}</p>
@@ -108,6 +175,8 @@
 
                 listContainer.appendChild(listItem);
             });
+
+            lazyLoadImages();
         }
 
         function parseCSV(csv) {
@@ -125,31 +194,73 @@
         }
 
         function filterLinks() {
-            const filter = document.getElementById('filter-input').value.toLowerCase();
-            const items = document.querySelectorAll('.link-item');
+        const filter = document.getElementById('filter-input').value.toLowerCase();
+        const items = document.querySelectorAll('.link-item');
+        let hasVisibleItem = false;
 
-            items.forEach(item => {
-                const title = item.querySelector('.link-title').textContent.toLowerCase();
-                const description = item.querySelector('.link-description').textContent.toLowerCase();
-                const url = item.querySelector('.link-url').textContent.toLowerCase();
+        items.forEach(item => {
+            const title = item.querySelector('.link-title').textContent.toLowerCase();
+            const description = item.querySelector('.link-description').textContent.toLowerCase();
+            const url = item.querySelector('.link-url').textContent.toLowerCase();
 
-                if (title.includes(filter) || description.includes(filter) || url.includes(filter)) {
-                    item.style.display = '';
-                } else {
-                    item.style.display = 'none';
-                }
+            if (title.includes(filter) || description.includes(filter) || url.includes(filter)) {
+                item.style.display = '';
+                hasVisibleItem = true;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        const message = document.getElementById('no-results-message');
+        if (!hasVisibleItem) {
+            if (!message) {
+                const listContainer = document.querySelector('.link-list');
+                const noResultsMessage = document.createElement('li');
+                noResultsMessage.id = 'no-results-message';
+                noResultsMessage.style.textAlign = 'center';
+                noResultsMessage.style.color = '#555';
+                noResultsMessage.style.padding = '10px';
+
+                // Crear y agregar el mensaje de texto
+                const text = document.createElement('p');
+                text.textContent = 'Ningún elemento coincide con la búsqueda';
+                noResultsMessage.appendChild(text);
+
+                // Crear y agregar la imagen
+                const image = document.createElement('img');
+                image.src = 'https://i.pinimg.com/736x/64/1b/e5/641be587098f570b0725090612f84c83.jpg'; // URL de la imagen
+                image.alt = 'Sin resultados';
+                image.style.marginTop = '10px';
+                image.style.maxWidth = '200px';
+                image.style.height = 'auto';
+                noResultsMessage.appendChild(image);
+
+                listContainer.appendChild(noResultsMessage);
+            }
+        } else if (message) {
+            message.remove();
+        }
+    }
+
+        function lazyLoadImages() {
+            const images = document.querySelectorAll('img.lazy');
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.getAttribute('data-src');
+                        img.classList.remove('lazy');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            images.forEach(image => {
+                observer.observe(image);
             });
         }
 
         document.addEventListener('DOMContentLoaded', loadCSVAndGenerateList);
     </script>
-</head>
-<body>
-    <div class="filter-container">
-        <input type="text" id="filter-input" onkeyup="filterLinks()" placeholder="Filtrar...">
-    </div>
-    <ul class="link-list">
-        <!-- Items will be loaded here dynamically -->
-    </ul>
 </body>
 </html>
