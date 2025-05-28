@@ -1,17 +1,27 @@
+:root {
+    --color-fondo: #fefdf9;
+    --color-borde: #ddd;
+    --color-hover: #f0f0f0;
+    --color-secundario: #555;
+    --color-boton: #ffffff;
+    --color-boton-hover: #0056b3;
+    --color-input-borde: #ccc;
+}
+
 /* Estilo general */
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #fefdf9;
+    background-color: var(--color-fondo);
 }
 
 .header {
     text-align: center;
     padding: 0;
-    background-color: #fefdf9;
-    border-bottom: 1px solid #ddd;
+    background-color: var(--color-fondo);
+    border-bottom: 1px solid var(--color-borde);
 }
 
 .logo {
@@ -24,8 +34,8 @@ body {
 /* Filtro de búsqueda */
 .filter-container {
     padding: 10px 30px 10px 10px;
-    background: #fefdf9;
-    border-bottom: 1px solid #ddd;
+    background: var(--color-fondo);
+    border-bottom: 1px solid var(--color-borde);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -35,7 +45,7 @@ body {
     width: 100%;
     padding: 10px;
     font-size: 1em;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-input-borde);
     border-radius: 5px;
 }
 
@@ -50,13 +60,13 @@ body {
     display: flex;
     align-items: stretch;
     padding: 10px;
-    border-bottom: 1px solid #ddd;
-    background: #fefdf9;
+    border-bottom: 1px solid var(--color-borde);
+    background: var(--color-fondo);
     transition: background 0.3s;
 }
 
 .producto-item:hover {
-    background: #f0f0f0;
+    background: var(--color-hover);
 }
 
 .producto-thumbnail {
@@ -90,7 +100,7 @@ body {
 .producto-precio,
 .producto-descripcion {
     font-size: 0.9em;
-    color: #555;
+    color: var(--color-secundario);
     margin: 3px 0;
 }
 
@@ -105,7 +115,7 @@ body {
     right: 20px;
     width: 70px;
     height: 70px;
-    background-color: #ffffff;
+    background-color: var(--color-boton);
     border-radius: 50%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     display: flex;
@@ -117,7 +127,7 @@ body {
 }
 
 .fab:hover {
-    background-color: #0056b3;
+    background-color: var(--color-boton-hover);
     transform: scale(1.1);
 }
 
