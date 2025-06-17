@@ -68,8 +68,8 @@ function mostrarProductos(productos) {
         const contenidoDiv = document.createElement('div');
         contenidoDiv.className = 'producto-contenido';
 
-        // Cartel "¡Oferta!" si el precio incluye "$1500"
-        if (producto.precio.includes('$1500')) {
+        // Cartel de oferta
+        if (producto.oferta == 'sí') {
             const ofertaLabel = document.createElement('span');
             ofertaLabel.className = 'oferta-label';
             ofertaLabel.textContent = '¡Oferta!';
