@@ -72,13 +72,13 @@ function mostrarProductos(productos) {
  * Filtra los productos por texto ingresado en el input
  */
 function filtrarProductos() {
-    const texto = document.getElementById('filter-input').value.toLowerCase();
+    const texto = normalizar(document.getElementById('filter-input').value);
     const productos = document.querySelectorAll('.producto-item');
     let hayCoincidencias = false;
 
     productos.forEach(item => {
-        const titulo = item.querySelector('.producto-titulo').textContent.toLowerCase();
-        const descripcion = item.querySelector('.producto-descripcion').textContent.toLowerCase();
+        const titulo = normalizar(item.querySelector('.producto-titulo').textContent);
+        const descripcion = normalizar(item.querySelector('.producto-descripcion').textContent);
 
         const visible = titulo.includes(texto) || descripcion.includes(texto);
         item.style.display = visible ? '' : 'none';
@@ -88,6 +88,16 @@ function filtrarProductos() {
 
     mostrarMensajeSinResultados(!hayCoincidencias);
 }
+
+/**
+ * Procesa los textos para hacer comparaciones más inclusivas,
+ * especialmente cuando se trata de acentos, diéresis, tildes, eñes, etc.
+ * @param {string} str
+ */
+function normalizar(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
 
 /**
  * Muestra u oculta el mensaje de "sin resultados"
