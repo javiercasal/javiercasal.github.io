@@ -96,7 +96,20 @@ function mostrarProductos(productos) {
         item.appendChild(thumbnailDiv);
         item.appendChild(contenidoDiv);
 
+        item.addEventListener('click', () => {
+            item.classList.toggle('expandido');
+        });
+
         contenedor.appendChild(item);
+
+        requestAnimationFrame(() => {
+            const contenido = item.querySelector('.producto-contenido');
+            const thumbnail = item.querySelector('.producto-thumbnail');
+
+            if (contenido.scrollHeight > thumbnail.offsetHeight) {
+                item.classList.add('con-desborde');
+            }
+        });
     });
 }
 

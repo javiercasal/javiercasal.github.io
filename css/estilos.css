@@ -86,10 +86,33 @@ body {
 }
 
 .producto-contenido {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    position: relative;
+    max-height: 120px; /* altura igual al thumbnail */
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    cursor: pointer;
+}
+
+.producto-item.expandido .producto-contenido {
+    max-height: 1000px; /* o cualquier valor suficientemente grande */
+}
+
+
+.producto-contenido::after {
+    content: "";
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, var(--color-fondo));
+    pointer-events: none;
+    z-index: 1;
+}
+
+.producto-item.con-desborde:not(.expandido) .producto-contenido::after {
+    display: block;
 }
 
 .producto-titulo {
