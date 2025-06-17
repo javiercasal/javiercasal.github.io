@@ -53,25 +53,48 @@ function mostrarProductos(productos) {
         const item = document.createElement('li');
         item.className = 'producto-item';
 
-        item.innerHTML = `
-            <div class="producto-thumbnail">
-                <img data-src="${producto.imagen}" alt="Miniatura" class="lazy">
-            </div>
-            <div class="producto-contenido">
-                <p class="producto-titulo">${producto.titulo}</p>
-                <p class="producto-precio">${producto.precio}</p>
-                <p class="producto-descripcion">${producto.descripcion}</p>
-            </div>
-        `;
+        // Miniatura
+        const thumbnailDiv = document.createElement('div');
+        thumbnailDiv.className = 'producto-thumbnail';
 
-        // Agregar cartel "¡Oferta!" si el precio incluye "$1500"
+        const imagen = document.createElement('img');
+        imagen.setAttribute('data-src', producto.imagen);
+        imagen.alt = 'Miniatura';
+        imagen.className = 'lazy';
+
+        thumbnailDiv.appendChild(imagen);
+
+        // Contenido
+        const contenidoDiv = document.createElement('div');
+        contenidoDiv.className = 'producto-contenido';
+
+        // Cartel "¡Oferta!" si el precio incluye "$1500"
         if (producto.precio.includes('$1500')) {
-            const contenido = item.querySelector('.producto-contenido');
             const ofertaLabel = document.createElement('span');
             ofertaLabel.className = 'oferta-label';
             ofertaLabel.textContent = '¡Oferta!';
-            contenido.insertBefore(ofertaLabel, contenido.firstChild); // Lo pone arriba del título
+            contenidoDiv.appendChild(ofertaLabel); // Aparece al principio
         }
+
+        const titulo = document.createElement('p');
+        titulo.className = 'producto-titulo';
+        titulo.textContent = producto.titulo;
+
+        const precio = document.createElement('p');
+        precio.className = 'producto-precio';
+        precio.textContent = producto.precio;
+
+        const descripcion = document.createElement('p');
+        descripcion.className = 'producto-descripcion';
+        descripcion.textContent = producto.descripcion;
+
+        contenidoDiv.appendChild(titulo);
+        contenidoDiv.appendChild(precio);
+        contenidoDiv.appendChild(descripcion);
+
+        // Ensamblar todo
+        item.appendChild(thumbnailDiv);
+        item.appendChild(contenidoDiv);
 
         contenedor.appendChild(item);
     });
