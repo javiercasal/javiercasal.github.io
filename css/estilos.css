@@ -109,6 +109,19 @@ body {
     text-decoration: underline;
 }
 
+.oferta-label {
+    display: inline-block;
+    background-color: #ff4444;
+    color: white;
+    font-weight: bold;
+    font-size: 0.8em;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    align-self: flex-start;
+}
+
+
 /* Botón flotante */
 .fab {
     position: fixed;

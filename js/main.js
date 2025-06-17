@@ -64,6 +64,15 @@ function mostrarProductos(productos) {
             </div>
         `;
 
+        // Agregar cartel "¡Oferta!" si el precio incluye "$1500"
+        if (producto.precio.includes('$1500')) {
+            const contenido = item.querySelector('.producto-contenido');
+            const ofertaLabel = document.createElement('span');
+            ofertaLabel.className = 'oferta-label';
+            ofertaLabel.textContent = '¡Oferta!';
+            contenido.insertBefore(ofertaLabel, contenido.firstChild); // Lo pone arriba del título
+        }
+
         contenedor.appendChild(item);
     });
 }
