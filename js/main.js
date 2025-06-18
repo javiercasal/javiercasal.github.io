@@ -80,6 +80,15 @@ function mostrarProductos(productos) {
         titulo.className = 'producto-titulo';
         titulo.textContent = producto.titulo;
 
+        // Verificar si el título contiene "s" y agregar logo "Sin TACC"
+        if (producto.sinTacc == "sí") {
+            const logo = document.createElement('img');
+            logo.src = 'img/sin-tacc.png';
+            logo.alt = 'Apto celíacos';
+            logo.className = 'logo-sin-tacc';
+            titulo.appendChild(logo);
+        }
+
         const precio = document.createElement('p');
         precio.className = 'producto-precio';
         precio.textContent = producto.precio;
