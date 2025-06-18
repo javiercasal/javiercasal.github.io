@@ -80,7 +80,6 @@ function mostrarProductos(productos) {
         titulo.className = 'producto-titulo';
         titulo.textContent = producto.titulo;
 
-        // Verificar si el título contiene "s" y agregar logo "Sin TACC"
         if (producto.sinTacc == "sí") {
             const logo = document.createElement('img');
             logo.src = 'img/sin-tacc.png';

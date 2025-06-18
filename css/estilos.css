@@ -116,9 +116,11 @@ body {
 }
 
 .logo-sin-tacc {
-    width: 20px;
-    margin-left: 5px;
+    width: 18px;
+    margin-left: 4px;
+    margin-bottom: 1.3px;
     vertical-align: text-bottom;
+    opacity: 90%;
 }
 
 .producto-precio,
