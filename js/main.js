@@ -117,7 +117,7 @@ function mostrarProductos(productos) {
             const contenido = item.querySelector('.producto-contenido');
             const thumbnail = item.querySelector('.producto-thumbnail');
 
-            if (contenido.scrollHeight > thumbnail.offsetHeight) {
+            if (contenido.scrollHeight > thumbnail.offsetHeight + 5) { // +5 por el margen agregado
                 item.classList.add('con-desborde');
             }
         });

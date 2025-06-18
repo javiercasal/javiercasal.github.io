@@ -99,7 +99,7 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 40px;
+    height: 20px;
     background: linear-gradient(to bottom, transparent, var(--color-fondo));
     pointer-events: none;
     z-index: 1;
