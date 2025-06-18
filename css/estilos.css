@@ -115,29 +115,11 @@ body {
     margin: 0;
 }
 
-.producto-etiquetas {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin-bottom: 6px;
-}
-
-.oferta-label {
-    display: inline-block;
-    background-color: #ff4444;
-    color: white;
-    font-weight: bold;
-    font-size: 0.8em;
-    padding: 4px 8px;
-    border-radius: 4px;
-    align-self: flex-start;
-}
-
-.logo-sin-tacc {
-    width: 20px;
-    display: inline-block;
+.logo-sin-tacc-inline {
+    width: 18px;
+    margin-right: 6px;
+    margin-bottom: 5px;
     vertical-align: middle;
-    align-self: flex-start;
 }
 
 .producto-precio,
@@ -149,6 +131,18 @@ body {
 
 .producto-precio {
     text-decoration: underline;
+}
+
+.oferta-label {
+    display: inline-block;
+    background-color: #ff4444;
+    color: white;
+    font-weight: bold;
+    font-size: 0.8em;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    align-self: flex-start;
 }
 
 /* Botón flotante */
