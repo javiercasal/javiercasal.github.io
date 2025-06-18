@@ -171,10 +171,13 @@ function mostrarMensajeSinResultados(mostrar) {
             mensaje.style.color = '#555';
             mensaje.style.padding = '10px';
 
-            mensaje.innerHTML = `
+            /* mensaje.innerHTML = `
                 <p>Ningún elemento coincide con la búsqueda</p>
                 <img src="img/sin-resultados.jpg" alt="Sin resultados"
                      style="margin-top:10px;max-width:200px;height:auto;">
+            `;*/
+            mensaje.innerHTML = `
+                <p>Ningún elemento coincide con la búsqueda</p>
             `;
 
             contenedor.appendChild(mensaje);
