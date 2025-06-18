@@ -68,24 +68,35 @@ function mostrarProductos(productos) {
         const contenidoDiv = document.createElement('div');
         contenidoDiv.className = 'producto-contenido';
 
+        const titulo = document.createElement('p');
+        titulo.className = 'producto-titulo';
+        titulo.textContent = producto.titulo;
+
+        // Contenedor para las etiquetas de Oferta y Sin TACC
+        const etiquetasDiv = document.createElement('div');
+        etiquetasDiv.className = 'producto-etiquetas';
+
         // Cartel de oferta
         if (producto.oferta == 'sí') {
             const ofertaLabel = document.createElement('span');
             ofertaLabel.className = 'oferta-label';
             ofertaLabel.textContent = '¡Oferta!';
-            contenidoDiv.appendChild(ofertaLabel); // Aparece al principio
+            // contenidoDiv.appendChild(ofertaLabel);
+            etiquetasDiv.appendChild(ofertaLabel);
         }
-
-        const titulo = document.createElement('p');
-        titulo.className = 'producto-titulo';
-        titulo.textContent = producto.titulo;
 
         if (producto.sinTacc == "sí") {
             const logo = document.createElement('img');
             logo.src = 'img/sin-tacc.png';
             logo.alt = 'Apto celíacos';
             logo.className = 'logo-sin-tacc';
-            titulo.appendChild(logo);
+            // titulo.appendChild(logo);
+            etiquetasDiv.appendChild(logo);
+        }
+
+        // Agregar las etiquetas (si hay al menos una)
+        if (etiquetasDiv.children.length > 0) {
+            contenidoDiv.appendChild(etiquetasDiv);
         }
 
         const precio = document.createElement('p');
