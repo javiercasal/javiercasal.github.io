@@ -1,4 +1,4 @@
-// Ejecutar cuando el documento esté listo
+// Ejecutar una vez que el documento esté listo
 document.addEventListener('DOMContentLoaded', () => {
     cargarYMostrarProductos();
 });
