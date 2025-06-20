@@ -72,7 +72,7 @@ function mostrarProductos(productos) {
         if (producto.oferta == 'sí') {
             const ofertaLabel = document.createElement('span');
             ofertaLabel.className = 'oferta-label';
-            ofertaLabel.textContent = '¡Oferta!';
+            ofertaLabel.textContent = 'OFERTA';
             contenidoDiv.appendChild(ofertaLabel); // Aparece al principio
         }
 

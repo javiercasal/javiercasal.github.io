@@ -157,10 +157,10 @@ body {
     background-color: #ff4444;
     color: white;
     font-weight: bold;
-    font-size: 0.8em;
-    padding: 4px 8px;
-    border-radius: 4px;
-    margin-bottom: 6px;
+    font-size: 0.7em;
+    padding: 3px 5px;
+    border-radius: 2px;
+    margin-bottom: 5px;
     align-self: flex-start;
 }
 
