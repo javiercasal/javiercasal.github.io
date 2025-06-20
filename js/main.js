@@ -141,6 +141,9 @@ function filtrarProductos() {
     });
 
     mostrarMensajeSinResultados(!hayCoincidencias);
+
+    const clearBtn = document.getElementById('clear-filter');
+    clearBtn.style.display = document.getElementById('filter-input').value ? 'block' : 'none';
 }
 
 /**
@@ -200,10 +203,43 @@ function activarLazyLoad() {
 // Asignar eventos al cargar el DOM
 document.addEventListener('DOMContentLoaded', () => {
     const inputFiltro = document.getElementById('filter-input');
-    inputFiltro.addEventListener('input', filtrarProductos);
+
+    // Crear botón de borrar dentro del input-wrapper
+    const inputWrapper = document.createElement('div');
+    inputWrapper.style.position = 'relative';
+    inputWrapper.style.display = 'flex';
+    inputWrapper.style.alignItems = 'center';
+
+    inputFiltro.parentNode.insertBefore(inputWrapper, inputFiltro);
+    inputWrapper.appendChild(inputFiltro);
+
+    const clearBtn = document.createElement('span');
+    clearBtn.id = 'clear-filter';
+    clearBtn.innerHTML = '&times;';
+    clearBtn.title = 'Borrar búsqueda';
+    clearBtn.style.position = 'absolute';
+    clearBtn.style.right = '10px';
+    clearBtn.style.cursor = 'pointer';
+    clearBtn.style.fontSize = '1.2em';
+    clearBtn.style.color = '#777';
+    clearBtn.style.display = 'none';
+
+    inputWrapper.appendChild(clearBtn);
+
+    inputFiltro.addEventListener('input', () => {
+        filtrarProductos();
+        clearBtn.style.display = inputFiltro.value ? 'block' : 'none';
+    });
+
+    clearBtn.addEventListener('click', () => {
+        inputFiltro.value = '';
+        filtrarProductos();
+        clearBtn.style.display = 'none';
+        inputFiltro.focus();
+    });
 
     const toggleBtn = document.createElement('button');
-    toggleBtn.className = 'tag';
+    toggleBtn.className = 'tag toggle-tag';
     toggleBtn.textContent = '+';
     toggleBtn.id = 'toggle-tags';
 
