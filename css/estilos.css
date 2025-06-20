@@ -1,15 +1,17 @@
 :root {
+    --color-blanco: white;
     --color-fondo: #fefdf9;
-    --color-borde: #ddd;
+    --color-negro-oliva: #333;
     --color-casi-negro: #222;
     --color-secundario: #555;
     --color-gris-clarito: #777;
-    --color-boton: #ffffff;
-    --color-boton-hover: #0056b3;
-    --color-input-borde: #ccc;
+    --color-gris-mas-clarito: #ccc;
+    --color-gris-muy-clarito: #ddd;
+    --color-gris-muy-muy-clarito: #eee;
+    --color-azul-francia: #0056b3;
+    --color-rojo-ofertas: #ff4444;
 }
 
-/* Estilo general */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -22,7 +24,7 @@ body {
     text-align: center;
     padding: 0;
     background-color: var(--color-fondo);
-    border-bottom: 1px solid var(--color-borde);
+    border-bottom: 1px solid var(--color-gris-muy-clarito);
 }
 
 .logo {
@@ -37,7 +39,7 @@ body {
 .filter-container {
     padding: 10px 30px 10px 10px;
     background: var(--color-fondo);
-    border-bottom: 1px solid var(--color-borde);
+    border-bottom: 1px solid var(--color-gris-muy-clarito);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -47,10 +49,11 @@ body {
     width: 100%;
     padding: 10px;
     font-size: 1em;
-    border: 1px solid var(--color-input-borde);
+    border: 1px solid var(--color-gris-mas-clarito);
     border-radius: 5px;
 }
 
+/* Tags */
 .tags-container {
     display: flex;
     flex-wrap: wrap;
@@ -59,10 +62,10 @@ body {
 }
 
 .tag {
-    background-color: #eee;
-    color: #333;
+    background-color: var(--color-gris-muy-muy-clarito);
+    color: var(--color-negro-oliva);
     font-size: 0.85em;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-gris-mas-clarito);
     border-radius: 15px;
     padding: 5px 10px;
     cursor: pointer;
@@ -70,7 +73,7 @@ body {
 }
 
 .tag:hover {
-    background-color: #ddd;
+    background-color: var(--color-gris-muy-clarito);
 }
 
 /* Lista de productos */
@@ -80,10 +83,11 @@ body {
     margin: 0;
 }
 
+/* Producto */
 .producto-item {
     display: flex;
     padding: 10px;
-    border-bottom: 1px solid var(--color-borde);
+    border-bottom: 1px solid var(--color-gris-muy-clarito);
     background: var(--color-fondo);
 }
 
@@ -109,6 +113,18 @@ body {
     max-height: 1000px;
 }
 
+.oferta-label {
+    display: inline-block;
+    background-color: var(--color-rojo-ofertas);
+    color: var(--color-blanco);
+    font-weight: bold;
+    font-size: 0.7em;
+    padding: 3px 5px;
+    border-radius: 2px;
+    margin-bottom: 5px;
+    align-self: flex-start;
+}
+
 .producto-titulo {
     font-family: sans-serif;
     font-size: 0.85m;
@@ -117,44 +133,27 @@ body {
     margin-top: 2px;
 }
 
-.producto-precio,
-.producto-descripcion {
-    font-size: 0.9em;
-    color: var(--color-secundario);
-    margin-right: 2px;
-    line-height: 1.5;
-}
-
-.producto-descripcion {
-    margin-bottom: 3px;
-}
-
 .producto-precio {
     font-size: 1.3em;
-    margin-top: 0px;
-    padding-top: 24px;
     color: var(--color-casi-negro);
+    padding-top: 24px;
+    margin-right: 2px;
+    margin-top: 0px;
     line-height: 0;
 }
 
 .producto-unidad {
     font-size: 0.65em;
     margin-left: 5px;
-    /*margin-left: 5px;*/
-    /*margin-top: 9px;*/
     color: var(--color-gris-clarito);
 }
 
-.oferta-label {
-    display: inline-block;
-    background-color: #ff4444;
-    color: white;
-    font-weight: bold;
-    font-size: 0.7em;
-    padding: 3px 5px;
-    border-radius: 2px;
-    margin-bottom: 5px;
-    align-self: flex-start;
+.producto-descripcion {
+    font-size: 0.9em;
+    color: var(--color-secundario);
+    margin-right: 2px;
+    line-height: 1.5;
+    margin-bottom: 3px;
 }
 
 .producto-tags {
@@ -168,7 +167,7 @@ body {
     right: 20px;
     width: 70px;
     height: 70px;
-    background-color: var(--color-boton);
+    background-color: var(--color-blanco);
     border-radius: 50%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     display: flex;
@@ -180,7 +179,7 @@ body {
 }
 
 .fab:hover {
-    background-color: var(--color-boton-hover);
+    background-color: var(--color-azul-francia);
     transform: scale(1.1);
 }
 
