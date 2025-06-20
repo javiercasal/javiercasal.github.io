@@ -68,7 +68,7 @@ function mostrarProductos(productos) {
         contenidoDiv.className = 'producto-contenido';
 
         // Cartel de oferta
-        if (producto.tags.includes(oferta)) {
+        if (producto.tags.includes("oferta")) {
             const ofertaLabel = document.createElement('span');
             ofertaLabel.className = 'oferta-label';
             ofertaLabel.textContent = 'OFERTA';
