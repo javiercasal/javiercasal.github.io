@@ -68,7 +68,7 @@ function mostrarProductos(productos) {
         contenidoDiv.className = 'producto-contenido';
 
         // Cartel de oferta
-        if (producto.oferta == 'sí') {
+        if (producto.tags.includes(oferta)) {
             const ofertaLabel = document.createElement('span');
             ofertaLabel.className = 'oferta-label';
             ofertaLabel.textContent = 'OFERTA';
@@ -127,14 +127,8 @@ function filtrarProductos() {
         const titulo = normalizar(item.querySelector('.producto-titulo').textContent);
         const descripcion = normalizar(item.querySelector('.producto-descripcion').textContent);
         const tags = normalizar(item.querySelector('.producto-tags').textContent);
-        const ofertaLabel = item.querySelector('.oferta-label');
-        let oferta = false;
 
-        if (texto == "ofertas" && ofertaLabel) {
-            oferta = true;
-        }
-
-        const visible = titulo.includes(texto) || descripcion.includes(texto) || tags.includes(texto) || oferta;
+        const visible = titulo.includes(texto) || descripcion.includes(texto) || tags.includes(texto);
         item.style.display = visible ? '' : 'none';
 
         if (visible) hayCoincidencias = true;
