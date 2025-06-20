@@ -137,13 +137,8 @@ body {
     font-size: 1.2em;
     font-weight: bold;
     margin: 0;
-}
-
-.logo-sin-tacc-inline {
-    width: 18px;
-    margin-right: 6px;
-    margin-bottom: 5px;
-    vertical-align: middle;
+    margin-bottom: 0px;
+    margin-top: 2px;
 }
 
 .producto-precio,

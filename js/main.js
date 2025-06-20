@@ -87,15 +87,6 @@ function mostrarProductos(productos) {
         const descripcion = document.createElement('p');
         descripcion.className = 'producto-descripcion';
 
-        if (producto.sinTacc === "sí") {
-            const logo = document.createElement('img');
-            logo.src = 'img/sin-tacc.png';
-            logo.alt = 'Apto celíacos';
-            logo.title = 'Apto para celíacos';
-            logo.className = 'logo-sin-tacc-inline';
-            descripcion.appendChild(logo);
-        }
-
         const textoDescripcion = document.createTextNode(producto.descripcion);
         descripcion.appendChild(textoDescripcion);
 
