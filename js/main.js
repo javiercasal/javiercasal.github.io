@@ -53,18 +53,17 @@ function mostrarProductos(productos) {
         const item = document.createElement('li');
         item.className = 'producto-item';
 
-        // Miniatura
+        // Imagen del producto
         const thumbnailDiv = document.createElement('div');
         thumbnailDiv.className = 'producto-thumbnail';
 
         const imagen = document.createElement('img');
         imagen.setAttribute('data-src', producto.imagen);
-        imagen.alt = 'Miniatura';
+        imagen.alt = 'Imagen del producto';
         imagen.className = 'lazy';
 
         thumbnailDiv.appendChild(imagen);
 
-        // Contenido
         const contenidoDiv = document.createElement('div');
         contenidoDiv.className = 'producto-contenido';
 
@@ -73,30 +72,32 @@ function mostrarProductos(productos) {
             const ofertaLabel = document.createElement('span');
             ofertaLabel.className = 'oferta-label';
             ofertaLabel.textContent = 'OFERTA';
-            contenidoDiv.appendChild(ofertaLabel); // Aparece al principio
+            contenidoDiv.appendChild(ofertaLabel);
         }
 
+        // Título
         const titulo = document.createElement('p');
         titulo.className = 'producto-titulo';
         titulo.textContent = producto.titulo;
 
+        // Precio
         const precio = document.createElement('p');
         precio.className = 'producto-precio';
         precio.textContent = producto.precio;
 
+        // Unidad de venta
         const unidad = document.createElement('span');
         unidad.className = 'producto-unidad';
         unidad.textContent = producto.unidad || '';
-
         precio.appendChild(unidad);
 
+        // Descripción del producto
         const descripcion = document.createElement('p');
         descripcion.className = 'producto-descripcion';
-
         const textoDescripcion = document.createTextNode(producto.descripcion);
         descripcion.appendChild(textoDescripcion);
 
-        // Div invisible que incluye los tags
+        // Tags (no visibles)
         const tags = document.createElement('p');
         tags.className = 'producto-tags';
         tags.textContent = producto.tags || '';
@@ -106,7 +107,7 @@ function mostrarProductos(productos) {
         contenidoDiv.appendChild(descripcion);
         contenidoDiv.appendChild(tags);
 
-        // Ensamblar todo
+        // Ensamblar la imagen y el contenido
         item.appendChild(thumbnailDiv);
         item.appendChild(contenidoDiv);
 
