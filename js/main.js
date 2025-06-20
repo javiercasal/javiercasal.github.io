@@ -96,9 +96,14 @@ function mostrarProductos(productos) {
         const textoDescripcion = document.createTextNode(producto.descripcion);
         descripcion.appendChild(textoDescripcion);
 
+        // Div invisible que incluye los tags
+        const tags = document.createElement('p');
+        tags.className = 'producto-tags';
+
         contenidoDiv.appendChild(titulo);
         contenidoDiv.appendChild(precio);
         contenidoDiv.appendChild(descripcion);
+        contenidoDiv.appendChild(tags);
 
         // Ensamblar todo
         item.appendChild(thumbnailDiv);
@@ -119,8 +124,15 @@ function filtrarProductos() {
     productos.forEach(item => {
         const titulo = normalizar(item.querySelector('.producto-titulo').textContent);
         const descripcion = normalizar(item.querySelector('.producto-descripcion').textContent);
+        const tags = normalizar(item.querySelector('.producto-tags').textContent);
+        const ofertaLabel = item.querySelector('.oferta-label');
+        let oferta = false;
 
-        const visible = titulo.includes(texto) || descripcion.includes(texto);
+        if (texto == "ofertas" && ofertaLabel) {
+            oferta = true;
+        }
+
+        const visible = titulo.includes(texto) || descripcion.includes(texto) || tags.includes(texto) || oferta;
         item.style.display = visible ? '' : 'none';
 
         if (visible) hayCoincidencias = true;
@@ -195,4 +207,18 @@ function activarLazyLoad() {
 document.addEventListener('DOMContentLoaded', () => {
     const inputFiltro = document.getElementById('filter-input');
     inputFiltro.addEventListener('input', filtrarProductos);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const inputFiltro = document.getElementById('filter-input');
+    inputFiltro.addEventListener('input', filtrarProductos);
+
+    // Detectar clics en los tags
+    const tags = document.querySelectorAll('.tag');
+    tags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            inputFiltro.value = tag.innerHTML;
+            filtrarProductos();
+        });
+    });
 });
