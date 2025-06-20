@@ -84,6 +84,12 @@ function mostrarProductos(productos) {
         precio.className = 'producto-precio';
         precio.textContent = producto.precio;
 
+        const unidad = document.createElement('span');
+        unidad.className = 'producto-unidad';
+        unidad.textContent = producto.unidad || '';
+
+        precio.appendChild(unidad);
+
         const descripcion = document.createElement('p');
         descripcion.className = 'producto-descripcion';
 
@@ -98,20 +104,7 @@ function mostrarProductos(productos) {
         item.appendChild(thumbnailDiv);
         item.appendChild(contenidoDiv);
 
-        item.addEventListener('click', () => {
-            item.classList.toggle('expandido');
-        });
-
         contenedor.appendChild(item);
-
-        requestAnimationFrame(() => {
-            const contenido = item.querySelector('.producto-contenido');
-            const thumbnail = item.querySelector('.producto-thumbnail');
-
-            if (contenido.scrollHeight > thumbnail.offsetHeight + 5) { // +5 por el margen agregado
-                item.classList.add('con-desborde');
-            }
-        });
     });
 }
 
