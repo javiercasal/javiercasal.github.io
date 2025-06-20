@@ -99,6 +99,7 @@ function mostrarProductos(productos) {
         // Div invisible que incluye los tags
         const tags = document.createElement('p');
         tags.className = 'producto-tags';
+        tags.textContent = producto.tags || '';
 
         contenidoDiv.appendChild(titulo);
         contenidoDiv.appendChild(precio);
