@@ -152,7 +152,6 @@ function normalizar(str) {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 }
 
-
 /**
  * Muestra u oculta el mensaje de "sin resultados"
  * @param {boolean} mostrar
@@ -169,14 +168,7 @@ function mostrarMensajeSinResultados(mostrar) {
             mensaje.style.color = '#555';
             mensaje.style.padding = '10px';
 
-            /* mensaje.innerHTML = `
-                <p>Ningún elemento coincide con la búsqueda</p>
-                <img src="img/sin-resultados.jpg" alt="Sin resultados"
-                     style="margin-top:10px;max-width:200px;height:auto;">
-            `;*/
-            mensaje.innerHTML = `
-                <p>Ningún elemento coincide con la búsqueda</p>
-            `;
+            mensaje.innerHTML = `<p>Ningún elemento coincide con la búsqueda</p>`;
 
             contenedor.appendChild(mensaje);
         }
