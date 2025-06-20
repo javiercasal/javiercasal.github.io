@@ -197,22 +197,40 @@ function activarLazyLoad() {
     imagenes.forEach(img => observer.observe(img));
 }
 
-// Asignar la función de filtrado al input de búsqueda
-document.addEventListener('DOMContentLoaded', () => {
-    const inputFiltro = document.getElementById('filter-input');
-    inputFiltro.addEventListener('input', filtrarProductos);
-});
-
+// Asignar eventos al cargar el DOM
 document.addEventListener('DOMContentLoaded', () => {
     const inputFiltro = document.getElementById('filter-input');
     inputFiltro.addEventListener('input', filtrarProductos);
 
-    // Detectar clics en los tags
-    const tags = document.querySelectorAll('.tag');
-    tags.forEach(tag => {
-        tag.addEventListener('click', () => {
-            inputFiltro.value = tag.innerHTML;
-            filtrarProductos();
-        });
+    const toggleBtn = document.createElement('button');
+    toggleBtn.className = 'tag';
+    toggleBtn.textContent = '+';
+    toggleBtn.id = 'toggle-tags';
+
+    const tagsContainer = document.querySelector('.tags-container');
+    const allTags = Array.from(tagsContainer.querySelectorAll('.tag'));
+
+    if (!document.getElementById('toggle-tags')) {
+        tagsContainer.appendChild(toggleBtn);
+    }
+
+    const visibles = allTags.slice(0, 7);
+    const ocultos = allTags.slice(7);
+
+    ocultos.forEach(tag => tag.style.display = 'none');
+
+    toggleBtn.addEventListener('click', () => {
+        const ocultosVisibles = ocultos[0].style.display === 'none';
+        ocultos.forEach(tag => tag.style.display = ocultosVisibles ? 'inline-block' : 'none');
+        toggleBtn.textContent = ocultosVisibles ? '-' : '+';
+    });
+
+    allTags.forEach(tag => {
+        if (tag.id !== 'toggle-tags') {
+            tag.addEventListener('click', () => {
+                inputFiltro.value = tag.textContent;
+                filtrarProductos();
+            });
+        }
     });
 });
