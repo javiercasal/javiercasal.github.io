@@ -170,6 +170,7 @@ body {
     color: var(--color-secundario);
     margin-right: 2px;
     line-height: 1.5;
+    margin-top: 2px;
     margin-bottom: 3px;
 }
 

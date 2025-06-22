@@ -96,6 +96,9 @@ function mostrarProductos(productos) {
         descripcion.className = 'producto-descripcion';
         const textoDescripcion = document.createTextNode(producto.descripcion);
         descripcion.appendChild(textoDescripcion);
+        if (textoDescripcion.textContent == '') {
+            descripcion.style.display = 'none';
+        }
 
         // Tags (no visibles)
         const tags = document.createElement('p');
@@ -103,8 +106,8 @@ function mostrarProductos(productos) {
         tags.textContent = producto.tags || '';
 
         contenidoDiv.appendChild(titulo);
-        contenidoDiv.appendChild(precio);
         contenidoDiv.appendChild(descripcion);
+        contenidoDiv.appendChild(precio);
         contenidoDiv.appendChild(tags);
 
         // Ensamblar la imagen y el contenido
