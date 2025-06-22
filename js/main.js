@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const visibles = allTags.slice(0, 7);
-    const ocultos = allTags.slice(8);
+    const ocultos = allTags.slice(4);
 
     ocultos.forEach(tag => tag.style.display = 'none');
 
