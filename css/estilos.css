@@ -139,11 +139,11 @@ body {
     color: var(--color-blanco);
     font-weight: bold;
     font-size: 0.7em;
-    padding: 3px 5px;
+    padding: 2.5px 4px;
     border-radius: 2px;
     margin-bottom: 5px;
     align-self: flex-start;
-    opacity: 90%;
+    opacity: 85%;
 }
 
 .producto-titulo {
