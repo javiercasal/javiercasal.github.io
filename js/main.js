@@ -242,7 +242,6 @@ document.addEventListener('DOMContentLoaded', () => {
         inputFiltro.value = '';
         filtrarProductos();
         clearBtn.style.display = 'none';
-        inputFiltro.focus();
     });
 
     const toggleBtn = document.createElement('button');
@@ -271,8 +270,19 @@ document.addEventListener('DOMContentLoaded', () => {
     allTags.forEach(tag => {
         if (tag.id !== 'toggle-tags') {
             tag.addEventListener('click', () => {
-                inputFiltro.value = tag.textContent;
+                if (inputFiltro.value === tag.textContent) {
+                    inputFiltro.value = ''
+                } else {
+                    inputFiltro.value = tag.textContent;
+                }
                 filtrarProductos();
+
+                if (ocultos[0].style.display !== 'none') {
+                    const ocultosVisibles = ocultos[0].style.display === 'none';
+                    ocultos.forEach(tag => tag.style.display = ocultosVisibles ? 'inline-block' : 'none');
+                    toggleBtn.textContent = ocultosVisibles ? '-' : '+';
+                }
+
             });
         }
     });
