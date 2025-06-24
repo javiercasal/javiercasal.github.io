@@ -68,7 +68,7 @@ function mostrarProductos(productos) {
         contenidoDiv.className = 'producto-contenido';
 
         // Cartel de oferta
-        if (producto.tags.includes("oferta")) {
+        if (producto.tags.includes('oferta')) {
             const ofertaLabel = document.createElement('span');
             ofertaLabel.className = 'oferta-label';
             ofertaLabel.textContent = 'OFERTA';
@@ -101,12 +101,22 @@ function mostrarProductos(productos) {
         }
 
         // Logo Sin TACC
-        if (producto.tags.includes("sin TACC")) {
+        if (producto.tags.includes('sin TACC')) {
             const logo = document.createElement('img');
             logo.src = 'img/sin-tacc.png';
-            logo.alt = 'Apto celíacos';
-            logo.title = 'Apto para celíacos';
+            logo.alt = 'Sin TACC';
+            logo.title = 'Sin TACC';
             logo.className = 'logo-sin-tacc-inline';
+            titulo.appendChild(logo);
+        }
+
+        // Logo orgánico
+        if (producto.tags.includes('orgánico')) {
+            const logo = document.createElement('img');
+            logo.src = 'img/organico.png';
+            logo.alt = 'Orgánico';
+            logo.title = 'Orgánico';
+            logo.className = 'logo-organico-inline';
             titulo.appendChild(logo);
         }
 
@@ -114,6 +124,10 @@ function mostrarProductos(productos) {
         const tags = document.createElement('p');
         tags.className = 'producto-tags';
         tags.textContent = producto.tags || '';
+
+        if (producto.ofera === 'sí') {
+            tags.textContent = tags.textContent + '|ofertas'
+        }
 
         contenidoDiv.appendChild(titulo);
         contenidoDiv.appendChild(descripcion);
@@ -159,13 +173,13 @@ function filtrarProductos() {
  * @param {string} str
  */
 function normalizar(str) {
-    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, '')
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2580-\u27BF]|\uD83E[\uDD10-\uDDFF]|🫘/g, '')
     .toLowerCase();
 }
 
 /**
- * Muestra u oculta el mensaje de "sin resultados"
+ * Muestra u oculta el mensaje de 'sin resultados'
  * @param {boolean} mostrar
  */
 function mostrarMensajeSinResultados(mostrar) {

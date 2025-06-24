@@ -152,11 +152,18 @@ body {
 }
 
 .logo-sin-tacc-inline {
-    width: 15px;
+    width: 18px;
     margin-left: 5px;
     margin-bottom: 5px;
     vertical-align: middle;
     opacity: 90%;
+}
+
+.logo-organico-inline {
+    width: 17px;
+    margin-left: 5px;
+    margin-bottom: 4.5px;
+    vertical-align: middle;
 }
 
 .producto-descripcion {
