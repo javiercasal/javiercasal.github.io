@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Metropolis';
+  src: url('fonts/metropolis-regular-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* === VARIABLES GLOBALES === */
 :root {
     --color-blanco: white;
@@ -15,7 +22,7 @@
 
 /* === ESTILOS GENERALES === */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Metropolis', Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: var(--color-fondo);
@@ -145,7 +152,6 @@ body {
 }
 
 .producto-titulo {
-    font-family: sans-serif;
     margin: 0;
     margin-bottom: 0px;
     margin-top: 2px;
