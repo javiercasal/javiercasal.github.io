@@ -100,6 +100,16 @@ function mostrarProductos(productos) {
             descripcion.style.display = 'none';
         }
 
+        // Logo Sin TACC
+        if (producto.tags.includes("sin TACC")) {
+            const logo = document.createElement('img');
+            logo.src = 'img/sin-tacc.png';
+            logo.alt = 'Apto celíacos';
+            logo.title = 'Apto para celíacos';
+            logo.className = 'logo-sin-tacc-inline';
+            titulo.appendChild(logo);
+        }
+
         // Tags (no visibles)
         const tags = document.createElement('p');
         tags.className = 'producto-tags';
