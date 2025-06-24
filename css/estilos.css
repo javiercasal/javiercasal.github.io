@@ -64,6 +64,7 @@ body {
 
 #clear-filter {
     position: absolute;
+    padding: 15px 10px 15px 20px;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
