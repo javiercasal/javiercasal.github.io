@@ -80,7 +80,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    padding: 12px 2px 0 2px;
+    padding: 12px 1px 0 1px;
 }
 
 .tag {
