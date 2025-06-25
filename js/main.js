@@ -227,6 +227,9 @@ function activarLazyLoad() {
 document.addEventListener('DOMContentLoaded', () => {
     const inputFiltro = document.getElementById('filter-input');
 
+    // Asegurarse de que el input esté vacío al cargar la página
+    inputFiltro.value = '';
+
     // Crear botón de borrar dentro del input-wrapper
     const inputWrapper = document.createElement('div');
     inputWrapper.style.position = 'relative';
