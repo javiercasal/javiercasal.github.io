@@ -151,7 +151,7 @@ body {
     background-color: var(--color-rojo-ofertas);
     color: var(--color-blanco);
     font-weight: bold;
-    font-size: 0.7em;
+    font-size: 0.6em;
     padding: 2.5px 4px;
     border-radius: 2px;
     margin-bottom: 5px;
@@ -200,7 +200,7 @@ body {
 }
 
 .producto-unidad {
-    font-size: 0.60em;
+    font-size: 0.65em;
     margin-left: 5px;
     color: var(--color-gris-clarito);
 }
