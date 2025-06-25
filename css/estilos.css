@@ -71,9 +71,10 @@ body {
 .filter-input-wrapper input {
     width: 100%;
     padding: 10px 40px 10px 10px; /* Espacio a la derecha para la cruz */
-    font-size: 1em;
+    font-size: 0.9em;
     border: 1px solid var(--color-gris-mas-clarito);
     border-radius: 5px;
+    font-family: 'Metropolis', Arial, sans-serif;
 }
 
 #clear-filter {
@@ -100,7 +101,7 @@ body {
 .tag {
     background-color: var(--color-gris-muy-muy-clarito);
     color: var(--color-negro-oliva);
-    font-size: 0.8em;
+    font-size: 0.75em;
     border: 1px solid var(--color-gris-mas-clarito);
     border-radius: 15px;
     padding: 5px 10px;
