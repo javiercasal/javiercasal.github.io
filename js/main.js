@@ -125,7 +125,7 @@ function mostrarProductos(productos) {
         tags.className = 'producto-tags';
         tags.textContent = producto.tags || '';
 
-        if (producto.ofera === 'sí') {
+        if (producto.oferta === 'sí') {
             tags.textContent = tags.textContent + '|ofertas'
         }
 
