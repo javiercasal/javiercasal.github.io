@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 async function cargarYMostrarProductos() {
     try {
-        const urlCSV = 'https://raw.githubusercontent.com/dieteticaaxelyjavi/productos/refs/heads/main/lista.csv';
+        const urlCSV = 'https://raw.githubusercontent.com/dieteticaaxelyjavi/productos/main/lista.csv';
         const respuesta = await fetch(urlCSV);
         const textoCSV = await respuesta.text();
 
