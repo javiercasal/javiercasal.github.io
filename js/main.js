@@ -268,41 +268,4 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleBtn.textContent = '+';
     toggleBtn.id = 'toggle-tags';
 
-    const tagsContainer = document.querySelector('.tags-container');
-    const allTags = Array.from(tagsContainer.querySelectorAll('.tag'));
-
-    if (!document.getElementById('toggle-tags')) {
-        tagsContainer.appendChild(toggleBtn);
-    }
-
-    const visibles = allTags.slice(0, 7);
-    const ocultos = allTags.slice(4);
-
-    ocultos.forEach(tag => tag.style.display = 'none');
-
-    toggleBtn.addEventListener('click', () => {
-        const ocultosVisibles = ocultos[0].style.display === 'none';
-        ocultos.forEach(tag => tag.style.display = ocultosVisibles ? 'inline-block' : 'none');
-        toggleBtn.textContent = ocultosVisibles ? '-' : '+';
-    });
-
-    allTags.forEach(tag => {
-        if (tag.id !== 'toggle-tags') {
-            tag.addEventListener('click', () => {
-                if (inputFiltro.value === tag.textContent) {
-                    inputFiltro.value = ''
-                } else {
-                    inputFiltro.value = tag.textContent;
-                }
-                filtrarProductos();
-
-                if (ocultos[0].style.display !== 'none') {
-                    const ocultosVisibles = ocultos[0].style.display === 'none';
-                    ocultos.forEach(tag => tag.style.display = ocultosVisibles ? 'inline-block' : 'none');
-                    toggleBtn.textContent = ocultosVisibles ? '-' : '+';
-                }
-
-            });
-        }
-    });
 });

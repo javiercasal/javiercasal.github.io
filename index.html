@@ -25,30 +25,8 @@
         <input type="text" id="filter-input" placeholder="Buscar..." autocomplete="off">
         <span id="clear-filter">&times;</span>
     </div>
-    <div class="tags-container">
-        <button class="tag">Ofertas</button>
-        <button class="tag">Novedades✨</button>
-        <button class="tag">Sin TACC</button>
-        <button class="tag">Frutos secos</button>
-        <button class="tag">Yerba🧉</button>
-        <button class="tag">Miel🍯</button>
-        <button class="tag">Yuyitos🌿</button>
-        <button class="tag">Aceite</button>
-        <button class="tag">Cereales🍚</button>
-        <button class="tag">Suplementos</button>
-        <button class="tag">Legumbres🫘</button>
-        <button class="tag">Harina</button>
-        <button class="tag">Semillas</button>
-        <button class="tag">Condimentos</button>
-        <button class="tag">Especias</button>
-        <button class="tag">Hierbas🌿</button>
-        <button class="tag">Snacks🍪</button>
-        <button class="tag">Hongos🍄</button>
-        <button class="tag">Chocolate🍫</button>
-        <button class="tag">Leches vegetales</button>
-        <button class="tag">Orgánico</button>
-        <button class="tag">Agroecológico</button>
-    </div>
+
+    <div class="tags-container" id="tags-container"></div>
 </div>
 
 <!-- Lista de productos -->
@@ -67,6 +45,83 @@
 document.addEventListener("contextmenu", function(e){
   e.preventDefault();
 }, false);
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    cargarEtiquetasDesdeCSV();
+});
+
+async function cargarEtiquetasDesdeCSV() {
+    const urlCSV = 'https://raw.githubusercontent.com/dieteticaaxelyjavi/productos/main/etiquetas';
+    try {
+        const respuesta = await fetch(urlCSV);
+        const texto = await respuesta.text();
+
+        const lineas = texto.trim().split('\n');
+        const etiquetas = lineas.map(l => l.trim());
+
+        const contenedor = document.getElementById('tags-container');
+        contenedor.innerHTML = '';
+
+        etiquetas.forEach(etiqueta => {
+            const boton = document.createElement('button');
+            boton.className = 'tag';
+            boton.textContent = etiqueta;
+            contenedor.appendChild(boton);
+        });
+
+        inicializarEventosTags();
+
+    } catch (error) {
+        console.error('Error al cargar las etiquetas:', error);
+    }
+}
+
+function inicializarEventosTags() {
+    const tagsContainer = document.querySelector('.tags-container');
+    const allTags = Array.from(tagsContainer.querySelectorAll('.tag'));
+
+    const toggleBtn = document.createElement('button');
+    toggleBtn.className = 'tag toggle-tag';
+    toggleBtn.textContent = '+';
+    toggleBtn.id = 'toggle-tags';
+
+    if (!document.getElementById('toggle-tags')) {
+        tagsContainer.appendChild(toggleBtn);
+    }
+
+    const visibles = allTags.slice(0, 7);
+    const ocultos = allTags.slice(4);
+
+    ocultos.forEach(tag => tag.style.display = 'none');
+
+    toggleBtn.addEventListener('click', () => {
+        const ocultosVisibles = ocultos[0].style.display === 'none';
+        ocultos.forEach(tag => tag.style.display = ocultosVisibles ? 'inline-block' : 'none');
+        toggleBtn.textContent = ocultosVisibles ? '-' : '+';
+    });
+
+    allTags.forEach(tag => {
+        if (tag.id !== 'toggle-tags') {
+            tag.addEventListener('click', () => {
+                const inputFiltro = document.getElementById('filter-input');
+                if (inputFiltro.value === tag.textContent) {
+                    inputFiltro.value = '';
+                } else {
+                    inputFiltro.value = tag.textContent;
+                }
+                filtrarProductos();
+
+                if (ocultos[0].style.display !== 'none') {
+                    const ocultosVisibles = ocultos[0].style.display === 'none';
+                    ocultos.forEach(tag => tag.style.display = ocultosVisibles ? 'inline-block' : 'none');
+                    toggleBtn.textContent = ocultosVisibles ? '-' : '+';
+                }
+            });
+        }
+    });
+}
 </script>
 
 </body>
