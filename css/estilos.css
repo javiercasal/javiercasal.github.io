@@ -108,6 +108,11 @@ body {
     cursor: pointer;
     transition: background-color 0.2s ease;
     font-family: 'Metropolis', Arial, sans-serif;
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tag:hover {

@@ -80,48 +80,64 @@ async function cargarEtiquetasDesdeCSV() {
 
 function inicializarEventosTags() {
     const tagsContainer = document.querySelector('.tags-container');
-    const allTags = Array.from(tagsContainer.querySelectorAll('.tag'));
+    const inputFiltro = document.getElementById('filter-input');
 
+    // Eliminar botón toggle anterior si existiera (por recarga o reinicialización)
+    const oldToggle = document.getElementById('toggle-tags');
+    if (oldToggle) oldToggle.remove();
+
+    // Recolectar las tags (excluyendo el botón toggle si existía)
+    const allTags = Array.from(tagsContainer.querySelectorAll('.tag')).filter(tag => tag.id !== 'toggle-tags');
+
+    // Crear botón toggle
     const toggleBtn = document.createElement('button');
     toggleBtn.className = 'tag toggle-tag';
     toggleBtn.textContent = '+';
     toggleBtn.id = 'toggle-tags';
+    tagsContainer.appendChild(toggleBtn);
 
-    if (!document.getElementById('toggle-tags')) {
-        tagsContainer.appendChild(toggleBtn);
-    }
+    // Esperar al siguiente frame para que el layout esté listo
+    requestAnimationFrame(() => {
+        const baseTop = allTags[0]?.offsetTop ?? 0;
+        const visibles = [];
+        const ocultos = [];
 
-    const visibles = allTags.slice(0, 7);
-    const ocultos = allTags.slice(4);
+        allTags.forEach(tag => {
+            if (tag.offsetTop === baseTop) {
+                visibles.push(tag);
+                tag.style.display = 'inline-block';
+            } else {
+                ocultos.push(tag);
+                tag.style.display = 'none';
+            }
+        });
 
-    ocultos.forEach(tag => tag.style.display = 'none');
+        // Mostrar el botón toggle solo si hay ocultos
+        toggleBtn.style.display = ocultos.length > 0 ? 'inline-block' : 'none';
 
-    toggleBtn.addEventListener('click', () => {
-        const ocultosVisibles = ocultos[0].style.display === 'none';
-        ocultos.forEach(tag => tag.style.display = ocultosVisibles ? 'inline-block' : 'none');
-        toggleBtn.textContent = ocultosVisibles ? '-' : '+';
-    });
+        // Evento del botón toggle
+        toggleBtn.addEventListener('click', () => {
+            const ocultosVisibles = ocultos[0].style.display === 'none';
+            ocultos.forEach(tag => tag.style.display = ocultosVisibles ? 'inline-block' : 'none');
+            toggleBtn.textContent = ocultosVisibles ? '-' : '+';
+        });
 
-    allTags.forEach(tag => {
-        if (tag.id !== 'toggle-tags') {
+        // Evento de click en cada tag
+        allTags.forEach(tag => {
             tag.addEventListener('click', () => {
-                const inputFiltro = document.getElementById('filter-input');
-                if (inputFiltro.value === tag.textContent) {
-                    inputFiltro.value = '';
-                } else {
-                    inputFiltro.value = tag.textContent;
-                }
+                inputFiltro.value = inputFiltro.value === tag.textContent ? '' : tag.textContent;
                 filtrarProductos();
 
-                if (ocultos[0].style.display !== 'none') {
-                    const ocultosVisibles = ocultos[0].style.display === 'none';
-                    ocultos.forEach(tag => tag.style.display = ocultosVisibles ? 'inline-block' : 'none');
-                    toggleBtn.textContent = ocultosVisibles ? '-' : '+';
+                // Al hacer click en un tag, se colapsan los ocultos si estaban abiertos
+                if (ocultos.length && ocultos[0].style.display !== 'none') {
+                    ocultos.forEach(tag => tag.style.display = 'none');
+                    toggleBtn.textContent = '+';
                 }
             });
-        }
+        });
     });
 }
+
 </script>
 
 </body>
