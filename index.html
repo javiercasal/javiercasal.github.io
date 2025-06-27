@@ -82,12 +82,9 @@ function inicializarEventosTags() {
     const tagsContainer = document.querySelector('.tags-container');
     const inputFiltro = document.getElementById('filter-input');
 
-    // Eliminar botón toggle anterior si existiera (por recarga o reinicialización)
+    // Eliminar botón toggle si existe
     const oldToggle = document.getElementById('toggle-tags');
     if (oldToggle) oldToggle.remove();
-
-    // Recolectar las tags (excluyendo el botón toggle si existía)
-    const allTags = Array.from(tagsContainer.querySelectorAll('.tag')).filter(tag => tag.id !== 'toggle-tags');
 
     // Crear botón toggle
     const toggleBtn = document.createElement('button');
@@ -96,46 +93,59 @@ function inicializarEventosTags() {
     toggleBtn.id = 'toggle-tags';
     tagsContainer.appendChild(toggleBtn);
 
-    // Esperar al siguiente frame para que el layout esté listo
-    requestAnimationFrame(() => {
+    // Recolectar tags (excluye toggle por ahora)
+    let tags = Array.from(tagsContainer.querySelectorAll('.tag')).filter(tag => tag.id !== 'toggle-tags');
+
+    // Reagrega el botón al final para medir correctamente
+    const allTags = [...tags, toggleBtn];
+
+    function ajustarTagsUnaLinea() {
+        // Mostrar todos inicialmente para medir
+        allTags.forEach(tag => tag.style.display = 'inline-block');
+
         const baseTop = allTags[0]?.offsetTop ?? 0;
-        const visibles = [];
-        const ocultos = [];
 
-        allTags.forEach(tag => {
-            if (tag.offsetTop === baseTop) {
-                visibles.push(tag);
-                tag.style.display = 'inline-block';
-            } else {
-                ocultos.push(tag);
-                tag.style.display = 'none';
-            }
-        });
+        // Ocultar todos los que no estén en la primera línea
+        let i = tags.length - 1;
 
-        // Mostrar el botón toggle solo si hay ocultos
-        toggleBtn.style.display = ocultos.length > 0 ? 'inline-block' : 'none';
+        while (toggleBtn.offsetTop > baseTop && i >= 0) {
+            tags[i].style.display = 'none';
+            i--;
+        }
 
-        // Evento del botón toggle
-        toggleBtn.addEventListener('click', () => {
-            const ocultosVisibles = ocultos[0].style.display === 'none';
-            ocultos.forEach(tag => tag.style.display = ocultosVisibles ? 'inline-block' : 'none');
-            toggleBtn.textContent = ocultosVisibles ? '-' : '+';
-        });
+        // Mostrar u ocultar el botón según si hay elementos ocultos
+        const hayOcultos = tags.some(tag => tag.style.display === 'none');
+        toggleBtn.textContent = hayOcultos ? '+' : '';
+        toggleBtn.style.display = hayOcultos ? 'inline-block' : 'none';
+    }
 
-        // Evento de click en cada tag
-        allTags.forEach(tag => {
-            tag.addEventListener('click', () => {
-                inputFiltro.value = inputFiltro.value === tag.textContent ? '' : tag.textContent;
-                filtrarProductos();
+    function expandirTags() {
+        tags.forEach(tag => tag.style.display = 'inline-block');
+        toggleBtn.textContent = '-';
+    }
 
-                // Al hacer click en un tag, se colapsan los ocultos si estaban abiertos
-                if (ocultos.length && ocultos[0].style.display !== 'none') {
-                    ocultos.forEach(tag => tag.style.display = 'none');
-                    toggleBtn.textContent = '+';
-                }
-            });
+    function colapsarTags() {
+        ajustarTagsUnaLinea();
+    }
+
+    toggleBtn.onclick = () => {
+        const expandido = toggleBtn.textContent === '+';
+        if (expandido) expandirTags();
+        else colapsarTags();
+    };
+
+    tags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            inputFiltro.value = inputFiltro.value === tag.textContent ? '' : tag.textContent;
+            filtrarProductos();
+            colapsarTags(); // Siempre colapsar después de seleccionar
         });
     });
+
+    // Ejecutar al inicio y al redimensionar
+    const recalcular = () => requestAnimationFrame(ajustarTagsUnaLinea);
+    recalcular();
+    window.addEventListener('resize', recalcular);
 }
 
 </script>
