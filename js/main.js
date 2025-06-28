@@ -83,7 +83,7 @@ function mostrarProductos(productos) {
         // Precio
         const precio = document.createElement('p');
         precio.className = 'producto-precio';
-        precio.textContent = producto.precio;
+        precio.textContent = formatearNumero(producto.precio);
 
         // Unidad de venta
         const unidad = document.createElement('span');
@@ -269,3 +269,8 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleBtn.id = 'toggle-tags';
 
 });
+
+function formatearNumero(valor) {
+  const numero = parseInt(valor, 10);
+  return '$' + numero.toLocaleString('es-AR');
+}
