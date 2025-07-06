@@ -26,15 +26,17 @@ async function cargarYMostrarProductos() {
  * @returns {Array<Object>} - Lista de productos
  */
 function parsearCSV(csv) {
+    const csvSeparator = ',';
     const filas = csv.split('\n').filter(fila => fila.trim() !== '');
-    const encabezados = filas[0].split(',');
+    const encabezados = filas[0].split(csvSeparator);
 
     return filas.slice(1).map(fila => {
-        const valores = fila.split(',');
+        const valores = fila.split(csvSeparator);
         const producto = {};
 
         encabezados.forEach((columna, i) => {
-            producto[columna.trim()] = valores[i]?.trim() || '';
+            // En los datos originales, las comas son remplazads por punto y comas al subirse a github
+            producto[columna.trim()] = valores[i]?.trim().replaceAll(';', ',') || '';
         });
 
         return producto;
@@ -58,10 +60,13 @@ function mostrarProductos(productos) {
         thumbnailDiv.className = 'producto-thumbnail';
 
         const imagen = document.createElement('img');
-        imagen.setAttribute('data-src', producto.imagen);
+        if (producto.imagen) {
+            imagen.setAttribute('data-src', producto.imagen);
+            imagen.className = 'lazy';
+        } else {
+            imagen.src = 'img/sin-imagen.png';
+        }
         imagen.alt = 'Imagen del producto';
-        imagen.className = 'lazy';
-
         thumbnailDiv.appendChild(imagen);
 
         const contenidoDiv = document.createElement('div');
@@ -78,7 +83,7 @@ function mostrarProductos(productos) {
         // Título
         const titulo = document.createElement('p');
         titulo.className = 'producto-titulo';
-        titulo.textContent = producto.titulo;
+        titulo.textContent = producto.producto;
 
         // Precio
         const precio = document.createElement('p');
