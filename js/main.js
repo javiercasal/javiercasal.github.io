@@ -73,7 +73,7 @@ function mostrarProductos(productos) {
         contenidoDiv.className = 'producto-contenido';
 
         // Cartel de oferta
-        if (producto.oferta === 'sí') {
+        if (producto.es_oferta === 'sí') {
             const ofertaLabel = document.createElement('span');
             ofertaLabel.className = 'oferta-label';
             ofertaLabel.textContent = 'OFERTA';
