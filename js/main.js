@@ -73,7 +73,7 @@ function mostrarProductos(productos) {
         contenidoDiv.className = 'producto-contenido';
 
         // Cartel de oferta
-        if (producto.es_oferta === 'sí') {
+        if (producto.es_oferta && (producto.es_oferta.toLowerCase() === 'sí' || producto.es_oferta.toLowerCase() === 'si')) {
             const ofertaLabel = document.createElement('span');
             ofertaLabel.className = 'oferta-label';
             ofertaLabel.textContent = 'OFERTA';
@@ -106,7 +106,7 @@ function mostrarProductos(productos) {
         }
 
         // Logo Sin TACC
-        if (producto.tags.includes('sin TACC')) {
+        if (producto.tags && producto.tags.includes('sin TACC')) {
             const logo = document.createElement('img');
             logo.src = 'img/sin-tacc.png';
             logo.alt = 'Sin TACC';
@@ -116,7 +116,7 @@ function mostrarProductos(productos) {
         }
 
         // Logo orgánico
-        if (producto.tags.includes('orgánico')) {
+        if (producto.tags && producto.tags.includes('orgánico')) {
             const logo = document.createElement('img');
             logo.src = 'img/organico.png';
             logo.alt = 'Orgánico';
@@ -130,7 +130,7 @@ function mostrarProductos(productos) {
         tags.className = 'producto-tags';
         tags.textContent = producto.tags || '';
 
-        if (producto.oferta === 'sí') {
+        if (producto.oferta && producto.oferta === 'sí') {
             tags.textContent = tags.textContent + '|ofertas'
         }
 
@@ -144,6 +144,7 @@ function mostrarProductos(productos) {
         item.appendChild(contenidoDiv);
 
         contenedor.appendChild(item);
+
     });
 }
 
