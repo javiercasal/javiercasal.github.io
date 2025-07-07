@@ -190,6 +190,7 @@ function normalizar(str) {
 function mostrarMensajeSinResultados(mostrar) {
     const contenedor = document.querySelector('.productos-lista');
     let mensaje = document.getElementById('no-results-message');
+    let imagen = document.getElementById('no-results-image');
 
     if (mostrar) {
         if (!mensaje) {
@@ -198,13 +199,28 @@ function mostrarMensajeSinResultados(mostrar) {
             mensaje.style.textAlign = 'center';
             mensaje.style.color = '#555';
             mensaje.style.padding = '10px';
-
+            mensaje.style.paddingBottom = '0px';
             mensaje.innerHTML = `<p>Ningún elemento coincide con la búsqueda</p>`;
-
             contenedor.appendChild(mensaje);
         }
-    } else if (mensaje) {
-        mensaje.remove();
+        if (!imagen) {
+            imagen = document.createElement('img');
+            imagen.id = 'no-results-image';
+            imagen.src = 'img/pava.png';
+            imagen.alt = 'Nada por aquí';
+            imagen.style.display = 'block';
+            imagen.style.margin = '0 auto';
+            imagen.style.width = '35vw'; // 20% del ancho de la ventana
+            imagen.style.height = 'auto';
+            contenedor.appendChild(imagen);
+        }
+    } else {
+        if (mensaje) {
+            mensaje.remove();
+        }
+        if (imagen) {
+            imagen.remove();
+        }
     }
 }
 
