@@ -84,7 +84,7 @@ function mostrarProductos(productos) {
             // Título
             const titulo = document.createElement('p');
             titulo.className = 'producto-titulo';
-            titulo.textContent = producto.producto;
+            titulo.textContent = producto.titulo;
 
             // Precio
             const precio = document.createElement('p');
