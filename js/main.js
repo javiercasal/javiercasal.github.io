@@ -282,6 +282,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     clearBtn.addEventListener('click', () => {
         inputFiltro.value = '';
+        // Deseleccionar todos los tags
+        document.querySelectorAll('.tags-container .tag:not(.toggle-tag)').forEach(tag => {
+            tag.classList.remove('selected');
+        });
         filtrarProductos();
         clearBtn.style.display = 'none';
     });

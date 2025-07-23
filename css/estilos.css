@@ -46,7 +46,7 @@ body {
 
 /* === LOGO === */
 .logo {
-    width: 165px;
+    width: 130px;
     height: auto;
     display: block;
     margin: 0 auto;
@@ -119,6 +119,24 @@ body {
     background-color: var(--color-gris-muy-clarito);
 }
 
+/* === TAGS SELECCIONADOS === */
+.tag.selected {
+    background-color: var(--color-azul-francia);
+    color: var(--color-blanco);
+    border-color: var(--color-azul-francia);
+}
+
+.tag.selected:hover {
+    background-color: var(--color-azul-francia);
+    opacity: 0.9;
+}
+
+.tag.toggle-tag.selected {
+    background-color: var(--color-gris-muy-muy-clarito);
+    color: var(--color-negro-oliva);
+    border-color: var(--color-gris-mas-clarito);
+}
+
 /* === PRODUCTOS === */
 .productos-lista {
     list-style: none;
@@ -136,15 +154,15 @@ body {
 .producto-thumbnail {
     margin-right: 15px;
     flex-shrink: 0;
-    width: 120px;
-    height: 120px;
+    width: 80px;
+    height: 80px;
 }
 
 .producto-thumbnail img {
     height: 100%;
     width: 100%;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 10px;
     display: block;
 }
 

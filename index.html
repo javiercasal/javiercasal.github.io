@@ -136,10 +136,31 @@ function inicializarEventosTags() {
 
     tags.forEach(tag => {
         tag.addEventListener('click', () => {
-            inputFiltro.value = inputFiltro.value === tag.textContent ? '' : tag.textContent;
+            // Remover clase selected de todos los tags primero
+            tags.forEach(t => t.classList.remove('selected'));
+
+            // Alternar selección solo si el tag coincide con el input
+            if (inputFiltro.value === tag.textContent) {
+                inputFiltro.value = '';
+            } else {
+                inputFiltro.value = tag.textContent;
+                tag.classList.add('selected');
+            }
+
             filtrarProductos();
-            colapsarTags(); // Siempre colapsar después de seleccionar
+            //colapsarTags(); // Siempre colapsar después de seleccionar
         });
+    });
+
+    inputFiltro.addEventListener('input', () => {
+        // Solo deseleccionar tags si el usuario está escribiendo (no cuando se establece por tag)
+        if (!inputFiltro.dataset.porTag) {
+            tags.forEach(t => t.classList.remove('selected'));
+        }
+        delete inputFiltro.dataset.porTag;
+
+        filtrarProductos();
+        document.getElementById('clear-filter').style.display = inputFiltro.value ? 'block' : 'none';
     });
 
     // Ejecutar al inicio y al redimensionar
