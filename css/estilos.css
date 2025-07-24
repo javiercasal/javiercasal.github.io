@@ -161,6 +161,7 @@ body {
 }
 
 .producto-thumbnail {
+    position: relative;
     margin-right: 15px;
     flex-shrink: 0;
     width: 80px;
@@ -181,15 +182,24 @@ body {
 }
 
 .oferta-label {
-    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: -5px;
     background-color: var(--color-rojo-ofertas);
     color: var(--color-blanco);
     font-weight: bold;
-    font-size: 0.6em;
+    font-size: 0.5em;
     padding: 2.5px 4px;
     border-radius: 2px;
-    margin-bottom: 5px;
+    z-index: 2; /* Para que aparezca sobre la imagen */
     opacity: 85%;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Opcional: Efecto al pasar el ratón */
+.oferta-label:hover {
+    transform: rotate(-15deg) scale(1.1);
+    opacity: 1;
 }
 
 .producto-titulo {

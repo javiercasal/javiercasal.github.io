@@ -78,7 +78,7 @@ function mostrarProductos(productos) {
                 const ofertaLabel = document.createElement('span');
                 ofertaLabel.className = 'oferta-label';
                 ofertaLabel.textContent = 'OFERTA';
-                contenidoDiv.appendChild(ofertaLabel);
+                thumbnailDiv.appendChild(ofertaLabel);
             }
 
             // Título
