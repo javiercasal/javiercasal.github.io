@@ -212,7 +212,8 @@ function mostrarMensajeSinResultados(mostrar) {
             imagen.alt = 'Nada por aquí';
             imagen.style.display = 'block';
             imagen.style.margin = '0 auto';
-            imagen.style.width = '35vw'; // 20% del ancho de la ventana
+            imagen.style.marginTop = '-30px';
+            imagen.style.width = '50vw'; // 50% del ancho de la ventana
             imagen.style.height = 'auto';
             contenedor.appendChild(imagen);
         }
