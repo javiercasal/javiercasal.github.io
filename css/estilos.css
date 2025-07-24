@@ -155,6 +155,7 @@ body {
 
 .producto-item {
     display: flex;
+    align-items: center; /* Añade esta línea para centrado vertical */
     padding: 10px;
     border-bottom: 1px solid var(--color-gris-muy-clarito);
     background: var(--color-fondo);
@@ -179,6 +180,10 @@ body {
 .producto-contenido {
     position: relative;
     max-height: 1000px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrado vertical del contenido */
+    height: 80px; /* Misma altura que la imagen */
 }
 
 .oferta-label {
@@ -205,7 +210,6 @@ body {
 .producto-titulo {
     margin: 0;
     margin-bottom: 2px;
-    margin-top: 2px;
     font-size: 0.8em;
 }
 
@@ -227,19 +231,14 @@ body {
 .producto-descripcion {
     font-size: 0.75em;
     color: var(--color-secundario);
-    margin-right: 2px;
-    line-height: 1.5;
-    margin-top: 2px;
-    margin-bottom: 2px;
+    margin: 2px 0; /* Espaciado más equilibrado */
+    line-height: 1.4; /* Mejor legibilidad */
 }
 
 .producto-precio {
     font-size: 1em;
     color: var(--color-casi-negro);
-    padding-top: 15px;
-    margin-right: 2px;
-    margin-top: -2px;
-    line-height: 0;
+    margin: 2px 0 0 0; /* Espaciado más equilibrado */
     font-weight: 500;
 }
 
