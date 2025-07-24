@@ -95,7 +95,16 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 6.5px;
-    padding: 12px 0px 0 0px;
+    padding: 12px 0 0;
+    line-height: 1.5em; /* Altura consistente para cada línea */
+    max-height: calc(3em + 19px); /* 2 líneas (1.5em cada una) + padding */
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    align-content: flex-start; /* Alinear líneas arriba */
+}
+
+.tags-container.expandido {
+    max-height: none;
 }
 
 .tag {
