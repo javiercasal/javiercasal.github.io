@@ -204,13 +204,13 @@ body {
 
 .producto-titulo {
     margin: 0;
-    margin-bottom: 0px;
+    margin-bottom: 3px;
     margin-top: 2px;
-    font-size: 0.95em;
+    font-size: 0.8em;
 }
 
 .logo-sin-tacc-inline {
-    width: 18px;
+    width: 15px;
     margin-left: 5px;
     margin-bottom: 5px;
     vertical-align: middle;
@@ -218,14 +218,14 @@ body {
 }
 
 .logo-organico-inline {
-    width: 17px;
+    width: 14.3px;
     margin-left: 3px;
     margin-bottom: 3px;
     vertical-align: middle;
 }
 
 .producto-descripcion {
-    font-size: 0.8em;
+    font-size: 0.75em;
     color: var(--color-secundario);
     margin-right: 2px;
     line-height: 1.5;
@@ -234,9 +234,9 @@ body {
 }
 
 .producto-precio {
-    font-size: 1.1em;
+    font-size: 1em;
     color: var(--color-casi-negro);
-    padding-top: 24px;
+    padding-top: 15px;
     margin-right: 2px;
     margin-top: -2px;
     line-height: 0;
