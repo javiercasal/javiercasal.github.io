@@ -118,6 +118,7 @@ body {
     transition: background-color 0.2s ease;
     font-family: 'Metropolis', Arial, sans-serif;
     display: inline-block;
+    font-weight: 500;
     max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
@@ -211,6 +212,7 @@ body {
     margin: 0;
     margin-bottom: 2px;
     font-size: 0.8em;
+    font-weight: 500;
 }
 
 .logo-sin-tacc-inline {
