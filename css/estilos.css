@@ -103,7 +103,7 @@ body {
 .tag {
     background-color: var(--color-gris-muy-muy-clarito);
     color: var(--color-negro-oliva);
-    font-size: 0.75em;
+    font-size: 0.8em;
     border: 1px solid var(--color-gris-mas-clarito);
     border-radius: 15px;
     padding: 5px 10px;
@@ -157,10 +157,10 @@ body {
 
 .producto-thumbnail {
     position: relative;
-    margin-right: 15px;
+    margin-right: 10px;
     flex-shrink: 0;
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
 }
 
 .producto-thumbnail img {
@@ -178,7 +178,7 @@ body {
     flex-direction: column;
     justify-content: center; /* Centrado vertical del contenido */
     height: 80px; /* Misma altura que la imagen */
-    gap: 4px;
+    gap: 7px;
 }
 
 .oferta-label {
@@ -205,8 +205,8 @@ body {
 .producto-titulo {
     margin: 0;
     margin-bottom: 0px;
-    font-size: 0.80em;
-    line-height: 1.4; /* Mejor legibilidad */
+    font-size: 0.90em;
+    line-height: 1.2; /* Mejor legibilidad */
     color: var(--color-casi-negro);
 }
 
@@ -221,28 +221,27 @@ body {
 .logo-organico-inline {
     width: 16px;
     margin-left: 3px;
-    margin-bottom: 0px;
     vertical-align: text-top;
 }
 
 .producto-descripcion {
-    font-size: 0.80em;
+    font-size: 0.90em;
     color: var(--color-gris-clarito);
     margin: 0px 0; /* Espaciado más equilibrado */
-    line-height: 1.4; /* Mejor legibilidad */
+    line-height: 1.2; /* Mejor legibilidad */
 }
 
 .producto-precio {
-    font-size: 0.80em;
+    font-size: 0.90em;
     color: var(--color-gris-clarito);
     margin: 0px 0 0 0; /* Espaciado más equilibrado */
-    line-height: 1.4; /* Mejor legibilidad */
+    line-height: 1.2; /* Mejor legibilidad */
 }
 
 .producto-unidad {
-    font-size: 0.75em;
+    font-size: 0.90em;
     margin-left: 5px;
-    line-height: 1.4; /* Mejor legibilidad */
+    line-height: 1; /* Mejor legibilidad */
     color: var(--color-secundario);
 }
 
