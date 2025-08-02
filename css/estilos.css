@@ -225,7 +225,7 @@ body {
 }
 
 .producto-descripcion {
-    font-size: 0.85em;
+    font-size: 0.75em;
     color: var(--color-gris-clarito);
     margin: 0px 0; /* Espaciado más equilibrado */
     line-height: 1.2; /* Mejor legibilidad */
