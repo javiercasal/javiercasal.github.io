@@ -159,8 +159,8 @@ body {
     position: relative;
     margin-right: 10px;
     flex-shrink: 0;
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
 }
 
 .producto-thumbnail img {
@@ -178,7 +178,7 @@ body {
     flex-direction: column;
     justify-content: center; /* Centrado vertical del contenido */
     height: 80px; /* Misma altura que la imagen */
-    gap: 7px;
+    gap: 9px;
 }
 
 .oferta-label {
@@ -205,41 +205,41 @@ body {
 .producto-titulo {
     margin: 0;
     margin-bottom: 0px;
-    font-size: 0.90em;
+    font-size: 0.85em;
     line-height: 1.2; /* Mejor legibilidad */
     color: var(--color-casi-negro);
 }
 
 .logo-sin-tacc-inline {
-    width: 16px;
+    width: 15px;
     margin-left: 4px;
     margin-bottom: 0px;
-    vertical-align: text-top;
+    vertical-align: text-bottom;
     opacity: 100%;
 }
 
 .logo-organico-inline {
-    width: 16px;
+    width: 15px;
     margin-left: 3px;
-    vertical-align: text-top;
+    vertical-align: text-bottom;
 }
 
 .producto-descripcion {
-    font-size: 0.90em;
+    font-size: 0.85em;
     color: var(--color-gris-clarito);
     margin: 0px 0; /* Espaciado más equilibrado */
     line-height: 1.2; /* Mejor legibilidad */
 }
 
 .producto-precio {
-    font-size: 0.90em;
+    font-size: 0.85em;
     color: var(--color-gris-clarito);
     margin: 0px 0 0 0; /* Espaciado más equilibrado */
     line-height: 1.2; /* Mejor legibilidad */
 }
 
 .producto-unidad {
-    font-size: 0.90em;
+    font-size: 0.85em;
     margin-left: 5px;
     line-height: 1; /* Mejor legibilidad */
     color: var(--color-secundario);
