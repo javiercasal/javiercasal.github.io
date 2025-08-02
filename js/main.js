@@ -51,101 +51,114 @@ function mostrarProductos(productos) {
     const contenedor = document.querySelector('.productos-lista');
     contenedor.innerHTML = ''; // Limpiar contenido anterior
 
-    productos.forEach(producto => {
-        if (producto.hay_stock && producto.hay_stock.toLowerCase() !== "no") {
-            const item = document.createElement('li');
-            item.className = 'producto-item';
+    // Ordenar productos: primero los con stock, luego los sin stock
+    const productosOrdenados = [...productos].sort((a, b) => {
+        const aSinStock = a.hay_stock && a.hay_stock.toLowerCase() === "no";
+        const bSinStock = b.hay_stock && b.hay_stock.toLowerCase() === "no";
 
-            // Imagen del producto
-            const thumbnailDiv = document.createElement('div');
-            thumbnailDiv.className = 'producto-thumbnail';
+        if (aSinStock && !bSinStock) return 1;    // a va después de b
+        if (!aSinStock && bSinStock) return -1;   // a va antes de b
+        return 0;                                 // mantener orden original
+    });
 
-            const imagen = document.createElement('img');
-            if (producto.imagen) {
-                imagen.setAttribute('data-src', producto.imagen);
-                imagen.className = 'lazy';
-            } else {
-                imagen.src = 'img/sin-imagen.png';
-            }
-            imagen.alt = 'Imagen del producto';
-            thumbnailDiv.appendChild(imagen);
-
-            const contenidoDiv = document.createElement('div');
-            contenidoDiv.className = 'producto-contenido';
-
-            // Cartel de oferta
-            if (producto.es_oferta && (producto.es_oferta.toLowerCase() === 'sí' || producto.es_oferta.toLowerCase() === 'si')) {
-                const ofertaLabel = document.createElement('span');
-                ofertaLabel.className = 'oferta-label';
-                ofertaLabel.textContent = 'OFERTA';
-                thumbnailDiv.appendChild(ofertaLabel);
-            }
-
-            // Título
-            const titulo = document.createElement('p');
-            titulo.className = 'producto-titulo';
-            titulo.textContent = producto.titulo;
-
-            // Precio
-            const precio = document.createElement('p');
-            precio.className = 'producto-precio';
-            precio.textContent = formatearNumero(producto.precio);
-
-            // Unidad de venta
-            const unidad = document.createElement('span');
-            unidad.className = 'producto-unidad';
-            unidad.textContent = producto.unidad || '';
-            precio.appendChild(unidad);
-
-            // Descripción del producto
-            const descripcion = document.createElement('p');
-            descripcion.className = 'producto-descripcion';
-            const textoDescripcion = document.createTextNode(producto.descripcion);
-            descripcion.appendChild(textoDescripcion);
-            if (textoDescripcion.textContent == '') {
-                descripcion.style.display = 'none';
-            }
-
-            // Logo Sin TACC
-            if (producto.tags && producto.tags.includes('sin TACC')) {
-                const logo = document.createElement('img');
-                logo.src = 'img/sin-tacc.png';
-                logo.alt = 'Sin TACC';
-                logo.title = 'Sin TACC';
-                logo.className = 'logo-sin-tacc-inline';
-                titulo.appendChild(logo);
-            }
-
-            // Logo orgánico
-            if (producto.tags && producto.tags.includes('orgánico')) {
-                const logo = document.createElement('img');
-                logo.src = 'img/organico.png';
-                logo.alt = 'Orgánico';
-                logo.title = 'Orgánico';
-                logo.className = 'logo-organico-inline';
-                titulo.appendChild(logo);
-            }
-
-            // Tags (no visibles)
-            const tags = document.createElement('p');
-            tags.className = 'producto-tags';
-            tags.textContent = producto.tags || '';
-
-            if (producto.oferta && producto.oferta === 'sí') {
-                tags.textContent = tags.textContent + '|ofertas'
-            }
-
-            contenidoDiv.appendChild(titulo);
-            contenidoDiv.appendChild(descripcion);
-            contenidoDiv.appendChild(precio);
-            contenidoDiv.appendChild(tags);
-
-            // Ensamblar la imagen y el contenido
-            item.appendChild(thumbnailDiv);
-            item.appendChild(contenidoDiv);
-
-            contenedor.appendChild(item);
+    productosOrdenados.forEach(producto => {
+        const item = document.createElement('li');
+        item.className = 'producto-item';
+        
+        // Añadir clase sin-stock si no hay stock
+        if (producto.hay_stock && producto.hay_stock.toLowerCase() === "no") {
+            item.classList.add('sin-stock');
         }
+
+        // Imagen del producto
+        const thumbnailDiv = document.createElement('div');
+        thumbnailDiv.className = 'producto-thumbnail';
+
+        const imagen = document.createElement('img');
+        if (producto.imagen) {
+            imagen.setAttribute('data-src', producto.imagen);
+            imagen.className = 'lazy';
+        } else {
+            imagen.src = 'img/sin-imagen.png';
+        }
+        imagen.alt = 'Imagen del producto';
+        thumbnailDiv.appendChild(imagen);
+
+        const contenidoDiv = document.createElement('div');
+        contenidoDiv.className = 'producto-contenido';
+
+        // Cartel de oferta
+        if (producto.es_oferta && (producto.es_oferta.toLowerCase() === 'sí' || producto.es_oferta.toLowerCase() === 'si')) {
+            const ofertaLabel = document.createElement('span');
+            ofertaLabel.className = 'oferta-label';
+            ofertaLabel.textContent = 'OFERTA';
+            thumbnailDiv.appendChild(ofertaLabel);
+        }
+
+        // Título
+        const titulo = document.createElement('p');
+        titulo.className = 'producto-titulo';
+        titulo.textContent = producto.titulo;
+
+        // Precio
+        const precio = document.createElement('p');
+        precio.className = 'producto-precio';
+        precio.textContent = formatearNumero(producto.precio);
+
+        // Unidad de venta
+        const unidad = document.createElement('span');
+        unidad.className = 'producto-unidad';
+        unidad.textContent = producto.unidad || '';
+        precio.appendChild(unidad);
+
+        // Descripción del producto
+        const descripcion = document.createElement('p');
+        descripcion.className = 'producto-descripcion';
+        const textoDescripcion = document.createTextNode(producto.descripcion);
+        descripcion.appendChild(textoDescripcion);
+        if (textoDescripcion.textContent == '') {
+            descripcion.style.display = 'none';
+        }
+
+        // Logo Sin TACC
+        if (producto.tags && producto.tags.includes('sin TACC')) {
+            const logo = document.createElement('img');
+            logo.src = 'img/sin-tacc.png';
+            logo.alt = 'Sin TACC';
+            logo.title = 'Sin TACC';
+            logo.className = 'logo-sin-tacc-inline';
+            titulo.appendChild(logo);
+        }
+
+        // Logo orgánico
+        if (producto.tags && producto.tags.includes('orgánico')) {
+            const logo = document.createElement('img');
+            logo.src = 'img/organico.png';
+            logo.alt = 'Orgánico';
+            logo.title = 'Orgánico';
+            logo.className = 'logo-organico-inline';
+            titulo.appendChild(logo);
+        }
+
+        // Tags (no visibles)
+        const tags = document.createElement('p');
+        tags.className = 'producto-tags';
+        tags.textContent = producto.tags || '';
+
+        if (producto.oferta && producto.oferta === 'sí') {
+            tags.textContent = tags.textContent + '|ofertas'
+        }
+
+        contenidoDiv.appendChild(titulo);
+        contenidoDiv.appendChild(descripcion);
+        contenidoDiv.appendChild(precio);
+        contenidoDiv.appendChild(tags);
+
+        // Ensamblar la imagen y el contenido
+        item.appendChild(thumbnailDiv);
+        item.appendChild(contenidoDiv);
+
+        contenedor.appendChild(item);
     });
 }
 

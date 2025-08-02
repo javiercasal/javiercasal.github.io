@@ -254,6 +254,62 @@ body {
     display: none;
 }
 
+/* === PRODUCTOS SIN STOCK === */
+.producto-item.sin-stock {
+    position: relative;
+    opacity: 0.6;
+    overflow: hidden;
+}
+
+.producto-item.sin-stock::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 100%,
+        rgba(255,255,255,0.5) 100%,
+        rgba(255,255,255,0.5) 100%
+    );
+    background-size: 100% 4px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.producto-item.sin-stock::after {
+    content: "SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK - SIN STOCK";
+    position: absolute;
+    top: 50%;
+    left: 1%;
+    width: 100%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    color: rgba(255, 0, 0, 0.2);
+    font-size: 1em;
+    font-weight: bold;
+    z-index: 1;
+    text-align: center;
+    pointer-events: none;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.15);
+}
+
+.producto-item.sin-stock .producto-thumbnail img {
+    filter: grayscale(100%) brightness(1.1);
+}
+
+.producto-item.sin-stock .producto-titulo,
+.producto-item.sin-stock .producto-descripcion,
+.producto-item.sin-stock .producto-precio {
+    color: var(--color-gris-clarito);
+    position: relative;
+    z-index: 3; /* Para que el texto del producto quede sobre el fondo */
+}
+
 /* === BOTÓN FLOTANTE === */
 .fab {
     position: fixed;

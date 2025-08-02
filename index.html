@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <meta property="og:title" content="Dietética Axel y Javi" />
     <meta property="og:description" content="🛵 Te llevamos el pedido a tu casa" />
     <meta property="og:image" content="https://dieteticaaxelyjavi.github.io/img/logo.png" />
     <meta property="og:url" content="https://dieteticaaxelyjavi.github.io/" />
     <meta property="og:type" content="website" />
+
     <title>Dietética Axel y Javi</title>
+
     <link rel="icon" type="image/png" href="img/almendras.png"/>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
@@ -108,7 +111,7 @@ function inicializarEventosTags() {
         const containerWidth = tagsContainer.offsetWidth;
         const tagElements = tags.map(tag => ({
             element: tag,
-            width: tag.offsetWidth + 6.5 // width + gap
+            width: tag.offsetWidth + 6.5 + 1 // width + gap + changui
         }));
 
         const toggleWidth = toggleBtn.offsetWidth + 6.5;
