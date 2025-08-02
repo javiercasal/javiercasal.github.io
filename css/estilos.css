@@ -1,14 +1,7 @@
 @font-face {
-  font-family: 'Metropolis';
-  src: url('fonts/metropolis-regular-webfont.woff2') format('woff2');
+  font-family: 'Lexend';
+  src: url('fonts/Lexend-Regular.woff2') format('woff2');
   font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Metropolis';
-  src: url('fonts/metropolis-medium-webfont.woff2') format('woff2');
-  font-weight: 500; /* Medium */
   font-style: normal;
 }
 
@@ -29,7 +22,7 @@
 
 /* === ESTILOS GENERALES === */
 body {
-    font-family: 'Metropolis', Arial, sans-serif;
+    font-family: 'Lexend', sans-serif;
     margin: 0;
     padding: 0;
     background-color: var(--color-fondo);
@@ -74,7 +67,7 @@ body {
     font-size: 0.9em;
     border: 1px solid var(--color-gris-mas-clarito);
     border-radius: 5px;
-    font-family: 'Metropolis', Arial, sans-serif;
+    font-family: 'Lexend', Arial, sans-serif;
 }
 
 #clear-filter {
@@ -116,9 +109,9 @@ body {
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    font-family: 'Metropolis', Arial, sans-serif;
+    font-family: 'Lexend', sans-serif;
     display: inline-block;
-    font-weight: 500;
+    font-weight: normal;
     max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
@@ -166,15 +159,15 @@ body {
     position: relative;
     margin-right: 15px;
     flex-shrink: 0;
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
 }
 
 .producto-thumbnail img {
     height: 100%;
     width: 100%;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 15px;
     display: block;
 }
 
@@ -185,6 +178,7 @@ body {
     flex-direction: column;
     justify-content: center; /* Centrado vertical del contenido */
     height: 80px; /* Misma altura que la imagen */
+    gap: 4px;
 }
 
 .oferta-label {
@@ -210,44 +204,46 @@ body {
 
 .producto-titulo {
     margin: 0;
-    margin-bottom: 2px;
-    font-size: 0.8em;
-    font-weight: 500;
+    margin-bottom: 0px;
+    font-size: 0.80em;
+    line-height: 1.4; /* Mejor legibilidad */
+    color: var(--color-casi-negro);
 }
 
 .logo-sin-tacc-inline {
-    width: 15px;
+    width: 16px;
     margin-left: 4px;
-    margin-bottom: 2px;
-    vertical-align: middle;
-    opacity: 90%;
+    margin-bottom: 0px;
+    vertical-align: text-top;
+    opacity: 100%;
 }
 
 .logo-organico-inline {
-    width: 14.3px;
+    width: 16px;
     margin-left: 3px;
-    margin-bottom: 2px;
-    vertical-align: middle;
+    margin-bottom: 0px;
+    vertical-align: text-top;
 }
 
 .producto-descripcion {
-    font-size: 0.75em;
-    color: var(--color-secundario);
-    margin: 2px 0; /* Espaciado más equilibrado */
+    font-size: 0.80em;
+    color: var(--color-gris-clarito);
+    margin: 0px 0; /* Espaciado más equilibrado */
     line-height: 1.4; /* Mejor legibilidad */
 }
 
 .producto-precio {
-    font-size: 1em;
-    color: var(--color-casi-negro);
-    margin: 2px 0 0 0; /* Espaciado más equilibrado */
-    font-weight: 500;
+    font-size: 0.80em;
+    color: var(--color-gris-clarito);
+    margin: 0px 0 0 0; /* Espaciado más equilibrado */
+    line-height: 1.4; /* Mejor legibilidad */
 }
 
 .producto-unidad {
-    font-size: 0.65em;
+    font-size: 0.75em;
     margin-left: 5px;
-    color: var(--color-gris-clarito);
+    line-height: 1.4; /* Mejor legibilidad */
+    color: var(--color-secundario);
 }
 
 .producto-tags {

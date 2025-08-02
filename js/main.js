@@ -64,7 +64,7 @@ function mostrarProductos(productos) {
     productosOrdenados.forEach(producto => {
         const item = document.createElement('li');
         item.className = 'producto-item';
-        
+
         // Añadir clase sin-stock si no hay stock
         if (producto.hay_stock && producto.hay_stock.toLowerCase() === "no") {
             item.classList.add('sin-stock');
@@ -105,11 +105,9 @@ function mostrarProductos(productos) {
         precio.className = 'producto-precio';
         precio.textContent = formatearNumero(producto.precio);
 
-        // Unidad de venta
-        const unidad = document.createElement('span');
-        unidad.className = 'producto-unidad';
-        unidad.textContent = producto.unidad || '';
-        precio.appendChild(unidad);
+        if (producto.unidad) {
+            precio.textContent += ' ' + producto.unidad;
+        }
 
         // Descripción del producto
         const descripcion = document.createElement('p');
