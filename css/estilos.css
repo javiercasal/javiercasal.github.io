@@ -178,7 +178,7 @@ body {
     flex-direction: column;
     justify-content: center; /* Centrado vertical del contenido */
     height: 80px; /* Misma altura que la imagen */
-    gap: 9px;
+    gap: 7px;
 }
 
 .oferta-label {
