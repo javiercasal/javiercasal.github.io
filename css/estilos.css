@@ -48,7 +48,7 @@ body {
 
 /* === FILTRO DE BÚSQUEDA === */
 .filter-container {
-    padding: 10px 10px 10px 10px;
+    padding: 10px 10px 0 10px;
     background: var(--color-fondo);
     border-bottom: 1px solid var(--color-gris-muy-clarito);
     position: sticky;
@@ -88,7 +88,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 6.5px;
-    padding: 12px 0 0;
+    padding: 12px 0 10px 0;
     line-height: 1.5em; /* Altura consistente para cada línea */
     max-height: calc(3em + 19px); /* 2 líneas (1.5em cada una) + padding */
     overflow: hidden;
