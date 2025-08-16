@@ -54,32 +54,43 @@ function mostrarProductos(productos) {
     // Crear overlay para imágenes a pantalla completa
     const overlay = document.createElement('div');
     overlay.className = 'image-overlay';
-    overlay.innerHTML = '<img src="" alt="Imagen ampliada">';
+    overlay.innerHTML = `
+        <img src="" alt="Imagen ampliada">
+        <button class="close-button" aria-label="Cerrar imagen"></button>
+    `;
     document.body.appendChild(overlay);
 
-    // Cerrar overlay al hacer clic
+    const closeButton = overlay.querySelector('.close-button');
+
+    // Función para cerrar el overlay
+    const cerrarOverlay = () => {
+        document.body.classList.remove('overlay-active');
+        overlay.classList.remove('active');
+    };
+
+    // Función para abrir el overlay
+    const abrirOverlay = () => {
+        document.body.classList.add('overlay-active');
+        overlay.classList.add('active');
+    };
+
+    // Eventos para cerrar
+    closeButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        cerrarOverlay();
+    });
+
     overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) { // Solo cerrar si se hace clic fuera de la imagen
+        if (e.target === overlay) {
             cerrarOverlay();
         }
     });
 
-    // Cerrar overlay con tecla ESC
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && overlay.classList.contains('active')) {
             cerrarOverlay();
         }
     });
-
-    function abrirOverlay() {
-        document.body.classList.add('overlay-active');
-        overlay.classList.add('active');
-    }
-
-    function cerrarOverlay() {
-        document.body.classList.remove('overlay-active');
-        overlay.classList.remove('active');
-    }
 
     // Ordenar productos: primero los con stock, luego los sin stock
     const productosOrdenados = [...productos].sort((a, b) => {
