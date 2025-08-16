@@ -51,6 +51,26 @@ function mostrarProductos(productos) {
     const contenedor = document.querySelector('.productos-lista');
     contenedor.innerHTML = ''; // Limpiar contenido anterior
 
+    // Crear overlay para imágenes a pantalla completa
+    const overlay = document.createElement('div');
+    overlay.className = 'image-overlay';
+    overlay.innerHTML = '<img src="" alt="Imagen ampliada">';
+    document.body.appendChild(overlay);
+
+    // Cerrar overlay al hacer clic
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) { // Solo cerrar si se hace clic fuera de la imagen
+            overlay.classList.remove('active');
+        }
+    });
+
+    // Cerrar overlay con tecla ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) {
+            overlay.classList.remove('active');
+        }
+    });
+
     // Ordenar productos: primero los con stock, luego los sin stock
     const productosOrdenados = [...productos].sort((a, b) => {
         const aSinStock = a.hay_stock && a.hay_stock.toLowerCase() === "no";
@@ -81,7 +101,18 @@ function mostrarProductos(productos) {
         } else {
             imagen.src = 'img/sin-imagen.png';
         }
-        imagen.alt = 'Imagen del producto';
+        imagen.alt = producto.titulo || 'Imagen del producto';
+
+        // Agregar evento para mostrar imagen a pantalla completa
+        thumbnailDiv.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const imgSrc = producto.imagen || 'img/sin-imagen.png';
+            const overlayImg = overlay.querySelector('img');
+            overlayImg.src = imgSrc;
+            overlayImg.alt = producto.titulo || 'Imagen ampliada';
+            overlay.classList.add('active');
+        });
+
         thumbnailDiv.appendChild(imagen);
 
         const contenidoDiv = document.createElement('div');
