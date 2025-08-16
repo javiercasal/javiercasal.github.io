@@ -334,3 +334,14 @@ body {
     object-fit: cover;
     border-radius: 50%;
 }
+
+/* Solución para el padding en Safari (iPhone) */
+@supports (-webkit-touch-callout: none) {
+  .tags-container {
+    padding-bottom: 20px !important; /* 10px normal + 10px extra para Safari */
+  }
+  
+  .tags-container.expandido {
+    padding-bottom: 10px !important; /* Volver al valor normal cuando está expandido */
+  }
+}
