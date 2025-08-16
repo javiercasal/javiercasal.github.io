@@ -338,7 +338,7 @@ body {
 /* Solución para el padding en Safari (iPhone) */
 @supports (-webkit-touch-callout: none) {
   .tags-container {
-    padding-bottom: 20px !important; /* 10px normal + 15px extra para Safari */
+    padding-bottom: 25px !important; /* 10px normal + 15px extra para Safari */
   }
   
   .tags-container.expandido {
