@@ -368,6 +368,14 @@ body {
     border-radius: 50%;
 }
 
+/* Bloquear scroll cuando el overlay está activo */
+body.overlay-active {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
 /* Solución para el padding en Safari (iPhone) */
 @supports (-webkit-touch-callout: none) {
   .tags-container {

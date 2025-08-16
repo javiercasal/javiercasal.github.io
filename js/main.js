@@ -60,16 +60,26 @@ function mostrarProductos(productos) {
     // Cerrar overlay al hacer clic
     overlay.addEventListener('click', (e) => {
         if (e.target === overlay) { // Solo cerrar si se hace clic fuera de la imagen
-            overlay.classList.remove('active');
+            cerrarOverlay();
         }
     });
 
     // Cerrar overlay con tecla ESC
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && overlay.classList.contains('active')) {
-            overlay.classList.remove('active');
+            cerrarOverlay();
         }
     });
+
+    function abrirOverlay() {
+        document.body.classList.add('overlay-active');
+        overlay.classList.add('active');
+    }
+
+    function cerrarOverlay() {
+        document.body.classList.remove('overlay-active');
+        overlay.classList.remove('active');
+    }
 
     // Ordenar productos: primero los con stock, luego los sin stock
     const productosOrdenados = [...productos].sort((a, b) => {
@@ -110,7 +120,7 @@ function mostrarProductos(productos) {
             const overlayImg = overlay.querySelector('img');
             overlayImg.src = imgSrc;
             overlayImg.alt = producto.titulo || 'Imagen ampliada';
-            overlay.classList.add('active');
+            abrirOverlay();
         });
 
         thumbnailDiv.appendChild(imagen);
