@@ -81,14 +81,14 @@ function mostrarProductos(productos) {
     });
 
     overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) {
-            cerrarOverlay();
+        if (e.target === overlay) { // Solo cerrar si se hace clic fuera de la imagen
+            overlay.classList.remove('active');
         }
     });
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && overlay.classList.contains('active')) {
-            cerrarOverlay();
+            overlay.classList.remove('active');
         }
     });
 
@@ -131,7 +131,7 @@ function mostrarProductos(productos) {
             const overlayImg = overlay.querySelector('img');
             overlayImg.src = imgSrc;
             overlayImg.alt = producto.titulo || 'Imagen ampliada';
-            abrirOverlay();
+            overlay.classList.add('active');
         });
 
         thumbnailDiv.appendChild(imagen);
