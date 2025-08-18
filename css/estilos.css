@@ -88,7 +88,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 6.5px;
-    padding: 12px 0 10px 0;
+    padding: 12px 0 12px 0;
     line-height: 1.5em; /* Altura consistente para cada línea */
     max-height: calc(3em + 19px); /* 2 líneas (1.5em cada una) + padding */
     overflow: hidden;
@@ -245,7 +245,7 @@ body {
 
 .logo-sin-tacc-inline {
     width: 15px;
-    margin-left: 4px;
+    margin-left: 3px;
     margin-bottom: 0px;
     vertical-align: text-bottom;
     opacity: 100%;
@@ -371,11 +371,11 @@ body {
 /* Solución para el padding en Safari (iPhone) */
 @supports (-webkit-touch-callout: none) {
   .tags-container {
-    padding-bottom: 25px !important; /* 10px normal + 15px extra para Safari */
+    padding-bottom: 24px !important; /* 12px normal + 12px extra para Safari */
   }
   
   .tags-container.expandido {
-    padding-bottom: 10px !important; /* Volver al valor normal cuando está expandido */
+    padding-bottom: 12px !important; /* Volver al valor normal cuando está expandido */
   }
 }
 
