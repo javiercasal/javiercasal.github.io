@@ -48,7 +48,7 @@ body {
 
 /* === FILTRO DE BÚSQUEDA === */
 .filter-container {
-    padding: 10px 10px 0 10px;
+    padding: 12px 12px 0 12px;
     background: var(--color-fondo);
     border-bottom: 1px solid var(--color-gris-muy-clarito);
     position: sticky;
