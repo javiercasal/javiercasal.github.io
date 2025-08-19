@@ -7,7 +7,7 @@
      <!-- Etiquetas meta de Open Graph -->
     <meta property="og:title" content="Dietética Axel y Javi" />
     <meta property="og:description" content="🛵 Te llevamos el pedido a tu casa" />
-    <meta property="og:image" content="https://dieteticaaxelyjavi.github.io/img/logo.png" />
+    <meta property="og:image" content="https://dietetica.github.io/img/logo.png" />
     <meta property="og:image:width" content="606" />
     <meta property="og:image:height" content="606" />
     <meta property="og:site_name" content="Dietética Axel y Javi" />
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function cargarEtiquetasDesdeCSV() {
-    const urlCSV = 'https://raw.githubusercontent.com/dieteticaaxelyjavi/productos/main/etiquetas';
+    const urlCSV = 'https://raw.githubusercontent.com/dietetica/productos/main/etiquetas';
     try {
         const respuesta = await fetch(urlCSV);
         const texto = await respuesta.text();
