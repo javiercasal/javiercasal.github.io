@@ -1,7 +1,5 @@
-// Impide que aparezca el menú contextual (clic derecho) del navegador
-document.addEventListener("contextmenu", function(e) {
-    e.preventDefault();
-}, false);
+// ===== VARIABLES GLOBALES =====
+let nombresProductos = []; // Para autocomplete
 
 // ===== FUNCIONES DE INICIALIZACIÓN =====
 
@@ -13,6 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarEtiquetasDesdeCSV();
     inicializarSistemaDeFiltrado();
 });
+
+// Impide que aparezca el menú contextual (clic derecho) del navegador
+document.addEventListener("contextmenu", function(e) {
+    e.preventDefault();
+}, false);
 
 // ===== FUNCIONES AUXILIARES/HELPERS =====
 
@@ -59,6 +62,57 @@ async function cargarYMostrarProductos() {
     } catch (error) {
         console.error('Error al cargar el archivo CSV:', error);
     }
+}
+
+function inicializarAutocomplete() {
+    const inputFiltro = document.getElementById('filter-input');
+    const suggestionsContainer = document.createElement('div');
+    suggestionsContainer.className = 'autocomplete-suggestions';
+    suggestionsContainer.style.display = 'none';
+    
+    // Insertar después del input wrapper
+    inputFiltro.parentNode.parentNode.appendChild(suggestionsContainer);
+
+    inputFiltro.addEventListener('input', function() {
+        const value = this.value.trim().toLowerCase();
+        suggestionsContainer.innerHTML = '';
+        suggestionsContainer.style.display = 'none';
+
+        if (value.length < 2) return; // Mostrar sugerencias solo después de 2 caracteres
+
+        const suggestions = nombresProductos.filter(nombre =>
+            normalizar(nombre).includes(normalizar(value))
+        ).slice(0, 5); // Máximo 5 sugerencias
+
+        if (suggestions.length > 0) {
+            suggestionsContainer.style.display = 'block';
+            suggestions.forEach(suggestion => {
+                const div = document.createElement('div');
+                div.className = 'suggestion-item';
+                div.textContent = suggestion;
+                div.addEventListener('click', () => {
+                    inputFiltro.value = suggestion;
+                    filtrarProductos();
+                    suggestionsContainer.style.display = 'none';
+                });
+                suggestionsContainer.appendChild(div);
+            });
+        }
+    });
+
+    // Ocultar sugerencias al hacer clic fuera
+    document.addEventListener('click', (e) => {
+        if (!suggestionsContainer.contains(e.target) && e.target !== inputFiltro) {
+            suggestionsContainer.style.display = 'none';
+        }
+    });
+
+    inputFiltro.addEventListener('blur', () => {
+        // Pequeño delay para permitir el clic en las sugerencias
+        setTimeout(() => {
+            suggestionsContainer.style.display = 'none';
+        }, 200);
+    });
 }
 
 // Convierte el texto de un CSV en un array de objetos
@@ -122,8 +176,6 @@ function activarLazyLoad() {
 }
 
 // ===== FUNCIONES DE UI/INTERFAZ =====
-
-let nombresProductos = [];
 
 // Muestra la lista de productos en el HTML
 function mostrarProductos(productos) {
@@ -554,60 +606,4 @@ function inicializarEventosTags() {
     const recalcular = () => requestAnimationFrame(calcularLineas);
     recalcular();
     window.addEventListener('resize', recalcular);
-}
-
-
-
-
-
-
-function inicializarAutocomplete() {
-    const inputFiltro = document.getElementById('filter-input');
-    const suggestionsContainer = document.createElement('div');
-    suggestionsContainer.className = 'autocomplete-suggestions';
-    suggestionsContainer.style.display = 'none';
-    
-    // Insertar después del input wrapper
-    inputFiltro.parentNode.parentNode.appendChild(suggestionsContainer);
-
-    inputFiltro.addEventListener('input', function() {
-        const value = this.value.trim().toLowerCase();
-        suggestionsContainer.innerHTML = '';
-        suggestionsContainer.style.display = 'none';
-
-        if (value.length < 2) return; // Mostrar sugerencias solo después de 2 caracteres
-
-        const suggestions = nombresProductos.filter(nombre =>
-            normalizar(nombre).includes(normalizar(value))
-        ).slice(0, 5); // Máximo 5 sugerencias
-
-        if (suggestions.length > 0) {
-            suggestionsContainer.style.display = 'block';
-            suggestions.forEach(suggestion => {
-                const div = document.createElement('div');
-                div.className = 'suggestion-item';
-                div.textContent = suggestion;
-                div.addEventListener('click', () => {
-                    inputFiltro.value = suggestion;
-                    filtrarProductos();
-                    suggestionsContainer.style.display = 'none';
-                });
-                suggestionsContainer.appendChild(div);
-            });
-        }
-    });
-
-    // Ocultar sugerencias al hacer clic fuera
-    document.addEventListener('click', (e) => {
-        if (!suggestionsContainer.contains(e.target) && e.target !== inputFiltro) {
-            suggestionsContainer.style.display = 'none';
-        }
-    });
-
-    inputFiltro.addEventListener('blur', () => {
-        // Pequeño delay para permitir el clic en las sugerencias
-        setTimeout(() => {
-            suggestionsContainer.style.display = 'none';
-        }, 200);
-    });
 }
