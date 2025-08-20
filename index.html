@@ -4,227 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-     <!-- Etiquetas meta de Open Graph -->
-    <meta property="og:title" content="Dietética Axel y Javi" />
-    <meta property="og:description" content="🛵 Te llevamos el pedido a tu casa" />
-    <meta property="og:image" content="https://dietetica.github.io/img/logo.png" />
-    <meta property="og:image:width" content="606" />
-    <meta property="og:image:height" content="606" />
-    <meta property="og:site_name" content="Dietética Axel y Javi" />
-    <meta property="og:url" content="https://dietetica.github.io/" />
-    <meta property="og:type" content="website" />
+    <!-- Metadatos Open Graph -->
+    <meta property="og:title" content="Dietética Axel y Javi">
+    <meta property="og:description" content="🛵 Te llevamos el pedido a tu casa">
+    <meta property="og:image" content="https://dietetica.github.io/img/logo.png">
+    <meta property="og:image:width" content="606">
+    <meta property="og:image:height" content="606">
+    <meta property="og:site_name" content="Dietética Axel y Javi">
+    <meta property="og:url" content="https://dietetica.github.io/">
+    <meta property="og:type" content="website">
 
-    <!-- Title -->
-    <title>Dietética Axel y Javi</title>
+    <!-- Metadatos adicionales para mejor SEO -->
+    <meta name="description" content="Dietética Axel y Javi - Productos naturales, orgánicos y sin TACC. Envíos a domicilio.">
+    <meta name="keywords" content="dietética, productos naturales, orgánicos, sin TACC, alimentos saludables">
+
+    <!-- Título -->
+    <title>Dietética Axel y Javi | Alimentos amigos</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="img/almendras.png"/>
+    <link rel="icon" type="image/png" href="img/almendras.png">
+
+    <!-- Preconexión para mejorar rendimiento -->
+    <link rel="preconnect" href="https://raw.githubusercontent.com">
 
     <!-- Styles -->
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
+    <!-- Encabezado con logo -->
+    <header class="header">
+        <img src="img/logo.png" alt="Logo de la Dietética Axel y Javi" class="logo">
+    </header>
 
-<!-- Encabezado con logo -->
-<header class="header">
-    <img src="img/logo.png" alt="Logo de la Dietética Axel y Javi" class="logo">
-</header>
-
-<!-- Filtro de búsqueda -->
-<div class="filter-container">
-    <div class="filter-input-wrapper">
-        <input type="text" id="filter-input" placeholder="Buscar..." autocomplete="off">
-        <span id="clear-filter">&times;</span>
+    <!-- Filtro de búsqueda -->
+    <div class="filter-container">
+        <div class="filter-input-wrapper">
+            <input type="text" id="filter-input" placeholder="Buscar..." autocomplete="off">
+            <span id="clear-filter">&times;</span>
+        </div>
+        <div class="tags-container" id="tags-container"></div>
     </div>
 
-    <div class="tags-container" id="tags-container"></div>
-</div>
+    <!-- Lista de productos -->
+    <ul class="productos-lista"></ul>
 
-<!-- Lista de productos -->
-<ul class="productos-lista"></ul>
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://api.whatsapp.com/send/?phone=5491133417868" class="fab" target="_blank" aria-label="Enviar mensaje por WhatsApp">
+        <img src="img/whatsapp.png" alt="Icono de WhatsApp">
+    </a>
 
-<!-- Botón flotante de WhatsApp -->
-<a href="https://api.whatsapp.com/send/?phone=5491133417868" class="fab" target="_blank"
-   aria-label="Enviar mensaje por WhatsApp">
-    <img src="img/whatsapp.png" alt="Icono de WhatsApp">
-</a>
-
-<!-- Scripts -->
-<script src="js/main.js"></script>
-
-<script>
-document.addEventListener("contextmenu", function(e){
-  e.preventDefault();
-}, false);
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    cargarEtiquetasDesdeCSV();
-});
-
-async function cargarEtiquetasDesdeCSV() {
-    const urlCSV = 'https://raw.githubusercontent.com/dietetica/productos/main/etiquetas';
-    try {
-        const respuesta = await fetch(urlCSV);
-        const texto = await respuesta.text();
-
-        const lineas = texto.trim().split('\n');
-        const etiquetas = lineas.map(l => l.trim());
-
-        const contenedor = document.getElementById('tags-container');
-        contenedor.innerHTML = '';
-
-        etiquetas.forEach(etiqueta => {
-            const boton = document.createElement('button');
-            boton.className = 'tag';
-            boton.textContent = etiqueta;
-            contenedor.appendChild(boton);
-        });
-
-        inicializarEventosTags();
-
-    } catch (error) {
-        console.error('Error al cargar las etiquetas:', error);
-    }
-}
-
-function inicializarEventosTags() {
-    const tagsContainer = document.querySelector('.tags-container');
-    const inputFiltro = document.getElementById('filter-input');
-
-    // Eliminar botón toggle si existe
-    const oldToggle = document.getElementById('toggle-tags');
-    if (oldToggle) oldToggle.remove();
-
-    // Crear botón toggle
-    const toggleBtn = document.createElement('button');
-    toggleBtn.className = 'tag toggle-tag';
-    toggleBtn.textContent = '+';
-    toggleBtn.id = 'toggle-tags';
-    tagsContainer.appendChild(toggleBtn);
-
-    // Recolectar tags (excluye toggle por ahora)
-    let tags = Array.from(tagsContainer.querySelectorAll('.tag')).filter(tag => tag.id !== 'toggle-tags');
-
-    function calcularLineas() {
-        // Resetear estado
-        tagsContainer.classList.remove('expandido');
-        tags.forEach(tag => tag.style.display = 'inline-block');
-        toggleBtn.style.display = 'inline-block';
-
-        // Forzar cálculo de layout
-        void tagsContainer.offsetHeight;
-
-        const containerWidth = tagsContainer.offsetWidth;
-        const tagElements = tags.map(tag => ({
-            element: tag,
-            width: tag.offsetWidth + 6.5 + 1 // width + gap + changui
-        }));
-
-        const toggleWidth = toggleBtn.offsetWidth + 6.5;
-        let lines = [[], []];
-        let lineWidths = [0, 0];
-        let remainingTags = [...tagElements];
-        let allTagsVisible = true;
-
-        // Llenar primera línea
-        while (remainingTags.length > 0 && lineWidths[0] + remainingTags[0].width <= containerWidth) {
-            lines[0].push(remainingTags[0]);
-            lineWidths[0] += remainingTags[0].width;
-            remainingTags.shift();
-        }
-
-        // Llenar segunda línea (incluyendo el botón si es necesario)
-        if (remainingTags.length > 0) {
-            // Intentar agregar el botón a la segunda línea
-            const lastLineWithButton = lineWidths[1] + toggleWidth <= containerWidth;
-
-            // Calcular espacio restante
-            let remainingWidth = containerWidth - lineWidths[1];
-
-            // Agregar tags que quepan
-            while (remainingTags.length > 0 && lineWidths[1] + remainingTags[0].width <= containerWidth) {
-                lines[1].push(remainingTags[0]);
-                lineWidths[1] += remainingTags[0].width;
-                remainingTags.shift();
-            }
-
-            // Si quedan tags, mostrar el botón
-            if (remainingTags.length > 0 || !lastLineWithButton) {
-                allTagsVisible = false;
-                // Retroceder tags hasta que quepa el botón
-                while (lineWidths[1] + toggleWidth > containerWidth && lines[1].length > 0) {
-                    const removedTag = lines[1].pop();
-                    lineWidths[1] -= removedTag.width;
-                    remainingTags.unshift(removedTag);
-                }
-            }
-        }
-
-        // Aplicar visibilidad
-        tags.forEach(tag => {
-            const isVisible = lines.flat().some(item => item.element === tag);
-            tag.style.display = isVisible ? 'inline-block' : 'none';
-        });
-
-        // Configurar botón toggle
-        toggleBtn.textContent = allTagsVisible ? '' : '+';
-        toggleBtn.style.display = allTagsVisible ? 'none' : 'inline-block';
-    }
-
-    function expandirTags() {
-        tagsContainer.classList.add('expandido');
-        tags.forEach(tag => tag.style.display = 'inline-block');
-        toggleBtn.textContent = '-';
-    }
-
-    function colapsarTags() {
-        tagsContainer.classList.remove('expandido');
-        calcularLineas();
-    }
-
-    toggleBtn.onclick = () => {
-        const expandido = toggleBtn.textContent === '+';
-        if (expandido) expandirTags();
-        else colapsarTags();
-    };
-
-    tags.forEach(tag => {
-        tag.addEventListener('click', () => {
-            // Remover clase selected de todos los tags primero
-            tags.forEach(t => t.classList.remove('selected'));
-
-            // Alternar selección solo si el tag coincide con el input
-            if (inputFiltro.value === tag.textContent) {
-                inputFiltro.value = '';
-            } else {
-                inputFiltro.value = tag.textContent;
-                tag.classList.add('selected');
-            }
-
-            filtrarProductos();
-        });
-    });
-
-    inputFiltro.addEventListener('input', () => {
-        // Solo deseleccionar tags si el usuario está escribiendo (no cuando se establece por tag)
-        if (!inputFiltro.dataset.porTag) {
-            tags.forEach(t => t.classList.remove('selected'));
-        }
-        delete inputFiltro.dataset.porTag;
-
-        filtrarProductos();
-        document.getElementById('clear-filter').style.display = inputFiltro.value ? 'block' : 'none';
-    });
-
-    // Ejecutar al inicio y al redimensionar
-    const recalcular = () => requestAnimationFrame(calcularLineas);
-    recalcular();
-    window.addEventListener('resize', recalcular);
-}
-
-</script>
-
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
 </body>
 </html>

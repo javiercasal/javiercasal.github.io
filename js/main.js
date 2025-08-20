@@ -1,11 +1,47 @@
-// Ejecutar una vez que el documento esté listo
+// Impide que aparezca el menú contextual (clic derecho) del navegador
+document.addEventListener("contextmenu", function(e) {
+    e.preventDefault();
+}, false);
+
+// ===== FUNCIONES DE INICIALIZACIÓN =====
+
+// Se ejecuta una vez que el documento esté listo
 document.addEventListener('DOMContentLoaded', () => {
     cargarYMostrarProductos();
+    cargarEtiquetasDesdeCSV();
+    inicializarSistemaDeFiltrado();
 });
 
-/**
- * Carga el archivo CSV desde GitHub, lo parsea y muestra los productos
- */
+// ===== FUNCIONES AUXILIARES/HELPERS =====
+
+// Normaliza acentos, diéresis, tildes, eñes, etc.
+function normalizar(str) {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2580-\u27BF]|\uD83E[\uDD10-\uDDFF]|🫘/g, '')
+    .toLowerCase();
+}
+
+// Formatear número como moneda argentina
+function formatearNumero(valor) {
+  const numero = parseInt(valor, 10);
+  return '$' + numero.toLocaleString('es-AR');
+}
+
+// Asegurarse de que el input de búsqueda esté vacío al cargar la página
+function resetInputValue(inputElement) {
+    inputElement.value = '';
+}
+
+// Deseleccionar todos los tags
+function deselectAllTags() {
+    document.querySelectorAll('.tags-container .tag:not(.toggle-tag)').forEach(tag => {
+        tag.classList.remove('selected');
+    });
+}
+
+// ===== FUNCIONES PRINCIPALES =====
+
+// Carga el archivo CSV desde GitHub, lo parsea y muestra los productos
 async function cargarYMostrarProductos() {
     try {
         const urlCSV = 'https://raw.githubusercontent.com/dieteticaaxelyjavi/productos/main/lista.csv';
@@ -20,11 +56,7 @@ async function cargarYMostrarProductos() {
     }
 }
 
-/**
- * Convierte el contenido CSV en un array de objetos
- * @param {string} csv - Texto plano del archivo CSV
- * @returns {Array<Object>} - Lista de productos
- */
+// Convierte el texto de un CSV en un array de objetos
 function parsearCSV(csv) {
     const csvSeparator = ',';
     const filas = csv.split('\n').filter(fila => fila.trim() !== '');
@@ -43,10 +75,50 @@ function parsearCSV(csv) {
     });
 }
 
-/**
- * Muestra la lista de productos en el HTML
- * @param {Array<Object>} productos
- */
+// Filtra los productos por texto ingresado en el input
+function filtrarProductos() {
+    const texto = normalizar(document.getElementById('filter-input').value);
+    const productos = document.querySelectorAll('.producto-item');
+    let hayCoincidencias = false;
+
+    productos.forEach(item => {
+        const titulo = normalizar(item.querySelector('.producto-titulo').textContent);
+        const descripcion = normalizar(item.querySelector('.producto-descripcion').textContent);
+        const tags = normalizar(item.querySelector('.producto-tags').textContent);
+
+        const visible = titulo.includes(texto) || descripcion.includes(texto) || tags.includes(texto);
+        item.style.display = visible ? '' : 'none';
+
+        if (visible) hayCoincidencias = true;
+    });
+
+    mostrarMensajeSinResultados(!hayCoincidencias);
+
+    const clearBtn = document.getElementById('clear-filter');
+    clearBtn.style.display = document.getElementById('filter-input').value ? 'block' : 'none';
+}
+
+// Carga las imágenes cuando están por entrar en pantalla
+function activarLazyLoad() {
+    const imagenes = document.querySelectorAll('img.lazy');
+
+    const observer = new IntersectionObserver((entradas, observer) => {
+        entradas.forEach(entrada => {
+            if (entrada.isIntersecting) {
+                const img = entrada.target;
+                img.src = img.getAttribute('data-src');
+                img.classList.remove('lazy');
+                observer.unobserve(img);
+            }
+        });
+    });
+
+    imagenes.forEach(img => observer.observe(img));
+}
+
+// ===== FUNCIONES DE UI/INTERFAZ =====
+
+// Muestra la lista de productos en el HTML
 function mostrarProductos(productos) {
     const contenedor = document.querySelector('.productos-lista');
     contenedor.innerHTML = ''; // Limpiar contenido anterior
@@ -212,46 +284,7 @@ function mostrarProductos(productos) {
     });
 }
 
-/**
- * Filtra los productos por texto ingresado en el input
- */
-function filtrarProductos() {
-    const texto = normalizar(document.getElementById('filter-input').value);
-    const productos = document.querySelectorAll('.producto-item');
-    let hayCoincidencias = false;
-
-    productos.forEach(item => {
-        const titulo = normalizar(item.querySelector('.producto-titulo').textContent);
-        const descripcion = normalizar(item.querySelector('.producto-descripcion').textContent);
-        const tags = normalizar(item.querySelector('.producto-tags').textContent);
-
-        const visible = titulo.includes(texto) || descripcion.includes(texto) || tags.includes(texto);
-        item.style.display = visible ? '' : 'none';
-
-        if (visible) hayCoincidencias = true;
-    });
-
-    mostrarMensajeSinResultados(!hayCoincidencias);
-
-    const clearBtn = document.getElementById('clear-filter');
-    clearBtn.style.display = document.getElementById('filter-input').value ? 'block' : 'none';
-}
-
-/**
- * Procesa los textos para hacer comparaciones más inclusivas,
- * especialmente cuando se trata de acentos, diéresis, tildes, eñes, etc.
- * @param {string} str
- */
-function normalizar(str) {
-    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2580-\u27BF]|\uD83E[\uDD10-\uDDFF]|🫘/g, '')
-    .toLowerCase();
-}
-
-/**
- * Muestra u oculta el mensaje de 'sin resultados'
- * @param {boolean} mostrar
- */
+// Muestra u oculta el mensaje de 'Sin resultados'
 function mostrarMensajeSinResultados(mostrar) {
     const contenedor = document.querySelector('.productos-lista');
     let mensaje = document.getElementById('no-results-message');
@@ -290,78 +323,225 @@ function mostrarMensajeSinResultados(mostrar) {
     }
 }
 
-/**
- * Carga las imágenes cuando están por entrar en pantalla
- */
-function activarLazyLoad() {
-    const imagenes = document.querySelectorAll('img.lazy');
+// ===== FUNCIONES DE CONFIGURACIÓN DEL SISTEMA DE FILTRADO =====
 
-    const observer = new IntersectionObserver((entradas, observer) => {
-        entradas.forEach(entrada => {
-            if (entrada.isIntersecting) {
-                const img = entrada.target;
-                img.src = img.getAttribute('data-src');
-                img.classList.remove('lazy');
-                observer.unobserve(img);
-            }
-        });
-    });
-
-    imagenes.forEach(img => observer.observe(img));
+// Configura el filtro de búsqueda y el botón de borrado del input de búsqueda
+async function inicializarSistemaDeFiltrado() {
+    const inputFiltro = document.getElementById('filter-input');
+    resetInputValue(inputFiltro);
+    const { inputWrapper, clearBtn } = createInputWrapperWithClearButton(inputFiltro);
+    setupInputEvents(inputFiltro, clearBtn);
+    setupClearButtonEvents(inputFiltro, clearBtn);
+    const toggleBtn = createToggleButton();
 }
 
-// Asignar eventos al cargar el DOM
-document.addEventListener('DOMContentLoaded', () => {
-    const inputFiltro = document.getElementById('filter-input');
-
-    // Asegurarse de que el input esté vacío al cargar la página
-    inputFiltro.value = '';
-
-    // Crear botón de borrar dentro del input-wrapper
+// Crear un wrapper para el input y un botón de limpieza dentro del wrapper
+function createInputWrapperWithClearButton(inputElement) {
     const inputWrapper = document.createElement('div');
-    inputWrapper.style.position = 'relative';
-    inputWrapper.style.display = 'flex';
-    inputWrapper.style.alignItems = 'center';
+    inputWrapper.className = 'filter-input-wrapper';
 
-    inputFiltro.parentNode.insertBefore(inputWrapper, inputFiltro);
-    inputWrapper.appendChild(inputFiltro);
+    // Reemplazar el input con el wrapper que contiene el input
+    inputElement.parentNode.insertBefore(inputWrapper, inputElement);
+    inputWrapper.appendChild(inputElement);
 
+    // Crear botón de limpieza
     const clearBtn = document.createElement('span');
     clearBtn.id = 'clear-filter';
     clearBtn.innerHTML = '&times;';
     clearBtn.title = 'Borrar búsqueda';
-    clearBtn.style.position = 'absolute';
-    clearBtn.style.right = '10px';
-    clearBtn.style.cursor = 'pointer';
-    clearBtn.style.fontSize = '1.2em';
-    clearBtn.style.color = '#777';
     clearBtn.style.display = 'none';
 
     inputWrapper.appendChild(clearBtn);
 
-    inputFiltro.addEventListener('input', () => {
-        filtrarProductos();
-        clearBtn.style.display = inputFiltro.value ? 'block' : 'none';
-    });
+    return { inputWrapper, clearBtn };
+}
 
-    clearBtn.addEventListener('click', () => {
-        inputFiltro.value = '';
-        // Deseleccionar todos los tags
-        document.querySelectorAll('.tags-container .tag:not(.toggle-tag)').forEach(tag => {
-            tag.classList.remove('selected');
-        });
+// Configurar eventos del input de búsqueda
+function setupInputEvents(inputElement, clearButton) {
+    inputElement.addEventListener('input', () => {
         filtrarProductos();
-        clearBtn.style.display = 'none';
+        clearButton.style.display = inputElement.value ? 'block' : 'none';
     });
+}
 
+// Configurar eventos del botón de limpieza
+function setupClearButtonEvents(inputElement, clearButton) {
+    clearButton.addEventListener('click', () => {
+        inputElement.value = '';
+        deselectAllTags();
+        filtrarProductos();
+        clearButton.style.display = 'none';
+    });
+}
+
+// Crear botón toggle
+function createToggleButton() {
     const toggleBtn = document.createElement('button');
     toggleBtn.className = 'tag toggle-tag';
     toggleBtn.textContent = '+';
     toggleBtn.id = 'toggle-tags';
+    return toggleBtn;
+}
 
-});
+// ===== FUNCIONES DE GESTIÓN DE ETIQUETAS =====
 
-function formatearNumero(valor) {
-  const numero = parseInt(valor, 10);
-  return '$' + numero.toLocaleString('es-AR');
+async function cargarEtiquetasDesdeCSV() {
+    const urlCSV = 'https://raw.githubusercontent.com/dietetica/productos/main/etiquetas';
+    try {
+        const respuesta = await fetch(urlCSV);
+        const texto = await respuesta.text();
+
+        const lineas = texto.trim().split('\n');
+        const etiquetas = lineas.map(l => l.trim());
+
+        const contenedor = document.getElementById('tags-container');
+        contenedor.innerHTML = '';
+
+        etiquetas.forEach(etiqueta => {
+            const boton = document.createElement('button');
+            boton.className = 'tag';
+            boton.textContent = etiqueta;
+            contenedor.appendChild(boton);
+        });
+
+        inicializarEventosTags();
+
+    } catch (error) {
+        console.error('Error al cargar las etiquetas:', error);
+    }
+}
+
+function inicializarEventosTags() {
+    const tagsContainer = document.querySelector('.tags-container');
+    const inputFiltro = document.getElementById('filter-input');
+
+    // Eliminar botón toggle si existe
+    const oldToggle = document.getElementById('toggle-tags');
+    if (oldToggle) oldToggle.remove();
+
+    // Crear botón toggle
+    const toggleBtn = document.createElement('button');
+    toggleBtn.className = 'tag toggle-tag';
+    toggleBtn.textContent = '+';
+    toggleBtn.id = 'toggle-tags';
+    tagsContainer.appendChild(toggleBtn);
+
+    // Recolectar tags (excluye toggle por ahora)
+    let tags = Array.from(tagsContainer.querySelectorAll('.tag')).filter(tag => tag.id !== 'toggle-tags');
+
+    function calcularLineas() {
+        // Resetear estado
+        tagsContainer.classList.remove('expandido');
+        tags.forEach(tag => tag.style.display = 'inline-block');
+        toggleBtn.style.display = 'inline-block';
+
+        // Forzar cálculo de layout
+        void tagsContainer.offsetHeight;
+
+        const containerWidth = tagsContainer.offsetWidth;
+        const tagElements = tags.map(tag => ({
+            element: tag,
+            width: tag.offsetWidth + 6.5 + 1 // width + gap + changui
+        }));
+
+        const toggleWidth = toggleBtn.offsetWidth + 6.5;
+        let lines = [[], []];
+        let lineWidths = [0, 0];
+        let remainingTags = [...tagElements];
+        let allTagsVisible = true;
+
+        // Llenar primera línea
+        while (remainingTags.length > 0 && lineWidths[0] + remainingTags[0].width <= containerWidth) {
+            lines[0].push(remainingTags[0]);
+            lineWidths[0] += remainingTags[0].width;
+            remainingTags.shift();
+        }
+
+        // Llenar segunda línea (incluyendo el botón si es necesario)
+        if (remainingTags.length > 0) {
+            // Intentar agregar el botón a la segunda línea
+            const lastLineWithButton = lineWidths[1] + toggleWidth <= containerWidth;
+
+            // Calcular espacio restante
+            let remainingWidth = containerWidth - lineWidths[1];
+
+            // Agregar tags que quepan
+            while (remainingTags.length > 0 && lineWidths[1] + remainingTags[0].width <= containerWidth) {
+                lines[1].push(remainingTags[0]);
+                lineWidths[1] += remainingTags[0].width;
+                remainingTags.shift();
+            }
+
+            // Si quedan tags, mostrar el botón
+            if (remainingTags.length > 0 || !lastLineWithButton) {
+                allTagsVisible = false;
+                // Retroceder tags hasta que quepa el botón
+                while (lineWidths[1] + toggleWidth > containerWidth && lines[1].length > 0) {
+                    const removedTag = lines[1].pop();
+                    lineWidths[1] -= removedTag.width;
+                    remainingTags.unshift(removedTag);
+                }
+            }
+        }
+
+        // Aplicar visibilidad
+        tags.forEach(tag => {
+            const isVisible = lines.flat().some(item => item.element === tag);
+            tag.style.display = isVisible ? 'inline-block' : 'none';
+        });
+
+        // Configurar botón toggle
+        toggleBtn.textContent = allTagsVisible ? '' : '+';
+        toggleBtn.style.display = allTagsVisible ? 'none' : 'inline-block';
+    }
+
+    function expandirTags() {
+        tagsContainer.classList.add('expandido');
+        tags.forEach(tag => tag.style.display = 'inline-block');
+        toggleBtn.textContent = '-';
+    }
+
+    function colapsarTags() {
+        tagsContainer.classList.remove('expandido');
+        calcularLineas();
+    }
+
+    toggleBtn.onclick = () => {
+        const expandido = toggleBtn.textContent === '+';
+        if (expandido) expandirTags();
+        else colapsarTags();
+    };
+
+    tags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            // Remover clase selected de todos los tags primero
+            tags.forEach(t => t.classList.remove('selected'));
+
+            // Alternar selección solo si el tag coincide con el input
+            if (inputFiltro.value === tag.textContent) {
+                inputFiltro.value = '';
+            } else {
+                inputFiltro.value = tag.textContent;
+                tag.classList.add('selected');
+            }
+
+            filtrarProductos();
+        });
+    });
+
+    inputFiltro.addEventListener('input', () => {
+        // Solo deseleccionar tags si el usuario está escribiendo (no cuando se establece por tag)
+        if (!inputFiltro.dataset.porTag) {
+            tags.forEach(t => t.classList.remove('selected'));
+        }
+        delete inputFiltro.dataset.porTag;
+
+        filtrarProductos();
+        document.getElementById('clear-filter').style.display = inputFiltro.value ? 'block' : 'none';
+    });
+
+    // Ejecutar al inicio y al redimensionar
+    const recalcular = () => requestAnimationFrame(calcularLineas);
+    recalcular();
+    window.addEventListener('resize', recalcular);
 }

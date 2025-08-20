@@ -63,9 +63,11 @@ body {
     z-index: 1000; /* Asegura que esté por encima de otros elementos */
 }
 
-/* Contenedor relativo para posicionar el icono de limpiar */
+/* Contenedor del input de búsqueda */
 .filter-input-wrapper {
     position: relative;
+    display: flex;
+    align-items: center;
     width: 100%;
 }
 
