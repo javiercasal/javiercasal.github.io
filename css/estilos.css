@@ -1,3 +1,4 @@
+/* === FUENTES PERSONALIZADAS === */
 @font-face {
   font-family: 'Lexend';
   src: url('fonts/Lexend-Regular.woff2') format('woff2');
@@ -7,15 +8,20 @@
 
 /* === VARIABLES GLOBALES === */
 :root {
+    /* Colores base */
     --color-blanco: white;
     --color-fondo: #fefdf9;
-    --color-negro-oliva: #333;
+
+    /* Escala de grises (ordenados de oscuro a claro) */
     --color-casi-negro: #222;
+    --color-negro-oliva: #333;
     --color-secundario: #555;
     --color-gris-clarito: #777;
     --color-gris-mas-clarito: #ccc;
     --color-gris-muy-clarito: #ddd;
     --color-gris-muy-muy-clarito: #eee;
+
+    /* Colores semánticos */
     --color-azul-francia: #0056b3;
     --color-rojo-ofertas: #ff4444;
 }
@@ -26,7 +32,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: var(--color-fondo);
-    user-select: none;
+    user-select: none; /* Evita selección de texto en la interfaz táctil */
 }
 
 /* === HEADER === */
@@ -38,12 +44,13 @@ body {
 }
 
 /* === LOGO === */
+/* Estilos para el logotipo de la aplicación */
 .logo {
     width: 130px;
     height: auto;
     display: block;
     margin: 0 auto;
-    padding: 10px 10px 10px 10px;
+    padding: 10px;
 }
 
 /* === FILTRO DE BÚSQUEDA === */
@@ -53,14 +60,16 @@ body {
     border-bottom: 1px solid var(--color-gris-muy-clarito);
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
 }
 
+/* Contenedor relativo para posicionar el icono de limpiar */
 .filter-input-wrapper {
     position: relative;
     width: 100%;
 }
 
+/* Campo de entrada de búsqueda */
 .filter-input-wrapper input {
     width: 100%;
     padding: 10px 40px 10px 10px; /* Espacio a la derecha para la cruz */
@@ -70,6 +79,7 @@ body {
     font-family: 'Lexend', Arial, sans-serif;
 }
 
+/* Botón para limpiar el campo de búsqueda */
 #clear-filter {
     position: absolute;
     padding: 15px 10px 15px 20px;
@@ -79,8 +89,8 @@ body {
     font-size: 1.2em;
     color: var(--color-gris-clarito);
     cursor: pointer;
-    display: none;
-    user-select: none;
+    display: none; /* Oculto por defecto */
+    user-select: none; /* Evita selección accidental */
 }
 
 /* === TAGS === */
@@ -88,18 +98,20 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 6.5px;
-    padding: 10px 0 10px 0;
-    line-height: 1.5em; /* Altura consistente para cada línea */
+    padding: 10px 0; /* Simplificado de 10px 0 10px 0 */
+    line-height: 1.5em;
     max-height: calc(3em + 19px); /* 2 líneas (1.5em cada una) + padding */
     overflow: hidden;
     transition: max-height 0.3s ease;
     align-content: flex-start; /* Alinear líneas arriba */
 }
 
+/* Estado expandido del contenedor de etiquetas */
 .tags-container.expandido {
     max-height: none;
 }
 
+/* Estilos base para cada etiqueta individual */
 .tag {
     background-color: var(--color-gris-muy-muy-clarito);
     color: var(--color-negro-oliva);
@@ -118,10 +130,6 @@ body {
     text-overflow: ellipsis;
 }
 
-.tag:hover {
-    background-color: var(--color-gris-muy-clarito);
-}
-
 /* === TAGS SELECCIONADOS === */
 .tag.selected {
     background-color: var(--color-azul-francia);
@@ -129,11 +137,7 @@ body {
     border-color: var(--color-azul-francia);
 }
 
-.tag.selected:hover {
-    background-color: var(--color-azul-francia);
-    opacity: 0.9;
-}
-
+/* Estado de etiqueta toggle seleccionada (estilo secundario) */
 .tag.toggle-tag.selected {
     background-color: var(--color-gris-muy-muy-clarito);
     color: var(--color-negro-oliva);
@@ -147,14 +151,16 @@ body {
     margin: 0;
 }
 
+/* Elemento individual de producto */
 .producto-item {
     display: flex;
-    align-items: center; /* Añade esta línea para centrado vertical */
+    align-items: center;
     padding: 10px;
     border-bottom: 1px solid var(--color-gris-muy-clarito);
     background: var(--color-fondo);
 }
 
+/* Contenedor de la miniatura del producto */
 .producto-thumbnail {
     position: relative;
     margin-right: 10px;
@@ -164,6 +170,7 @@ body {
     cursor: pointer; /* Asegurar que la imagen del producto sea clickeable */
 }
 
+/* Imagen de la miniatura del producto */
 .producto-thumbnail img {
     height: 100%;
     width: 100%;
@@ -173,6 +180,7 @@ body {
 }
 
 /* === OVERLAY DE IMAGEN A PANTALLA COMPLETA === */
+/* Fondo oscuro para visualización de imagen completa */
 .image-overlay {
     position: fixed;
     top: 0;
@@ -190,11 +198,13 @@ body {
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
+/* Estado activo del overlay */
 .image-overlay.active {
     opacity: 1;
     visibility: visible;
 }
 
+/* Imagen dentro del overlay */
 .image-overlay img {
     max-width: 90%;
     max-height: 90%;
@@ -204,6 +214,42 @@ body {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Sutil sombra para mejor contraste */
 }
 
+/* === BOTÓN DE CERRAR OVERLAY === */
+.close-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 2001;
+    transition: background-color 0.3s ease;
+    border: none;
+}
+
+/* Creación de icono "X" con pseudo-elementos */
+.close-button::before, .close-button::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background-color: white;
+}
+
+.close-button::before {
+    transform: rotate(45deg);
+}
+
+.close-button::after {
+    transform: rotate(-45deg);
+}
+
+/* Contenedor de información del producto */
 .producto-contenido {
     position: relative;
     max-height: 1000px;
@@ -214,6 +260,7 @@ body {
     gap: 7px;
 }
 
+/* Etiqueta de oferta en producto */
 .oferta-label {
     position: absolute;
     top: 4px;
@@ -229,20 +276,16 @@ body {
     box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
-/* Opcional: Efecto al pasar el ratón */
-.oferta-label:hover {
-    transform: rotate(-15deg) scale(1.1);
-    opacity: 1;
-}
-
+/* Título del producto */
 .producto-titulo {
     margin: 0;
     margin-bottom: 0px;
     font-size: 0.85em;
-    line-height: 1.2; /* Mejor legibilidad */
+    line-height: 1.2;
     color: var(--color-casi-negro);
 }
 
+/* Logo sin TACC en línea con texto */
 .logo-sin-tacc-inline {
     width: 15px;
     margin-left: 3px;
@@ -251,44 +294,51 @@ body {
     opacity: 100%;
 }
 
+/* Logo orgánico en línea con texto */
 .logo-organico-inline {
     width: 15px;
     margin-left: 3px;
     vertical-align: text-bottom;
 }
 
+/* Descripción del producto */
 .producto-descripcion {
     font-size: 0.75em;
     color: var(--color-gris-clarito);
-    margin: 0px 0; /* Espaciado más equilibrado */
-    line-height: 1.2; /* Mejor legibilidad */
+    margin: 0px 0;
+    line-height: 1.2;
 }
 
+/* Precio del producto */
 .producto-precio {
     font-size: 0.85em;
     color: var(--color-gris-clarito);
-    margin: 0px 0 0 0; /* Espaciado más equilibrado */
-    line-height: 1.2; /* Mejor legibilidad */
+    margin: 0px 0 0 0;
+    line-height: 1.2;
 }
 
+/* Unidad de medida del producto */
 .producto-unidad {
     font-size: 0.85em;
     margin-left: 5px;
-    line-height: 1; /* Mejor legibilidad */
+    line-height: 1;
     color: var(--color-secundario);
 }
 
+/* Etiquetas ocultas del producto (usadas para filtrado) */
 .producto-tags {
     display: none;
 }
 
 /* === PRODUCTOS SIN STOCK === */
+/* Estado de producto sin stock */
 .producto-item.sin-stock {
     position: relative;
     opacity: 0.6;
     overflow: hidden;
 }
 
+/* Patrón visual para productos sin stock */
 .producto-item.sin-stock::before {
     content: "";
     position: absolute;
@@ -308,6 +358,7 @@ body {
     pointer-events: none;
 }
 
+/* Texto repetitivo indicando "SIN STOCK" */
 .producto-item.sin-stock::after {
     content: "SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK";
     position: absolute;
@@ -326,10 +377,12 @@ body {
     text-shadow: 1px 1px 2px rgba(0,0,0,0.15);
 }
 
+/* Efecto en imagen para productos sin stock */
 .producto-item.sin-stock .producto-thumbnail img {
     filter: grayscale(100%) brightness(1.1);
 }
 
+/* Estilos de texto para productos sin stock */
 .producto-item.sin-stock .producto-titulo,
 .producto-item.sin-stock .producto-descripcion,
 .producto-item.sin-stock .producto-precio {
@@ -356,11 +409,7 @@ body {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.fab:hover {
-    background-color: var(--color-azul-francia);
-    transform: scale(1.1);
-}
-
+/* Imagen dentro del botón flotante */
 .fab img {
     width: 70px;
     height: 70px;
@@ -368,7 +417,8 @@ body {
     border-radius: 50%;
 }
 
-/* Solución para el padding en Safari (iPhone) */
+/* === SOLUCIÓN PARA SAFARI (IPHONE) === */
+/* Hack Safari iOS: añade padding extra para evitar corte de las últimas tags */
 @supports (-webkit-touch-callout: none) {
   .tags-container {
     padding-bottom: 20px !important; /* 10px normal + 10px extra para Safari */
@@ -377,42 +427,4 @@ body {
   .tags-container.expandido {
     padding-bottom: 10px !important; /* Volver al valor normal cuando está expandido */
   }
-}
-
-/* Estilos para el botón de cerrar */
-.close-button {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index: 2001;
-    transition: background-color 0.3s ease;
-    border: none;
-}
-
-.close-button:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-}
-
-.close-button::before, .close-button::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 2px;
-    background-color: white;
-}
-
-.close-button::before {
-    transform: rotate(45deg);
-}
-
-.close-button::after {
-    transform: rotate(-45deg);
 }
