@@ -14,11 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ===== FUNCIONES AUXILIARES/HELPERS =====
 
-// Normaliza acentos, diéresis, tildes, eñes, etc.
+// Normaliza acentos, diéresis, tildes, eñes, etc. y hace trim
 function normalizar(str) {
-    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2580-\u27BF]|\uD83E[\uDD10-\uDDFF]|🫘/g, '')
-    .toLowerCase();
+    return str
+        .trim() // Elimina espacios al inicio y final
+        .normalize('NFD') // Descompone los caracteres Unicode en sus componentes básicos
+        .replace(/[\u0300-\u036f]/g, '') // Elimina signos diacríticos (acentos, tildes, etc.)
+        .replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2580-\u27BF]|\uD83E[\uDD10-\uDDFF]|🫘/g, '') // Elimina emojis, símbolos y caracteres especiales
+        .toLowerCase();
 }
 
 // Formatear número como moneda argentina
