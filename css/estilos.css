@@ -305,7 +305,7 @@ body {
 
 /* Descripción del producto */
 .producto-descripcion {
-    font-size: 0.75em;
+    font-size: 0.85em;
     color: var(--color-gris-clarito);
     margin: 0px 0;
     line-height: 1.2;
