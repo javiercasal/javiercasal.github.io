@@ -7,7 +7,9 @@ document.addEventListener("contextmenu", function(e) {
 
 // Se ejecuta una vez que el documento esté listo
 document.addEventListener('DOMContentLoaded', () => {
-    cargarYMostrarProductos();
+    cargarYMostrarProductos().then(() => {
+        inicializarAutocomplete();
+    });
     cargarEtiquetasDesdeCSV();
     inicializarSistemaDeFiltrado();
 });
@@ -121,10 +123,15 @@ function activarLazyLoad() {
 
 // ===== FUNCIONES DE UI/INTERFAZ =====
 
+let nombresProductos = [];
+
 // Muestra la lista de productos en el HTML
 function mostrarProductos(productos) {
     const contenedor = document.querySelector('.productos-lista');
     contenedor.innerHTML = ''; // Limpiar contenido anterior
+
+    // Almacenar los nombres de los productos para el autocomplete de la búsqueda
+    nombresProductos = productos.map(p => p.titulo.trim()).filter(Boolean);
 
     // Crear overlay para imágenes a pantalla completa
     const overlay = document.createElement('div');
@@ -547,4 +554,60 @@ function inicializarEventosTags() {
     const recalcular = () => requestAnimationFrame(calcularLineas);
     recalcular();
     window.addEventListener('resize', recalcular);
+}
+
+
+
+
+
+
+function inicializarAutocomplete() {
+    const inputFiltro = document.getElementById('filter-input');
+    const suggestionsContainer = document.createElement('div');
+    suggestionsContainer.className = 'autocomplete-suggestions';
+    suggestionsContainer.style.display = 'none';
+    
+    // Insertar después del input wrapper
+    inputFiltro.parentNode.parentNode.appendChild(suggestionsContainer);
+
+    inputFiltro.addEventListener('input', function() {
+        const value = this.value.trim().toLowerCase();
+        suggestionsContainer.innerHTML = '';
+        suggestionsContainer.style.display = 'none';
+
+        if (value.length < 2) return; // Mostrar sugerencias solo después de 2 caracteres
+
+        const suggestions = nombresProductos.filter(nombre =>
+            normalizar(nombre).includes(normalizar(value))
+        ).slice(0, 5); // Máximo 5 sugerencias
+
+        if (suggestions.length > 0) {
+            suggestionsContainer.style.display = 'block';
+            suggestions.forEach(suggestion => {
+                const div = document.createElement('div');
+                div.className = 'suggestion-item';
+                div.textContent = suggestion;
+                div.addEventListener('click', () => {
+                    inputFiltro.value = suggestion;
+                    filtrarProductos();
+                    suggestionsContainer.style.display = 'none';
+                });
+                suggestionsContainer.appendChild(div);
+            });
+        }
+    });
+
+    // Ocultar sugerencias al hacer clic fuera
+    document.addEventListener('click', (e) => {
+        if (!suggestionsContainer.contains(e.target) && e.target !== inputFiltro) {
+            suggestionsContainer.style.display = 'none';
+        }
+    });
+
+    inputFiltro.addEventListener('blur', () => {
+        // Pequeño delay para permitir el clic en las sugerencias
+        setTimeout(() => {
+            suggestionsContainer.style.display = 'none';
+        }, 200);
+    });
 }
