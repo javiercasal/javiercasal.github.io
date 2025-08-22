@@ -3,37 +3,722 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Metadatos Open Graph -->
-    <meta property="og:title" content="Dietética Axel y Javi">
-    <meta property="og:description" content="🛵 Te llevamos el pedido a tu casa">
-    <meta property="og:image" content="https://dietetica.github.io/img/logo.png">
-    <meta property="og:image:width" content="606">
-    <meta property="og:image:height" content="606">
-    <meta property="og:site_name" content="Dietética Axel y Javi">
-    <meta property="og:url" content="https://dietetica.github.io/">
-    <meta property="og:type" content="website">
-
-    <!-- Metadatos adicionales para mejor SEO -->
-    <meta name="description" content="Dietética Axel y Javi - Productos naturales, orgánicos y sin TACC. Envíos a domicilio.">
-    <meta name="keywords" content="dietética, productos naturales, orgánicos, sin TACC, alimentos saludables">
-
-    <!-- Título -->
     <title>Dietética Axel y Javi | Alimentos amigos</title>
+    <style>
+        /* === FUENTES PERSONALIZADAS === */
+        @font-face {
+          font-family: 'Lexend';
+          src: url('fonts/Lexend-Regular.woff2') format('woff2');
+          font-weight: normal;
+          font-style: normal;
+        }
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="img/almendras.png">
+        /* === VARIABLES GLOBALES === */
+        :root {
+            /* Colores base */
+            --color-blanco: white;
+            --color-fondo: #fefdf9;
 
-    <!-- Preconexión para mejorar rendimiento -->
-    <link rel="preconnect" href="https://raw.githubusercontent.com">
+            /* Escala de grises (ordenados de oscuro a claro) */
+            --color-casi-negro: #222;
+            --color-negro-oliva: #333;
+            --color-secundario: #555;
+            --color-gris-clarito: #777;
+            --color-gris-mas-clarito: #ccc;
+            --color-gris-muy-clarito: #ddd;
+            --color-gris-muy-muy-clarito: #eee;
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="css/estilos.css">
+            /* Colores semánticos */
+            --color-azul-francia: #0056b3;
+            --color-rojo-ofertas: #ff4444;
+            
+            /* Colores WhatsApp */
+            --whatsapp-green: #25D366;
+            --whatsapp-light-green: #dcf8c6;
+            --whatsapp-dark-green: #128C7E;
+            --whatsapp-chat-bg: #ece5dd;
+        }
+
+        /* === ESTILOS GENERALES === */
+        body {
+            font-family: 'Lexend', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-fondo);
+            user-select: none; /* Evita selección de texto en la interfaz táctil */
+        }
+
+        /* === HEADER === */
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            background-color: var(--color-fondo);
+            border-bottom: 1px solid var(--color-gris-muy-clarito);
+            position: relative;
+        }
+
+        /* === LOGO === */
+        .logo {
+            width: 130px;
+            height: auto;
+            display: block;
+            padding: 10px;
+        }
+
+        /* === CARRITO ICONO === */
+        .cart-icon-container {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--whatsapp-green);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* === FILTRO DE BÚSQUEDA === */
+        .filter-container {
+            padding: 10px 10px 0 10px;
+            background: var(--color-fondo);
+            border-bottom: 1px solid var(--color-gris-muy-clarito);
+            position: sticky;
+            top: 0;
+            z-index: 1000; /* Asegura que esté por encima de otros elementos */
+        }
+
+        /* Contenedor del input de búsqueda */
+        .filter-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Campo de entrada de búsqueda */
+        .filter-input-wrapper input {
+            width: 100%;
+            padding: 10px 40px 10px 10px; /* Espacio a la derecha para la cruz */
+            font-size: 0.9em;
+            border: 1px solid var(--color-gris-mas-clarito);
+            border-radius: 5px;
+            font-family: 'Lexend', Arial, sans-serif;
+        }
+
+        /* Botón para limpiar el campo de búsqueda */
+        #clear-filter {
+            position: absolute;
+            padding: 15px 10px 15px 20px;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+            color: var(--color-gris-clarito);
+            cursor: pointer;
+            display: none; /* Oculto por defecto */
+            user-select: none; /* Evita selección accidental */
+        }
+
+        /* === AUTOCOMPLETE SUGERENCIAS === */
+        .autocomplete-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid var(--color-gris-mas-clarito);
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1001;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--color-gris-muy-muy-clarito);
+            font-size: 0.9em;
+        }
+
+        .suggestion-item:hover {
+            background-color: var(--color-gris-muy-muy-clarito);
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        /* === TAGS === */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6.5px;
+            padding: 10px 0; /* Simplificado de 10px 0 10px 0 */
+            line-height: 1.5em;
+            max-height: calc(3em + 19px); /* 2 líneas (1.5em cada una) + padding */
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            align-content: flex-start; /* Alinear líneas arriba */
+        }
+
+        /* Estado expandido del contenedor de etiquetas */
+        .tags-container.expandido {
+            max-height: none;
+        }
+
+        /* Estilos base para cada etiqueta individual */
+        .tag {
+            background-color: var(--color-gris-muy-muy-clarito);
+            color: var(--color-negro-oliva);
+            font-size: 0.8em;
+            border: 1px solid var(--color-gris-mas-clarito);
+            border-radius: 15px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            font-family: 'Lexend', sans-serif;
+            display: inline-block;
+            font-weight: normal;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* === TAGS SELECCIONADOS === */
+        .tag.selected {
+            background-color: var(--color-azul-francia);
+            color: var(--color-blanco);
+            border-color: var(--color-azul-francia);
+        }
+
+        /* Estado de etiqueta toggle seleccionada (estilo secundario) */
+        .tag.toggle-tag.selected {
+            background-color: var(--color-gris-muy-muy-clarito);
+            color: var(--color-negro-oliva);
+            border-color: var(--color-gris-mas-clarito);
+        }
+
+        /* === PRODUCTOS === */
+        .productos-lista {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Elemento individual de producto */
+        .producto-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid var(--color-gris-muy-clarito);
+            background: var(--color-fondo);
+            position: relative;
+        }
+
+        /* Contenedor de la miniatura del producto */
+        .producto-thumbnail {
+            position: relative;
+            margin-right: 10px;
+            flex-shrink: 0;
+            width: 90px;
+            height: 90px;
+            cursor: pointer; /* Asegurar que la imagen del producto sea clickeable */
+        }
+
+        /* Imagen de la miniatura del producto */
+        .producto-thumbnail img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            display: block;
+        }
+
+        /* === OVERLAY DE IMAGEN A PANTALLA COMPLETA === */
+        /* Fondo oscuro para visualización de imagen completa */
+        .image-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        /* Estado activo del overlay */
+        .image-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Imagen dentro del overlay */
+        .image-overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            cursor: default;
+            border-radius: 15px; /* Mismo radio que las miniaturas */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Sutil sombra para mejor contraste */
+        }
+
+        /* === BOTÓN DE CERRAR OVERLAY === */
+        .close-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 2001;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+
+        /* Creación de icono "X" con pseudo-elementos */
+        .close-button::before, .close-button::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            background-color: white;
+        }
+
+        .close-button::before {
+            transform: rotate(45deg);
+        }
+
+        .close-button::after {
+            transform: rotate(-45deg);
+        }
+
+        /* Contenedor de información del producto */
+        .producto-contenido {
+            position: relative;
+            max-height: 1000px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centrado vertical del contenido */
+            height: 80px; /* Misma altura que la imagen */
+            gap: 7px;
+            flex: 1;
+        }
+
+        /* Etiqueta de oferta en producto */
+        .oferta-label {
+            position: absolute;
+            top: 4px;
+            left: -5px;
+            background-color: var(--color-rojo-ofertas);
+            color: var(--color-blanco);
+            font-weight: bold;
+            font-size: 0.5em;
+            padding: 2.5px 4px;
+            border-radius: 2px;
+            z-index: 2; /* Para que aparezca sobre la imagen */
+            opacity: 85%;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        /* Título del producto */
+        .producto-titulo {
+            margin: 0;
+            margin-bottom: 0px;
+            font-size: 0.85em;
+            line-height: 1.2;
+            color: var(--color-casi-negro);
+        }
+
+        /* Logo sin TACC en línea con texto */
+        .logo-sin-tacc-inline {
+            width: 15px;
+            margin-left: 3px;
+            margin-bottom: 0px;
+            vertical-align: text-bottom;
+            opacity: 100%;
+        }
+
+        /* Logo orgánico en línea con texto */
+        .logo-organico-inline {
+            width: 15px;
+            margin-left: 3px;
+            vertical-align: text-bottom;
+        }
+
+        /* Descripción del producto */
+        .producto-descripcion {
+            font-size: 0.85em;
+            color: var(--color-gris-clarito);
+            margin: 0px 0;
+            line-height: 1.2;
+        }
+
+        /* Precio del producto */
+        .producto-precio {
+            font-size: 0.85em;
+            color: var(--color-gris-clarito);
+            margin: 0px 0 0 0;
+            line-height: 1.2;
+        }
+
+        /* Unidad de medida del producto */
+        .producto-unidad {
+            font-size: 0.85em;
+            margin-left: 5px;
+            line-height: 1;
+            color: var(--color-secundario);
+        }
+
+        /* Etiquetas ocultas del producto (usadas para filtrado) */
+        .producto-tags {
+            display: none;
+        }
+
+        /* === BOTÓN AGREGAR AL CARRITO === */
+        .add-to-cart-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--whatsapp-green);
+            color: white;
+            border: none;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: var(--whatsapp-dark-green);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .add-to-cart-btn.added {
+            background-color: var(--whatsapp-dark-green);
+            transform: translateY(-50%) scale(1);
+        }
+
+        .add-to-cart-btn:disabled {
+            background-color: var(--color-gris-mas-clarito);
+            cursor: not-allowed;
+            transform: translateY(-50%) scale(1);
+        }
+
+        /* === PRODUCTOS SIN STOCK === */
+        /* Estado de producto sin stock */
+        .producto-item.sin-stock {
+            position: relative;
+            opacity: 0.6;
+            overflow: hidden;
+        }
+
+        /* Patrón visual para productos sin stock */
+        .producto-item.sin-stock::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 100%,
+                rgba(255,255,255,0.5) 100%,
+                rgba(255,255,255,0.5) 100%
+            );
+            background-size: 100% 4px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Texto repetitivo indicando "SIN STOCK" */
+        .producto-item.sin-stock::after {
+            content: "SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK   SIN STOCK";
+            position: absolute;
+            top: 50%;
+            left: 1%;
+            width: 100%;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            color: rgba(255, 0, 0, 0.2);
+            font-size: 1em;
+            font-weight: bold;
+            z-index: 1;
+            text-align: center;
+            pointer-events: none;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.15);
+        }
+
+        /* Efecto en imagen para productos sin stock */
+        .producto-item.sin-stock .producto-thumbnail img {
+            filter: grayscale(100%) brightness(1.1);
+        }
+
+        /* Estilos de texto para productos sin stock */
+        .producto-item.sin-stock .producto-titulo,
+        .producto-item.sin-stock .producto-descripcion,
+        .producto-item.sin-stock .producto-precio {
+            color: var(--color-gris-clarito);
+            position: relative;
+            z-index: 3; /* Para que el texto del producto quede sobre el fondo */
+        }
+
+        /* === BOTÓN FLOTANTE === */
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 70px;
+            height: 70px;
+            background-color: var(--color-blanco);
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            z-index: 1000;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Imagen dentro del botón flotante */
+        .fab img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* === SOLUCIÓN PARA SAFARI (IPHONE) === */
+        /* Hack Safari iOS: añade padding extra para evitar corte de las últimas tags */
+        @supports (-webkit-touch-callout: none) {
+          .tags-container {
+            padding-bottom: 20px !important; /* 10px normal + 10px extra para Safari */
+          }
+          
+          .tags-container.expandido {
+            padding-bottom: 10px !important; /* Volver al valor normal cuando está expandido */
+          }
+        }
+
+        /* === CARRITO DE COMPRAS === */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 2000;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 350px;
+            height: 100%;
+            background-color: white;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            z-index: 2001;
+        }
+
+        .cart-header {
+            padding: 20px;
+            background-color: var(--whatsapp-dark-green);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-title {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .cart-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .cart-item-price {
+            font-size: 14px;
+            color: var(--whatsapp-dark-green);
+            font-weight: 500;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .quantity-btn {
+            width: 25px;
+            height: 25px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .quantity-input {
+            width: 30px;
+            text-align: center;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 2px;
+        }
+
+        .remove-item {
+            color: #ff3b30;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 16px;
+        }
+
+        .cart-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-weight: 500;
+            font-size: 18px;
+        }
+
+        .checkout-btn {
+            background-color: var(--whatsapp-green);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background-color: var(--whatsapp-dark-green);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+        }
+
+        /* Cuando el carrito está abierto */
+        .cart-open .cart-sidebar {
+            right: 0;
+        }
+
+        .cart-open .cart-overlay {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <!-- Encabezado con logo -->
+    <!-- Encabezado con logo y carrito -->
     <header class="header">
         <img src="img/logo.png" alt="Logo de la Dietética Axel y Javi" class="logo">
+        <div class="cart-icon-container">
+            <div class="cart-icon" id="cartIcon">
+                🛒
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
     </header>
 
     <!-- Filtro de búsqueda -->
@@ -52,8 +737,260 @@
     <a href="https://api.whatsapp.com/send/?phone=5491133417868" class="fab" target="_blank" aria-label="Enviar mensaje por WhatsApp">
         <img src="img/whatsapp.png" alt="Icono de WhatsApp">
     </a>
+    
+    <!-- Overlay y carrito de compras -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar">
+        <div class="cart-header">
+            <h2 class="cart-title">Tu pedido</h2>
+            <button class="close-cart" id="closeCart">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart" id="emptyCart">
+                <p>No hay productos en tu carrito</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0</span>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn">Enviar por WhatsApp</button>
+        </div>
+    </div>
 
-    <!-- Scripts -->
+    <script>
+        // ===== CÓDIGO DEL CARRITO =====
+        
+        // Variables globales del carrito
+        let cart = [];
+        const cartIcon = document.getElementById('cartIcon');
+        const cartCount = document.getElementById('cartCount');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const closeCart = document.getElementById('closeCart');
+        const cartItems = document.getElementById('cartItems');
+        const emptyCart = document.getElementById('emptyCart');
+        const cartTotal = document.getElementById('cartTotal');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        
+        // Inicializar el carrito
+        function initCart() {
+            loadCartFromStorage();
+            updateCartUI();
+            
+            // Event listeners
+            cartIcon.addEventListener('click', openCart);
+            cartOverlay.addEventListener('click', closeCartSidebar);
+            closeCart.addEventListener('click', closeCartSidebar);
+            checkoutBtn.addEventListener('click', checkout);
+            
+            // Modificar la función mostrarProductos para incluir botones de carrito
+            overrideShowProducts();
+        }
+        
+        // Sobrescribir la función mostrarProductos para agregar botones de carrito
+        function overrideShowProducts() {
+            const originalShowProducts = window.mostrarProductos;
+            
+            window.mostrarProductos = function(productos) {
+                originalShowProducts.apply(this, arguments);
+                
+                // Agregar botones de carrito a cada producto
+                document.querySelectorAll('.producto-item').forEach((item, index) => {
+                    if (!item.querySelector('.add-to-cart-btn')) {
+                        const product = productos[index];
+                        const button = document.createElement('button');
+                        button.className = 'add-to-cart-btn';
+                        button.innerHTML = '+';
+                        button.setAttribute('data-id', product.id || index);
+                        button.setAttribute('data-name', product.titulo);
+                        button.setAttribute('data-price', product.precio);
+                        button.setAttribute('data-image', product.imagen || 'img/sin-imagen.png');
+                        
+                        // No permitir agregar productos sin stock
+                        if (product.hay_stock && product.hay_stock.toLowerCase() === "no") {
+                            button.disabled = true;
+                        } else {
+                            button.addEventListener('click', (e) => {
+                                e.stopPropagation();
+                                addToCart(
+                                    parseInt(button.getAttribute('data-id')),
+                                    button.getAttribute('data-name'),
+                                    parseFloat(button.getAttribute('data-price')),
+                                    button.getAttribute('data-image')
+                                );
+                                
+                                // Efecto visual de agregado
+                                button.classList.add('added');
+                                setTimeout(() => {
+                                    button.classList.remove('added');
+                                }, 500);
+                            });
+                        }
+                        
+                        item.appendChild(button);
+                    }
+                });
+            };
+        }
+        
+        // Funciones del carrito
+        function addToCart(productId, productName, productPrice, productImage) {
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: productName,
+                    price: productPrice,
+                    image: productImage,
+                    quantity: 1
+                });
+            }
+            
+            updateCartUI();
+            saveCartToStorage();
+        }
+        
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+            saveCartToStorage();
+        }
+        
+        function updateQuantity(productId, newQuantity) {
+            if (newQuantity < 1) {
+                removeFromCart(productId);
+                return;
+            }
+            
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity = newQuantity;
+                updateCartUI();
+                saveCartToStorage();
+            }
+        }
+        
+        function calculateTotal() {
+            return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+        }
+        
+        function updateCartUI() {
+            // Actualizar contador
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Actualizar items del carrito
+            if (cart.length === 0) {
+                emptyCart.style.display = 'block';
+                cartItems.innerHTML = '';
+                cartItems.appendChild(emptyCart);
+            } else {
+                emptyCart.style.display = 'none';
+                
+                cartItems.innerHTML = '';
+                cart.forEach(item => {
+                    const cartItemElement = document.createElement('div');
+                    cartItemElement.className = 'cart-item';
+                    cartItemElement.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <h4 class="cart-item-title">${item.name}</h4>
+                            <p class="cart-item-price">$${item.price.toLocaleString('es-AR')}</p>
+                            <div class="cart-item-quantity">
+                                <button class="quantity-btn decrease" data-id="${item.id}">-</button>
+                                <input type="number" value="${item.quantity}" min="1" class="quantity-input" data-id="${item.id}">
+                                <button class="quantity-btn increase" data-id="${item.id}">+</button>
+                                <button class="remove-item" data-id="${item.id}">🗑️</button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    cartItems.appendChild(cartItemElement);
+                });
+                
+                // Agregar event listeners a los botones de cantidad
+                document.querySelectorAll('.quantity-btn.decrease').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.getAttribute('data-id'));
+                        const item = cart.find(item => item.id === id);
+                        if (item) updateQuantity(id, item.quantity - 1);
+                    });
+                });
+                
+                document.querySelectorAll('.quantity-btn.increase').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.getAttribute('data-id'));
+                        const item = cart.find(item => item.id === id);
+                        if (item) updateQuantity(id, item.quantity + 1);
+                    });
+                });
+                
+                document.querySelectorAll('.quantity-input').forEach(input => {
+                    input.addEventListener('change', (e) => {
+                        const id = parseInt(e.target.getAttribute('data-id'));
+                        const newQuantity = parseInt(e.target.value) || 1;
+                        updateQuantity(id, newQuantity);
+                    });
+                });
+                
+                document.querySelectorAll('.remove-item').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.getAttribute('data-id'));
+                        removeFromCart(id);
+                    });
+                });
+            }
+            
+            // Actualizar total
+            cartTotal.textContent = `$${calculateTotal().toLocaleString('es-AR')}`;
+        }
+        
+        function openCart() {
+            document.body.classList.add('cart-open');
+        }
+        
+        function closeCartSidebar() {
+            document.body.classList.remove('cart-open');
+        }
+        
+        function checkout() {
+            if (cart.length === 0) return;
+            
+            // Formatear mensaje para WhatsApp
+            const phoneNumber = "5491133417868"; // Tu número de WhatsApp
+            let message = "¡Hola! Me gustaría hacer el siguiente pedido:%0A%0A";
+            
+            cart.forEach(item => {
+                message += `• ${item.quantity}x ${item.name} - $${(item.price * item.quantity).toLocaleString('es-AR')}%0A`;
+            });
+            
+            message += `%0A*Total: $${calculateTotal().toLocaleString('es-AR')}*`;
+            
+            // Abrir WhatsApp
+            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+        }
+        
+        // Almacenamiento local
+        function saveCartToStorage() {
+            localStorage.setItem('dietetica_cart', JSON.stringify(cart));
+        }
+        
+        function loadCartFromStorage() {
+            const savedCart = localStorage.getItem('dietetica_cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+        }
+        
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', initCart);
+    </script>
+    
+    <!-- Script original -->
     <script src="js/main.js"></script>
 </body>
 </html>
