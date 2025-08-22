@@ -329,6 +329,24 @@ function mostrarProductos(productos) {
             tags.textContent = tags.textContent + '|ofertas'
         }
 
+        // Botón para agregar al carrito
+        if (producto.hay_stock && producto.hay_stock.toLowerCase() !== "no") {
+            const botonAgregar = document.createElement('button');
+            botonAgregar.className = 'boton-agregar';
+            botonAgregar.innerHTML = '+';
+            botonAgregar.title = 'Agregar al carrito';
+            botonAgregar.addEventListener('click', (e) => {
+                e.stopPropagation();
+                agregarAlCarrito({
+                    id: producto.titulo, // Usar título como ID único
+                    titulo: producto.titulo,
+                    precio: producto.precio,
+                    unidad: producto.unidad
+                });
+            });
+            thumbnailDiv.appendChild(botonAgregar);
+        }
+
         contenidoDiv.appendChild(titulo);
         contenidoDiv.appendChild(descripcion);
         contenidoDiv.appendChild(precio);
@@ -603,3 +621,12 @@ function inicializarEventosTags() {
     recalcular();
     window.addEventListener('resize', recalcular);
 }
+
+// ===== FUNCIÓN GLOBAL PARA AGREGAR AL CARRITO =====
+window.agregarAlCarrito = function(producto) {
+    if (window.carrito) {
+        window.carrito.agregarProducto(producto);
+    } else {
+        console.error('El carrito no está inicializado');
+    }
+};
