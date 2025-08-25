@@ -565,7 +565,6 @@ body {
 .lista-carrito {
     flex: 1;
     overflow-y: auto;
-    margin-bottom: 15px;
     max-height: calc(100vh - 200px); /* Altura máxima */
 }
 
