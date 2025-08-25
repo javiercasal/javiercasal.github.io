@@ -159,8 +159,7 @@ class Carrito {
                         <p>${item.titulo}</p>
                     </div>
                     <div class="controles-precio-item-carrito">
-                        <div class="controles-unidad-item-carrito">
-                            <button class="eliminar">×</button>    
+                        <div class="controles-unidad-item-carrito"> 
                             <button class="disminuir">-</button>
                             <span class="unidad-item-carrito">${item.unidad || ''}</span>
                             <button class="aumentar">+</button>
