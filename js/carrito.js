@@ -154,15 +154,21 @@ class Carrito {
                 <div class="imagen-item-carrito">
                     <img src="${imagenSrc}" alt="${item.titulo}" onerror="this.src='img/sin-imagen.png'">
                 </div>
-                <div class="info-item">
-                    <h4>${item.titulo}</h4>
-                    <p>${formatearNumero(item.precio)} ${item.unidad || ''}</p>
-                </div>
-                <div class="controles-item">
-                    <button class="disminuir">-</button>
-                    <span>${item.cantidad}</span>
-                    <button class="aumentar">+</button>
-                    <button class="eliminar">×</button>
+                <div class="contenido-item-carrito">
+                    <div class="titulo-item-carrito">
+                        <p>${item.titulo}</p>
+                    </div>
+                    <div class="controles-precio-item-carrito">
+                        <div class="controles-unidad-item-carrito">
+                            <button class="eliminar">×</button>    
+                            <button class="disminuir">-</button>
+                            <span class="unidad-item-carrito">${item.unidad || ''}</span>
+                            <button class="aumentar">+</button>
+                        </div>
+                    </div>
+                    <div class="precio-item-carrito">
+                        ${formatearNumero(item.precio * item.cantidad)}
+                    </div>
                 </div>
             `;
             
