@@ -153,7 +153,7 @@ body {
     border-radius: 15px;
     padding: 5px 10px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.3s ease;
     font-family: 'Lexend', sans-serif;
     display: inline-block;
     font-weight: normal;
@@ -165,16 +165,23 @@ body {
 
 /* === TAGS SELECCIONADOS === */
 .tag.selected {
-    background-color: var(--color-azul-francia);
+background: linear-gradient(45deg, 
+                #4834d4 0%, 
+                #3498db 70%,  
+                #00d2ff 100%);
     color: var(--color-blanco);
-    border-color: var(--color-azul-francia);
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,114,255,0.3);
+    font-weight: 500;
 }
 
-/* Estado de etiqueta toggle seleccionada (estilo secundario) */
-.tag.toggle-tag.selected {
-    background-color: var(--color-gris-muy-muy-clarito);
-    color: var(--color-negro-oliva);
-    border-color: var(--color-gris-mas-clarito);
+.tag.selected:hover {
+    background: linear-gradient(45deg, 
+                #0080ff 0%, 
+                #00d2ff 50%, 
+                #0080ff 100%);
+    box-shadow: 0 3px 6px rgba(0,114,255,0.4);
+    transform: translateY(-1px);
 }
 
 /* === PRODUCTOS === */
@@ -679,8 +686,14 @@ body {
     padding-top: 10px;
     margin-top: 10px;
 }
+
 .boton-enviar {
-    background-color: var(--color-azul-francia);
+    background: linear-gradient(45deg, 
+                #f09433 0%, 
+                #e6683c 15%, 
+                #dc2743 40%, 
+                #cc2366 65%, 
+                #bc1888 100%);
     color: white;
     border: none;
     padding: 15px;
@@ -690,14 +703,24 @@ body {
     cursor: pointer;
     font-weight: bold;
     font-size: 1em;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .boton-enviar:hover {
-    background-color: #004494;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    background: linear-gradient(45deg, 
+                #ffa64d 0%, 
+                #ff7a5c 10%, 
+                #ff3b5f 40%, 
+                #e62e7b 70%, 
+                #d4269a 100%);
+}
+
+.boton-enviar:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .boton-agregar {
