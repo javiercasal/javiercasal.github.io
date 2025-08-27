@@ -690,9 +690,9 @@ body {
 .boton-enviar {
     background: linear-gradient(45deg, 
                 #f09433 0%, 
-                #e6683c 15%, 
-                #dc2743 40%, 
-                #cc2366 65%, 
+                #e6683c 25%, 
+                #dc2743 50%, 
+                #cc2366 75%, 
                 #bc1888 100%);
     color: white;
     border: none;
@@ -712,9 +712,9 @@ body {
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     background: linear-gradient(45deg, 
                 #ffa64d 0%, 
-                #ff7a5c 10%, 
-                #ff3b5f 40%, 
-                #e62e7b 70%, 
+                #ff7a5c 25%, 
+                #ff3b5f 50%, 
+                #e62e7b 75%, 
                 #d4269a 100%);
 }
 
