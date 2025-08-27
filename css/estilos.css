@@ -165,10 +165,10 @@ body {
 
 /* === TAGS SELECCIONADOS === */
 .tag.selected {
-background: linear-gradient(45deg, 
-                #4834d4 0%, 
-                #3498db 70%,  
-                #00d2ff 100%);
+    background: linear-gradient(45deg, 
+                    #4834d4 0%, 
+                    #3498db 70%,  
+                    #00d2ff 100%);
     color: var(--color-blanco);
     border: none;
     box-shadow: 0 2px 4px rgba(0,114,255,0.3);
@@ -177,9 +177,9 @@ background: linear-gradient(45deg,
 
 .tag.selected:hover {
     background: linear-gradient(45deg, 
-                #0080ff 0%, 
-                #00d2ff 50%, 
-                #0080ff 100%);
+                    #4834d4 0%, 
+                    #3498db 70%,  
+                    #00d2ff 100%);
     box-shadow: 0 3px 6px rgba(0,114,255,0.4);
     transform: translateY(-1px);
 }
