@@ -350,7 +350,7 @@ function mostrarProductos(productos) {
                     unidad: producto.unidad
                 });
             });
-            thumbnailDiv.appendChild(botonAgregar);
+            item.appendChild(botonAgregar);
         }
 
         contenidoDiv.appendChild(titulo);
