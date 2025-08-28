@@ -438,32 +438,6 @@ body {
     z-index: 3; /* Para que el texto del producto quede sobre el fondo */
 }
 
-/* === BOTÓN FLOTANTE === */
-.fab {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 70px;
-    height: 70px;
-    background-color: var(--color-blanco);
-    border-radius: 50%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    z-index: 1000;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-/* Imagen dentro del botón flotante */
-.fab img {
-    width: 70px;
-    height: 70px;
-    object-fit: cover;
-    border-radius: 50%;
-}
-
 /* === SOLUCIÓN PARA SAFARI (IPHONE) === */
 /* Hack Safari iOS: añade padding extra para evitar corte de las últimas tags */
 @supports (-webkit-touch-callout: none) {
@@ -479,10 +453,10 @@ body {
 /* === CARRITO DE COMPRAS === */
 .carrito-flotante {
     position: fixed;
-    bottom: 100px;
+    bottom: 20px;
     right: 20px;
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     background-color: var(--color-blanco);
     border-radius: 50%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -499,8 +473,8 @@ body {
 }
 
 .carrito-flotante img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
 }
 
 .contador-carrito {
