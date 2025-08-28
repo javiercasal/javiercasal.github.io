@@ -325,7 +325,6 @@ body {
     font-size: 0.85em;
     line-height: 1.2;
     color: var(--color-casi-negro);
-    font-weight: bold;
 }
 
 /* Logo sin TACC en línea con texto */
@@ -356,7 +355,7 @@ body {
 /* Precio del producto */
 .producto-precio {
     font-size: 0.85em;
-    color: var(--color-casi-negro);
+    color: var(--color-gris-clarito);
     margin: 0px 0 0 0;
     line-height: 1.2;
 }
