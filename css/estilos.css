@@ -17,6 +17,7 @@
     --color-negro-oliva: #333;
     --color-secundario: #555;
     --color-gris-clarito: #777;
+    --color-gris-clarito-whatsapp: #f6f5f3;
     --color-gris-mas-clarito: #ccc;
     --color-gris-muy-clarito: #ddd;
     --color-gris-muy-muy-clarito: #eee;
@@ -24,7 +25,7 @@
     /* Colores semánticos */
     --color-azul-francia: #0056b3;
     --color-rojo-ofertas: #ff4444;
-    --color-verde-carrito: #00b469;
+    --color-verde-carrito: #1dab61;
 }
 
 /* === ESTILOS GENERALES === */
@@ -347,7 +348,8 @@ body {
 .producto-descripcion {
     font-size: 0.85em;
     color: var(--color-gris-clarito);
-    margin: 0px 0;
+    margin: 0px;
+    margin-right: 15px;
     line-height: 1.2;
 }
 
@@ -708,17 +710,12 @@ body {
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    background: linear-gradient(45deg, 
-                #ffa64d 0%, 
-                #ff7a5c 25%, 
-                #ff3b5f 50%, 
-                #e62e7b 75%, 
-                #d4269a 100%);
-    color: white;
+    background: var(--color-gris-clarito-whatsapp);
+    color: black;
     border: none;
     width: 24px;
     height: 24px;
-    border-radius: 50%;
+    border-radius: 15%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -728,7 +725,6 @@ body {
     opacity: 0.9;
     transition: all 0.3s ease;
     z-index: 10;
-    box-shadow: 0 1px 3px rgba(62, 16, 37, 0.3);
 }
 
 .boton-agregar:hover {
