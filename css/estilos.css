@@ -24,6 +24,7 @@
     /* Colores semánticos */
     --color-azul-francia: #0056b3;
     --color-rojo-ofertas: #ff4444;
+    --color-verde-carrito: #00b469;
 }
 
 /* === ESTILOS GENERALES === */
@@ -171,7 +172,6 @@ body {
                     #00d2ff 100%);
     color: var(--color-blanco);
     border: none;
-    box-shadow: 0 2px 4px rgba(0,114,255,0.3);
     font-weight: 500;
 }
 
@@ -180,7 +180,6 @@ body {
                     #4834d4 0%, 
                     #3498db 70%,  
                     #00d2ff 100%);
-    box-shadow: 0 3px 6px rgba(0,114,255,0.4);
     transform: translateY(-1px);
 }
 
@@ -481,15 +480,15 @@ body {
     position: absolute;
     top: -5px;
     right: -5px;
-    background-color: var(--color-rojo-ofertas);
+    background-color: var(--color-verde-carrito);
     color: white;
     border-radius: 50%;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 0.7em;
+    font-size: 0.8em;
     font-weight: bold;
 }
 
