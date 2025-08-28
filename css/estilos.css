@@ -167,21 +167,10 @@ body {
 
 /* === TAGS SELECCIONADOS === */
 .tag.selected {
-    background: linear-gradient(45deg, 
-                    #4834d4 0%, 
-                    #3498db 70%,  
-                    #00d2ff 100%);
+    background-color: var(--color-azul-francia);
     color: var(--color-blanco);
-    border: none;
+    border-color: var(--color-azul-francia);
     font-weight: 500;
-}
-
-.tag.selected:hover {
-    background: linear-gradient(45deg, 
-                    #4834d4 0%, 
-                    #3498db 70%,  
-                    #00d2ff 100%);
-    transform: translateY(-1px);
 }
 
 /* === PRODUCTOS === */
