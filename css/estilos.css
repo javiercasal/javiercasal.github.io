@@ -714,14 +714,13 @@ body {
     color: black;
     border: none;
     width: 24px;
-    height: 24px;
+    height: 28px;
     border-radius: 15%;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     font-size: 1em;
-    font-weight: bold;
     opacity: 0.9;
     transition: all 0.3s ease;
     z-index: 10;
