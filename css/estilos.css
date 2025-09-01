@@ -443,7 +443,8 @@ body {
 .carrito-flotante {
     position: fixed;
     bottom: 20px;
-    right: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     width: 70px;
     height: 70px;
     background-color: var(--color-blanco);
@@ -458,7 +459,7 @@ body {
 }
 
 .carrito-flotante:hover {
-    transform: scale(1.05);
+    transform: translateX(-50%) scale(1.05);
 }
 
 .carrito-flotante img {
