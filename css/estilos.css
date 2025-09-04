@@ -148,10 +148,10 @@ body {
 
 /* Estilos base para cada etiqueta individual */
 .tag {
-    background-color: var(--color-gris-muy-muy-clarito);
-    color: var(--color-negro-oliva);
+    background-color: #eaecff;
+    color: rgb(40, 38, 73);
     font-size: 0.8em;
-    border: 1px solid var(--color-gris-mas-clarito);
+    border: 1px solid #b4baff;
     border-radius: 15px;
     padding: 5px 10px;
     cursor: pointer;
@@ -167,7 +167,11 @@ body {
 
 /* === TAGS SELECCIONADOS === */
 .tag.selected {
-    background-color: var(--color-azul-francia);
+    background: linear-gradient(2255deg, 
+                #334AF0 0%, 
+                #4327DC 45%, 
+                #6623CC 75%, 
+                #8818BC 100%);
     color: var(--color-blanco);
     border-color: var(--color-azul-francia);
     font-weight: 500;
@@ -697,27 +701,30 @@ body {
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    background-color: var(--color-gris-muy-muy-clarito);
-    color: black;
-    border: 1px solid var(--color-gris-mas-clarito);
+    background: linear-gradient(45deg, 
+                #f09433 0%, 
+                #e6683c 25%, 
+                #dc2743 50%, 
+                #cc2366 75%, 
+                #bc1888 100%);
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 0px solid var(--color-gris-mas-clarito);
+    line-height: 2;
     width: 24px;
-    height: 28px;
-    border-radius: 15%;
+    height: 24px;
+    border-radius: 50%;
     display: flex;
+    text-underline-offset: 2px;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    font-size: 1em;
-    opacity: 0.9;
+    font-size: 1.3em;
+    font-weight: bold;
+    font-family: sans-serif;
+    opacity: 0.8;
     transition: all 0.3s ease;
     z-index: 10;
-}
-
-.boton-agregar:hover {
-    opacity: 1;
-    transform: translateY(-50%) scale(5.1);
-    box-shadow: 0 5px 10px rgba(32, 120, 255, 0.4);
-    background: linear-gradient(135deg, #64b5ff 0%, #1afbff 50%, #4a8ae4 100%);
 }
 
 .boton-agregar:active {
@@ -781,17 +788,21 @@ body {
 }
 
 .controles-unidad-item-carrito button {
-    background-color: var(--color-gris-muy-muy-clarito);
+    background-color: white;
     border: none;
-    width: 18px;
-    height: 18px;
+    width: 0px;
+    height: 0px;
+    border: 0px solid var(--color-gris-mas-clarito);
     border-radius: 50%;
     display: flex;
     justify-content: center;
+    padding: 10px;
     align-items: center;
+    text-align: center;
+    vertical-align: middle;
     cursor: pointer;
-    font-weight: bold;
-    font-size: 1em;
+    /* font-weight: bold; */
+    font-size: 0.6em;
     transition: background-color 0.2s;
 }
 
@@ -802,8 +813,9 @@ body {
 .unidad-item-carrito {
     font-size: 0.85em;
     color: var(--color-gris-clarito);
-    min-width: 60px;
     text-align: center;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 .precio-item-carrito {
