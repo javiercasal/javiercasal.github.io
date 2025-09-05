@@ -447,10 +447,10 @@ body {
 /* === CARRITO DE COMPRAS === */
 .carrito-flotante {
     position: fixed;
-    bottom: 24px;
-    right: 24px;
-    width: 75px;
-    height: 75px;
+    bottom: 20px;
+    right: 20px;
+    width: 70px;
+    height: 70px;
     background-color: var(--color-blanco);
     border-radius: 50%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -467,8 +467,8 @@ body {
 }
 
 .carrito-flotante img {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
 }
 
 .contador-carrito {
