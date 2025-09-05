@@ -124,7 +124,7 @@ class Carrito {
         this.listaCarrito.innerHTML = '';
         
         if (this.items.length === 0) {
-            this.listaCarrito.innerHTML = '<p style="text-align: center; color: #777; padding: 20px;">Tu carrito está vacío</p>';
+            this.listaCarrito.innerHTML = '<p style="text-align: center; color: #777; padding: 20px;">Tu pedido está vacío</p>';
             this.subtotalCarrito.textContent = '$0';
             this.totalCarrito.textContent = '$0';
             return;
@@ -160,9 +160,9 @@ class Carrito {
                     </div>
                     <div class="controles-precio-item-carrito">
                         <div class="controles-unidad-item-carrito"> 
-                            <button class="disminuir">➖</button>
+                            <button class="disminuir">-</button>
                             <span class="unidad-item-carrito">${item.unidad || ''}</span>
-                            <button class="aumentar">➕</button>
+                            <button class="aumentar">+</button>
                         </div>
                     </div>
                     <div class="precio-item-carrito">
