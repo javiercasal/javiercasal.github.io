@@ -822,7 +822,7 @@ body {
     position: fixed;
     background: var(--color-verde-carrito);
     color: white;
-    padding: 2px 10px 3.5px 10px;
+    padding: 2.5px 10px 4px 10px;
     border-radius: 20px;
     font-size: 0.85em;
     font-weight: bold;
