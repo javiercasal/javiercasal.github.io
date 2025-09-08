@@ -653,18 +653,13 @@ body {
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    background: linear-gradient(45deg, 
-                #f09433 0%, 
-                #e6683c 25%, 
-                #dc2743 50%, 
-                #cc2366 75%, 
-                #bc1888 100%);
+    background: var(--color-secundario);
     color: white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     border: 0px solid var(--color-gris-mas-clarito);
     line-height: 2;
-    width: 24px;
-    height: 24px;
+    width: 21px;
+    height: 21px;
     border-radius: 50%;
     display: flex;
     text-underline-offset: 2px;
@@ -710,7 +705,7 @@ body {
     display: flex;
     flex-direction: column;
     min-width: 0;
-    gap: 7px;
+    gap: 5px;
 }
 
 .titulo-item-carrito p {
@@ -743,8 +738,8 @@ body {
 .controles-unidad-item-carrito button {
     background-color: var(--color-gris-muy-clarito);
     border: none;
-    width: 14px;
-    height: 14px;
+    width: 24px;
+    height: 24px;
     border: 0px solid var(--color-gris-mas-clarito);
     border-radius: 50%;
     display: flex;
@@ -757,7 +752,8 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     vertical-align: middle;
     cursor: pointer;
-    font-size: 0.8em;
+    font-size: 1em;
+    font-weight: bold;
     transition: background-color 0.2s;
 }
 
@@ -766,7 +762,7 @@ body {
 }
 
 .unidad-item-carrito {
-    font-size: 0.95em;
+    font-size: 1em;
     color: var(--color-gris-clarito);
     text-align: center;
     padding-left: 0px;
