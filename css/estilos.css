@@ -710,13 +710,13 @@ body {
     display: flex;
     flex-direction: column;
     min-width: 0;
+    gap: 7px;
 }
 
 .titulo-item-carrito p {
-    margin: 7px 0 7px 0;
+    margin: 0;
     padding: 0;
     font-size: 0.85em;
-    font-weight: bold;
     color: var(--color-casi-negro);
     line-height: 1.2;
     white-space: nowrap;
@@ -729,13 +729,15 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 7px;
 }
 
 .controles-unidad-item-carrito {
     display: flex;
     align-items: center;
     gap: 4px;
+    font-size: 0.85em;
+    line-height: 1;
+    color: var(--color-secundario);
 }
 
 .controles-unidad-item-carrito button {
@@ -764,7 +766,7 @@ body {
 }
 
 .unidad-item-carrito {
-    font-size: 0.85em;
+    font-size: 0.95em;
     color: var(--color-gris-clarito);
     text-align: center;
     padding-left: 0px;
