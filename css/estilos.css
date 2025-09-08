@@ -34,7 +34,9 @@ body {
     margin: 0;
     padding: 0;
     background-color: var(--color-fondo);
-    user-select: none; /* Evita selección de texto en la interfaz táctil */
+    user-select: none;
+    /* Añadir padding inferior para evitar que la barra tape contenido */
+    padding-bottom: 100px;
 }
 
 /* === HEADER === */
@@ -445,49 +447,6 @@ body {
 }
 
 /* === CARRITO DE COMPRAS === */
-.carrito-flotante {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 70px;
-    height: 70px;
-    background-color: var(--color-blanco);
-    border-radius: 50%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.carrito-flotante:hover {
-    transform: scale(1.05);
-}
-
-.carrito-flotante img {
-    width: 42px;
-    height: 42px;
-}
-
-.contador-carrito {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: var(--color-verde-carrito);
-    color: white;
-    border-radius: 50%;
-    width: 25px;
-    font-family: monospace;
-    height: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.1em;
-    font-weight: bold;
-}
-
 .panel-carrito {
     position: fixed;
     top: 0;
@@ -856,4 +815,65 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* === BARRA INFERIOR CON BOTÓN CIRCULAR CENTRAL (OPCIÓN 4) === */
+.barra-circular-central {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    background: var(--color-blanco);
+    padding: 10px 20px;
+    border-radius: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    gap: 15px;
+}
+
+.boton-circular-grande {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--color-verde-carrito);
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.boton-circular-grande:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.boton-circular-grande .carrito-icono {
+    width: 28px;
+    height: 28px;
+    display: inline-block;
+    background: var(--color-blanco);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 22Q6.175 22 5.588 21.413Q5 20.825 5 20Q5 19.175 5.588 18.587Q6.175 18 7 18Q7.825 18 8.412 18.587Q9 19.175 9 20Q9 20.825 8.412 21.413Q7.825 22 7 22ZM17 22Q16.175 22 15.588 21.413Q15 20.825 15 20Q15 19.175 15.588 18.587Q16.175 18 17 18Q17.825 18 18.413 18.587Q19 19.175 19 20Q19 20.825 18.413 21.413Q17.825 22 17 22ZM6.15 6 8.55 11H15.55Q15.55 11 15.55 11Q15.55 11 15.55 11L18.3 6Q18.3 6 18.3 6Q18.3 6 18.3 6ZM5.2 4H19.95Q20.525 4 20.775 4.475Q21.025 4.95 20.75 5.45L17.3 11.95Q17.125 12.25 16.825 12.425Q16.525 12.6 16.2 12.6H8.1L7 14.6Q7 14.6 7 14.6Q7 14.6 7 14.6H19V16.6H7Q6.175 16.6 5.738 15.975Q5.3 15.35 5.65 14.6L6.6 12.6L3 4H1V2H4.25ZM8.55 11Q8.55 11 8.55 11Q8.55 11 8.55 11H15.55Q15.55 11 15.55 11Q15.55 11 15.55 11Z'/%3E%3C/svg%3E") center/contain no-repeat;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 22Q6.175 22 5.588 21.413Q5 20.825 5 20Q5 19.175 5.588 18.587Q6.175 18 7 18Q7.825 18 8.412 18.587Q9 19.175 9 20Q9 20.825 8.412 21.413Q7.825 22 7 22ZM17 22Q16.175 22 15.588 21.413Q15 20.825 15 20Q15 19.175 15.588 18.587Q16.175 18 17 18Q17.825 18 18.413 18.587Q19 19.175 19 20Q19 20.825 18.413 21.413Q17.825 22 17 22ZM6.15 6 8.55 11H15.55Q15.55 11 15.55 11Q15.55 11 15.55 11L18.3 6Q18.3 6 18.3 6Q18.3 6 18.3 6ZM5.2 4H19.95Q20.525 4 20.775 4.475Q21.025 4.95 20.75 5.45L17.3 11.95Q17.125 12.25 16.825 12.425Q16.525 12.6 16.2 12.6H8.1L7 14.6Q7 14.6 7 14.6Q7 14.6 7 14.6H19V16.6H7Q6.175 16.6 5.738 15.975Q5.3 15.35 5.65 14.6L6.6 12.6L3 4H1V2H4.25ZM8.55 11Q8.55 11 8.55 11Q8.55 11 8.55 11H15.55Q15.55 11 15.55 11Q15.55 11 15.55 11Z'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+.info-pedido {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.total-pedido {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: var(--color-negro-oliva);
+}
+
+.detalles-pedido {
+    font-size: 0.9em;
+    color: var(--color-secundario);
 }

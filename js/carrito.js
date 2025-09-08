@@ -24,24 +24,28 @@ class Carrito {
     }
 
     inicializarElementos() {
-        this.carritoFlotante = document.getElementById('carrito-flotante');
-        this.contadorCarrito = document.getElementById('contador-carrito');
         this.panelCarrito = document.getElementById('panel-carrito');
         this.overlayCarrito = document.getElementById('overlay-carrito');
         this.listaCarrito = document.getElementById('lista-carrito');
         this.subtotalCarrito = document.getElementById('subtotal-carrito');
         this.totalCarrito = document.getElementById('total-carrito');
         this.botonEnviar = document.getElementById('boton-enviar-pedido');
-        this.botonCerrarCarrito = document.getElementById('cerrar-carrito'); // Cambiado el nombre
+        this.botonCerrarCarrito = document.getElementById('cerrar-carrito');
+        
+        // Nuevos elementos para la barra circular central
+        this.barraCircularCentral = document.getElementById('barra-circular-central');
+        this.botonCarritoCentral = document.getElementById('boton-carrito-central');
+        this.totalPedido = document.getElementById('total-pedido');
+        this.detallesPedido = document.getElementById('detalles-pedido');
     }
 
     inicializarEventos() {
-        this.carritoFlotante.addEventListener('click', () => this.abrirCarrito());
         this.overlayCarrito.addEventListener('click', () => this.cerrarCarrito());
-        this.botonCerrarCarrito.addEventListener('click', () => this.cerrarCarrito()); // Usar el nuevo nombre
+        this.botonCerrarCarrito.addEventListener('click', () => this.cerrarCarrito());
         this.botonEnviar.addEventListener('click', () => this.enviarPedidoWhatsApp());
         
-        // Delegación de eventos para los controles de cantidad
+        this.botonCarritoCentral.addEventListener('click', () => this.abrirCarrito());
+        
         this.listaCarrito.addEventListener('click', (e) => {
             if (e.target.classList.contains('disminuir')) {
                 const id = e.target.closest('.item-carrito').dataset.id;
@@ -136,14 +140,22 @@ class Carrito {
     }
 
     actualizarUI() {
-        // Actualizar contador
+        // Actualizar contadores
         const totalItems = this.items.reduce((sum, item) => sum + item.cantidad, 0);
-        this.contadorCarrito.textContent = totalItems;
+        const subtotal = this.calcularSubtotal();
         
-        // Mostrar/ocultar contador
-        this.contadorCarrito.style.display = totalItems > 0 ? 'flex' : 'none';
+        // Actualizar información de la barra central
+        this.totalPedido.textContent = formatearNumero(subtotal);
+        this.detallesPedido.textContent = `${totalItems} producto${totalItems !== 1 ? 's' : ''}`;
         
-        // Actualizar lista
+        // Mostrar/ocultar barra central según si hay productos
+        if (totalItems > 0) {
+            this.barraCircularCentral.style.display = 'flex';
+        } else {
+            this.barraCircularCentral.style.display = 'none';
+        }
+        
+        // Resto de la actualización de UI (lista de carrito, etc.)
         this.listaCarrito.innerHTML = '';
         
         if (this.items.length === 0) {
@@ -197,8 +209,7 @@ class Carrito {
             this.listaCarrito.appendChild(elemento);
         });
         
-        // Actualizar totales
-        const subtotal = this.calcularSubtotal();
+        // Actualizar totales del panel
         this.subtotalCarrito.textContent = formatearNumero(subtotal);
         this.totalCarrito.textContent = formatearNumero(subtotal);
 
