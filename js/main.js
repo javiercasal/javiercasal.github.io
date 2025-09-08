@@ -341,6 +341,13 @@ function mostrarProductos(productos) {
             botonAgregar.className = 'boton-agregar';
             botonAgregar.innerHTML = '+';
             botonAgregar.title = 'Agregar al carrito';
+            botonAgregar.dataset.id = producto.titulo; // Guardar ID para verificación
+            
+            // Verificar si el producto ya está en el carrito
+            if (window.carrito && window.carrito.items.find(item => item.id === producto.titulo)) {
+                botonAgregar.classList.add('en-carrito');
+            }
+            
             botonAgregar.addEventListener('click', (e) => {
                 e.stopPropagation();
                 agregarAlCarrito({
@@ -348,7 +355,7 @@ function mostrarProductos(productos) {
                     titulo: producto.titulo,
                     precio: producto.precio,
                     unidad: producto.unidad
-                });
+                }, botonAgregar); // Pasar el botón como segundo parámetro
             });
             item.appendChild(botonAgregar);
         }

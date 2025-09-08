@@ -56,7 +56,21 @@ class Carrito {
         });
     }
 
-    agregarProducto(producto) {
+    actualizarBotonesAgregar() {
+        const botones = document.querySelectorAll('.boton-agregar');
+        botones.forEach(boton => {
+            const productoId = boton.dataset.id;
+            const enCarrito = this.items.find(item => item.id === productoId);
+            
+            if (enCarrito) {
+                boton.classList.add('en-carrito');
+            } else {
+                boton.classList.remove('en-carrito');
+            }
+        });
+    }
+
+    agregarProducto(producto, botonAgregar = null) {
         const productoExistente = this.items.find(item => item.id === producto.id);
         
         if (productoExistente) {
@@ -73,13 +87,21 @@ class Carrito {
         
         this.guardarEnLocalStorage();
         this.actualizarUI();
-        this.mostrarConfirmacionAgregado(producto.titulo);
+        
+        // Mostrar confirmación si se proporcionó un botón
+        if (botonAgregar) {
+            this.mostrarConfirmacionAgregado(producto.titulo, botonAgregar);
+        }
+        
+        // Actualizar el estado de los botones
+        this.actualizarBotonesAgregar();
     }
 
     eliminarProducto(id) {
         this.items = this.items.filter(item => item.id !== id);
         this.guardarEnLocalStorage();
         this.actualizarUI();
+        this.actualizarBotonesAgregar();
     }
 
     aumentarCantidad(id) {
@@ -102,6 +124,7 @@ class Carrito {
                 this.actualizarUI();
             }
         }
+        this.actualizarBotonesAgregar();
     }
 
     calcularSubtotal() {
@@ -178,6 +201,9 @@ class Carrito {
         const subtotal = this.calcularSubtotal();
         this.subtotalCarrito.textContent = formatearNumero(subtotal);
         this.totalCarrito.textContent = formatearNumero(subtotal);
+
+        // Actualizar botones al final
+        this.actualizarBotonesAgregar();
     }
 
     abrirCarrito() {
@@ -192,29 +218,63 @@ class Carrito {
         document.body.style.overflow = '';
     }
 
-    mostrarConfirmacionAgregado(nombreProducto) {
-        // Crear notificación temporal
+    mostrarConfirmacionAgregado(nombreProducto, botonAgregar) {
+        const botonRect = botonAgregar.getBoundingClientRect();
+        const scrollY = window.scrollY || window.pageYOffset;
+        const scrollX = window.scrollX || window.pageXOffset;
+        
         const notificacion = document.createElement('div');
-        notificacion.style.cssText = `
-            position: fixed;
-            bottom: 180px;
-            right: 20px;
-            background: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            z-index: 1002;
-            max-width: 250px;
-        `;
-        notificacion.textContent = `✓ ${nombreProducto} agregado al carrito`;
+        notificacion.className = 'notificacion-agregado';
+        notificacion.textContent = '¡Agregado!';
+        notificacion.style.position = 'absolute';
+        
+        // Calcular posición centrada verticalmente respecto al botón
+        const leftPosition = botonRect.left + scrollX - 10;
+        const topPosition = botonRect.top + scrollY + (botonRect.height / 2) - (12); // 12px es la mitad de la altura estimada de la notificación
+        
+        notificacion.style.left = `${leftPosition}px`;
+        notificacion.style.top = `${topPosition}px`;
+        notificacion.style.opacity = '0';
+        notificacion.style.zIndex = '500';
+        notificacion.style.transform = 'translateX(-95%)';
         
         document.body.appendChild(notificacion);
         
-        // Eliminar después de 3 segundos
+        // Asegurar que la notificación no se salga de la pantalla
+        const notifRect = notificacion.getBoundingClientRect();
+        
+        // Ajustar si se sale por la izquierda
+        if (notifRect.left < 10) {
+            notificacion.style.left = '10px';
+            notificacion.style.transform = 'none';
+        }
+        
+        // Ajustar si se sale por arriba
+        if (notifRect.top < 10) {
+            notificacion.style.top = `${scrollY + 10}px`;
+        }
+        
+        // Ajustar si se sale por abajo
+        if (notifRect.bottom > window.innerHeight - 10) {
+            notificacion.style.top = `${window.innerHeight - notifRect.height - 10 + scrollY}px`;
+        }
+        
+        // Animación de entrada
         setTimeout(() => {
-            document.body.removeChild(notificacion);
-        }, 3000);
+            notificacion.style.opacity = '1';
+            notificacion.style.transition = 'opacity 0.3s ease';
+        }, 10);
+        
+        // Animación de salida después de 1.5 segundos
+        setTimeout(() => {
+            notificacion.style.opacity = '0';
+            
+            setTimeout(() => {
+                if (notificacion.parentNode) {
+                    notificacion.parentNode.removeChild(notificacion);
+                }
+            }, 300);
+        }, 1000);
     }
 
     enviarPedidoWhatsApp() {
@@ -243,8 +303,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Función para agregar productos al carrito desde cualquier parte del código
-function agregarAlCarrito(producto) {
+function agregarAlCarrito(producto, botonAgregar = null) {
     if (window.carrito) {
-        window.carrito.agregarProducto(producto);
+        window.carrito.agregarProducto(producto, botonAgregar);
     }
 }

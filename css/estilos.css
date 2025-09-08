@@ -484,7 +484,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1em;
+    font-size: 1.1em;
     font-weight: bold;
 }
 
@@ -680,12 +680,7 @@ body {
 .boton-enviar:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    background: linear-gradient(45deg, 
-                #ffa64d 0%, 
-                #ff7a5c 25%, 
-                #ff3b5f 50%, 
-                #e62e7b 75%, 
-                #d4269a 100%);
+    background: var(--color-azul-francia);
 }
 
 .boton-enviar:active {
@@ -821,4 +816,46 @@ body {
     align-self: flex-end;
     font-size: 0.9em;
     color: var(--color-casi-negro);
+}
+
+/* === NOTIFICACIÓN DE AGREGADO === */
+.notificacion-agregado {
+    position: fixed;
+    background: var(--color-verde-carrito);
+    color: white;
+    padding: 2px 10px 3.5px 10px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: bold;
+    pointer-events: none;
+    white-space: nowrap;
+    transform-origin: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* === BOTÓN DE AGREGAR TRANSFORMADO === */
+.boton-agregar.en-carrito {
+    background: var(--color-verde-carrito) !important;
+    opacity: 1 !important;
+}
+
+.boton-agregar.en-carrito::after {
+    content: "✓";
+}
+
+/* Ocultar el contenido original del botón cuando está en el carrito */
+.boton-agregar.en-carrito {
+    font-size: 0; /* Ocultar el texto original */
+}
+
+.boton-agregar.en-carrito::after {
+    font-size: 0.7rem; /* Restaurar tamaño para el check */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
