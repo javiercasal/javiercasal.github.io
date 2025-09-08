@@ -827,7 +827,7 @@ body {
     align-items: center;
     background: var(--color-blanco);
     padding: 10px 20px;
-    border-radius: 30px;
+    border-radius: 50px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     z-index: 999;
     gap: 15px;

@@ -29,6 +29,23 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="css/estilos.css">
+    
+    <style>
+        /* Estilo adicional para hacer toda la barra clickeable */
+        .barra-circular-central {
+            cursor: pointer;
+        }
+        
+        /* Evitar que los elementos hijos disparen eventos por separado */
+        .barra-circular-central > * {
+            pointer-events: none;
+        }
+        
+        /* Pero permitir que el botón sí sea clickeable por separado */
+        .boton-circular-grande {
+            pointer-events: auto;
+        }
+    </style>
 </head>
 <body>
     <!-- Encabezado con logo -->
@@ -48,7 +65,7 @@
     <!-- Lista de productos -->
     <ul class="productos-lista"></ul>
 
-    <!-- Barra inferior con botón circular central (Opción 4) -->
+    <!-- Barra inferior con botón circular central -->
     <div class="barra-circular-central" id="barra-circular-central">
         <button class="boton-circular-grande" id="boton-carrito-central">
             <span class="carrito-icono"></span>
@@ -87,5 +104,21 @@
     <!-- Scripts -->
     <script src="js/main.js"></script>
     <script src="js/carrito.js"></script>
+    
+    <script>
+        // Modificación para que toda la barra abra el carrito
+        document.addEventListener('DOMContentLoaded', function() {
+            const barraCentral = document.getElementById('barra-circular-central');
+            
+            barraCentral.addEventListener('click', function(e) {
+                // Evitar que se dispare dos veces si se hace clic en el botón
+                if (!e.target.closest('.boton-circular-grande')) {
+                    if (window.carrito) {
+                        window.carrito.abrirCarrito();
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
