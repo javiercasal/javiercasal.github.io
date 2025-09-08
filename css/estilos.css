@@ -825,7 +825,7 @@ body {
     display: flex;
     align-items: center;
     background: var(--color-blanco);
-    padding: 10px 20px;
+    padding: 8px 15px 8px 10px;
     border-radius: 50px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     z-index: 999;
