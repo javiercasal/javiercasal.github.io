@@ -281,13 +281,13 @@ body {
 /* Contenedor de información del producto */
 .producto-contenido {
     position: relative;
-    max-height: 1000px;
+    max-height: none;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 80px;
     gap: 7px;
     width: calc(100% - 110px);
+    min-height: 80px;
 }
 
 /* Etiqueta de oferta en producto */
@@ -338,6 +338,13 @@ body {
     margin: 0px;
     margin-right: 15px;
     line-height: 1.2;
+    /* Propiedades para limitar a 3 líneas */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: calc(1.2em * 3); /* 3 líneas */
 }
 
 /* Precio del producto */
