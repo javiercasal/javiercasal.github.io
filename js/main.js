@@ -241,6 +241,7 @@ function mostrarProductos(productos) {
     productosOrdenados.forEach(producto => {
         const item = document.createElement('li');
         item.className = 'producto-item';
+        item.dataset.id = producto.id;
 
         // Añadir clase sin-stock si no hay stock
         if (producto.hay_stock && producto.hay_stock.toLowerCase() === "no") {
@@ -341,17 +342,17 @@ function mostrarProductos(productos) {
             botonAgregar.className = 'boton-agregar';
             botonAgregar.innerHTML = '+';
             botonAgregar.title = 'Agregar al carrito';
-            botonAgregar.dataset.id = producto.titulo; // Guardar ID para verificación
-            
+            botonAgregar.dataset.id = producto.id;
+
             // Verificar si el producto ya está en el carrito
-            if (window.carrito && window.carrito.items.find(item => item.id === producto.titulo)) {
+            if (window.carrito && window.carrito.items.find(item => item.id === producto.id)) {
                 botonAgregar.classList.add('en-carrito');
             }
             
             botonAgregar.addEventListener('click', (e) => {
                 e.stopPropagation();
                 agregarAlCarrito({
-                    id: producto.titulo, // Usar título como ID único
+                    id: producto.id,
                     titulo: producto.titulo,
                     precio: producto.precio,
                     unidad: producto.unidad

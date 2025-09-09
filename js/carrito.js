@@ -173,12 +173,12 @@ class Carrito {
             // Buscar la imagen del producto
             let imagenSrc = 'img/sin-imagen.png';
             const productos = document.querySelectorAll('.producto-item');
-            
+
             for (const producto of productos) {
-                const titulo = producto.querySelector('.producto-titulo');
-                if (titulo && titulo.textContent.trim() === item.titulo) {
+                if (producto.dataset.id === item.id) {
                     const img = producto.querySelector('.producto-thumbnail img');
                     if (img) {
+                        // Obtener la imagen real (src o data-src para lazy loading)
                         imagenSrc = img.src || img.getAttribute('data-src') || 'img/sin-imagen.png';
                         break;
                     }
