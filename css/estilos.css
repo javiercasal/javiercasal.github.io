@@ -54,7 +54,7 @@ body {
     height: auto;
     display: block;
     margin: 0 auto;
-    padding: 10px;
+    padding: 8px;
 }
 
 /* === FILTRO DE BÚSQUEDA === */
@@ -677,11 +677,6 @@ body {
     box-shadow: 0 2px 4px rgba(32, 120, 255, 0.2);
 }
 
-.producto-thumbnail:hover {
-    opacity: 1;
-    transform: scale(1.1);
-}
-
 .producto-item.sin-stock .boton-agregar {
     display: none;
 }
@@ -779,7 +774,7 @@ body {
     position: fixed;
     background: var(--color-verde-carrito);
     color: white;
-    padding: 2.5px 10px 4px 10px;
+    padding: 5.5px 10px 7px 10px;
     border-radius: 20px;
     font-size: 0.85em;
     font-weight: bold;
@@ -825,7 +820,7 @@ body {
     display: flex;
     align-items: center;
     background: var(--color-blanco);
-    padding: 8px 15px 8px 10px;
+    padding: 8px 28px 8px 10px;
     border-radius: 50px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     z-index: 999;
