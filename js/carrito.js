@@ -32,7 +32,7 @@ class Carrito {
         this.botonEnviar = document.getElementById('boton-enviar-pedido');
         this.botonCerrarCarrito = document.getElementById('cerrar-carrito');
         
-        // Nuevos elementos para la barra circular central
+        // Barra circular central
         this.barraCircularCentral = document.getElementById('barra-circular-central');
         this.botonCarritoCentral = document.getElementById('boton-carrito-central');
         this.totalPedido = document.getElementById('total-pedido');
@@ -241,7 +241,7 @@ class Carrito {
         
         // Calcular posición centrada verticalmente respecto al botón
         const leftPosition = botonRect.left + scrollX - 10;
-        const topPosition = botonRect.top + scrollY + (botonRect.height / 2) - (15); // 12px es la mitad de la altura estimada de la notificación
+        const topPosition = botonRect.top + scrollY + (botonRect.height / 2) - (15); // 15px es la mitad de la altura estimada de la notificación
         
         notificacion.style.left = `${leftPosition}px`;
         notificacion.style.top = `${topPosition}px`;
