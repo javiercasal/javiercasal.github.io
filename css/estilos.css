@@ -772,12 +772,8 @@ body {
     text-overflow: ellipsis;
 }
 
-.boton-agregar.en-carrito {
-    width: auto;
-}
-
 .boton-agregar.en-carrito::after {
-    content: "🛒✅";
+    content: "✔️";
 }
 
 /* Ocultar el contenido original del botón cuando está en el carrito */
