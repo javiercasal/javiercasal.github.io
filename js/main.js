@@ -340,7 +340,7 @@ function mostrarProductos(productos) {
         if (producto.hay_stock && producto.hay_stock.toLowerCase() !== "no") {
             const botonAgregar = document.createElement('button');
             botonAgregar.className = 'boton-agregar';
-            botonAgregar.innerHTML = '+';
+            botonAgregar.innerHTML = '➕';
             botonAgregar.title = 'Agregar al carrito';
             botonAgregar.dataset.id = producto.id;
 
