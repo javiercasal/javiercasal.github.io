@@ -338,7 +338,7 @@ body {
     font-size: 0.85em;
     color: var(--color-gris-clarito);
     margin: 0px;
-    margin-right: 15px;
+    margin-right: 12px;
     line-height: 1.2;
     /* Propiedades para limitar a 3 líneas */
     display: -webkit-box;
@@ -648,22 +648,29 @@ body {
 }
 
 .boton-agregar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    height: 26px;
-    width: 26px;
-    font-size: x-small;
-    z-index: 10;
-}
 
-.boton-agregar:active {
-    transform: translateY(-50%) scale(0.95);
-    box-shadow: 0 2px 4px rgba(32, 120, 255, 0.2);
+    background-color: var(--color-gris-muy-muy-clarito);
+    color: black;
+    font-size: 0.8em;
+    border: 1px solid var(--color-gris-mas-clarito);
+
+    line-height: 2;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    display: flex;
+    text-underline-offset: 2px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1em;
+    font-family: sans-serif;
+    opacity: 0.8;
+    z-index: 10;
 }
 
 .producto-item.sin-stock .boton-agregar {
@@ -772,8 +779,16 @@ body {
     text-overflow: ellipsis;
 }
 
+/* === BOTÓN DE AGREGAR TRANSFORMADO === */
+.boton-agregar.en-carrito {
+    background: var(--color-verde-carrito) !important;
+    color: white;
+    opacity: 1 !important;
+    border: var(--color-verde-carrito);
+}
+
 .boton-agregar.en-carrito::after {
-    content: "✔️";
+    content: "✓";
 }
 
 /* Ocultar el contenido original del botón cuando está en el carrito */

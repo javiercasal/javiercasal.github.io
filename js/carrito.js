@@ -288,7 +288,7 @@ class Carrito {
                     notificacion.parentNode.removeChild(notificacion);
                 }
             }, 300);
-        }, 2000);
+        }, 1000);
     }
 
     enviarPedidoWhatsApp() {
