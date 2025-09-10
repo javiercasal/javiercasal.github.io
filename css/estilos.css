@@ -777,7 +777,7 @@ body {
 }
 
 .boton-agregar.en-carrito::after {
-    content: "🛒✔️";
+    content: "🛒✅";
 }
 
 /* Ocultar el contenido original del botón cuando está en el carrito */
