@@ -512,8 +512,8 @@ body {
 .lista-carrito {
     flex: 1;
     overflow-y: auto;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
     max-height: calc(100vh - 200px); /* Altura máxima */
 }
 
@@ -580,8 +580,8 @@ body {
 }
 
 .imagen-item-carrito {
-    width: 65px;
-    height: 65px;
+    width: 80px;
+    height: 80px;
     margin-right: 10px;
     flex-shrink: 0;
     align-self: center;
@@ -699,7 +699,7 @@ body {
     display: flex;
     flex-direction: column;
     min-width: 0;
-    gap: 5px;
+    gap: 3px;
 }
 
 .titulo-item-carrito p {
@@ -725,16 +725,19 @@ body {
 .controles-unidad-item-carrito {
     display: flex;
     align-items: center;
-    background-color: var(--color-gris-muy-muy-clarito);
-    border-radius: 6px;
+    justify-content: space-between; /* Distribuye espacio entre elementos */
+    background-color: var(--color-fondo);
+    border: 1px solid #ddd;
+    border-radius: 10px;
     overflow: hidden;
     height: 28px;
     width: 100%;
+    position: relative; /* Para posicionamiento absoluto de los botones */
 }
 
 .controles-unidad-item-carrito button {
-    background-color: transparent;
     border: none;
+    background: #f8f8f8;
     width: 28px;
     height: 28px;
     display: flex;
@@ -743,9 +746,19 @@ body {
     cursor: pointer;
     font-weight: bold;
     font-size: 1em;
-    transition: background-color 0.2s;
     color: var(--color-casi-negro);
     padding: 0;
+    position: absolute; /* Posicionamiento absoluto */
+    top: 0;
+    transition: all 0.2s;
+}
+
+.controles-unidad-item-carrito button.disminuir {
+    left: 30; /* Extremo izquierdo */
+}
+
+.controles-unidad-item-carrito button.aumentar {
+    right: 0; /* Extremo derecho */
 }
 
 .controles-unidad-item-carrito button:hover {
@@ -754,16 +767,19 @@ body {
 
 .unidad-item-carrito {
     font-size: 0.85em;
-    color: var(--color-gris-clarito);
+    color: var(--color-casi-negro);
     text-align: center;
-    padding-left: 0px;
-    padding-right: 0px;
+    margin: 0 auto; /* Centra el texto */
+    padding: 0 28px; /* Espacio para los botones */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .precio-item-carrito {
     align-self: flex-end;
     font-size: 0.9em;
     color: var(--color-casi-negro);
+    margin-top: 3px;
 }
 
 /* === NOTIFICACIÓN DE AGREGADO === */
