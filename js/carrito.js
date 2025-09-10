@@ -194,11 +194,14 @@ class Carrito {
                         <p>${item.titulo}</p>
                     </div>
                     <div class="controles-precio-item-carrito">
+                        <button class="eliminar">🗑️</button>
+                        <button class="disminuir">➖</button>
                         <div class="controles-unidad-item-carrito"> 
-                            <button class="disminuir">-</button>
+
                             <span class="unidad-item-carrito">${item.unidad || ''}</span>
-                            <button class="aumentar">+</button>
+
                         </div>
+                        <button class="aumentar">➕</button>
                     </div>
                     <div class="precio-item-carrito">
                         ${formatearNumero(item.precio * item.cantidad)}
