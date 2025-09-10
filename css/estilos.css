@@ -207,7 +207,7 @@ body {
     height: 100%;
     width: 100%;
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: 15px;
     display: block;
 }
 
@@ -591,7 +591,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: 15px;
 }
 
 .resumen-carrito {
@@ -729,7 +729,7 @@ body {
     background-color: var(--color-fondo);
     margin: 0px 3px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 15px;
     overflow: hidden;
     font-size: 0.8;
     height: 28px;
@@ -740,6 +740,7 @@ body {
 .controles-precio-item-carrito button {
     font-size: 0.8em;
     height: 30px;
+    border-radius: 15px;
 }
 
 .controles-precio-item-carrito button.disminuir {
