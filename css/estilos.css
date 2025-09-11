@@ -785,18 +785,11 @@ body {
     color: white;
     opacity: 1 !important;
     border: var(--color-verde-carrito);
-}
-
-.boton-agregar.en-carrito::after {
-    content: "✓";
-}
-
-/* Ocultar el contenido original del botón cuando está en el carrito */
-.boton-agregar.en-carrito {
     font-size: 0; /* Ocultar el texto original */
 }
 
 .boton-agregar.en-carrito::after {
+    content: "✓";
     font-size: 0.7rem; /* Restaurar tamaño para el check */
     display: flex;
     justify-content: center;
