@@ -32,9 +32,9 @@ class Carrito {
         this.botonEnviar = document.getElementById('boton-enviar-pedido');
         this.botonCerrarCarrito = document.getElementById('cerrar-carrito');
         
-        // Barra circular central
-        this.barraCircularCentral = document.getElementById('barra-circular-central');
-        this.botonCarritoCentral = document.getElementById('boton-carrito-central');
+        // Barra minimalista
+        this.barraMinimalista = document.getElementById('barra-minimalista');
+        this.botonCarritoMinimalista = document.getElementById('boton-carrito-minimalista');
         this.totalPedido = document.getElementById('total-pedido');
         this.detallesPedido = document.getElementById('detalles-pedido');
     }
@@ -44,7 +44,8 @@ class Carrito {
         this.botonCerrarCarrito.addEventListener('click', () => this.cerrarCarrito());
         this.botonEnviar.addEventListener('click', () => this.enviarPedidoWhatsApp());
         
-        this.botonCarritoCentral.addEventListener('click', () => this.abrirCarrito());
+        // Evento para el botón de la barra minimalista
+        this.botonCarritoMinimalista.addEventListener('click', () => this.abrirCarrito());
         
         this.listaCarrito.addEventListener('click', (e) => {
             if (e.target.classList.contains('disminuir')) {
@@ -144,15 +145,16 @@ class Carrito {
         const totalItems = this.items.reduce((sum, item) => sum + item.cantidad, 0);
         const subtotal = this.calcularSubtotal();
         
-        // Actualizar información de la barra central
+        // Actualizar información de la barra minimalista
         this.totalPedido.textContent = formatearNumero(subtotal);
         this.detallesPedido.textContent = `${totalItems} producto${totalItems !== 1 ? 's' : ''}`;
         
-        // Mostrar/ocultar barra central según si hay productos
+        // Mostrar/ocultar barra minimalista según si hay productos
+        const barraMinimalista = document.getElementById('barra-minimalista');
         if (totalItems > 0) {
-            this.barraCircularCentral.style.display = 'flex';
+            barraMinimalista.style.display = 'flex';
         } else {
-            this.barraCircularCentral.style.display = 'none';
+            barraMinimalista.style.display = 'none';
         }
         
         // Resto de la actualización de UI (lista de carrito, etc.)

@@ -65,15 +65,15 @@
     <!-- Lista de productos -->
     <ul class="productos-lista"></ul>
 
-    <!-- Barra inferior con botón circular central -->
-    <div class="barra-circular-central" id="barra-circular-central">
-        <button class="boton-circular-grande" id="boton-carrito-central">
-            <span class="carrito-icono"></span>
-        </button>
-        <div class="info-pedido">
+    <!-- Barra inferior minimalista (Opción 1) -->
+    <div class="barra-minimalista" id="barra-minimalista">
+        <div class="price-info">
             <div class="total-pedido" id="total-pedido">$0</div>
             <div class="detalles-pedido" id="detalles-pedido">0 productos</div>
         </div>
+        <button class="cart-button" id="boton-carrito-minimalista">
+            <span>Ver carrito</span>
+        </button>
     </div>
 
     <!-- Panel del carrito -->
@@ -104,21 +104,5 @@
     <!-- Scripts -->
     <script src="js/main.js"></script>
     <script src="js/carrito.js"></script>
-    
-    <script>
-        // Modificación para que toda la barra abra el carrito
-        document.addEventListener('DOMContentLoaded', function() {
-            const barraCentral = document.getElementById('barra-circular-central');
-            
-            barraCentral.addEventListener('click', function(e) {
-                // Evitar que se dispare dos veces si se hace clic en el botón
-                if (!e.target.closest('.boton-circular-grande')) {
-                    if (window.carrito) {
-                        window.carrito.abrirCarrito();
-                    }
-                }
-            });
-        });
-    </script>
 </body>
 </html>

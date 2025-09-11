@@ -626,7 +626,7 @@ body {
     color: white;
     border: none;
     padding: 15px;
-    border-radius: 8px;
+    border-radius: 25px;
     width: 100%;
     margin-top: 15px;
     cursor: pointer;
@@ -863,4 +863,65 @@ body {
 .detalles-pedido {
     font-size: 0.9em;
     color: var(--color-secundario);
+}
+
+/* === BARRA INFERIOR MINIMALISTA (OPCIÓN 1) === */
+.barra-minimalista {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 15px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    z-index: 999;
+    display: none; /* Oculto por defecto, se mostrará con JS cuando haya productos */
+}
+
+.barra-minimalista .price-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.barra-minimalista .total-pedido {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: var(--color-negro-oliva);
+}
+
+.barra-minimalista .detalles-pedido {
+    font-size: 0.9em;
+    color: var(--color-secundario);
+}
+
+.barra-minimalista .cart-button {
+    background: var(--color-verde-carrito);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+}
+
+.barra-minimalista .cart-button:hover {
+    background: #189350;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.barra-minimalista .cart-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
