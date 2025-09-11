@@ -15,12 +15,28 @@ if (!NodeList.prototype.find) {
     };
 }
 
+async function obtenerCostoEnvio() {
+    try {
+        const urlJSON = 'https://raw.githubusercontent.com/dietetica/datos/main/config.json';
+        const respuesta = await fetch(urlJSON);
+        const datos = await respuesta.json();
+        
+        // Obtener el costo de envío desde la raíz del JSON
+        return parseInt(datos.costoEnvio) || 0;
+    } catch (error) {
+        console.error('Error al cargar el costo de envío:', error);
+        return 0;
+    }
+}
+
 class Carrito {
     constructor() {
         this.items = JSON.parse(localStorage.getItem('carrito')) || [];
+        this.costoEnvio = 0;
         this.inicializarElementos();
         this.inicializarEventos();
         this.actualizarUI();
+        this.cargarCostoEnvio();
     }
 
     inicializarElementos() {
@@ -28,6 +44,7 @@ class Carrito {
         this.overlayCarrito = document.getElementById('overlay-carrito');
         this.listaCarrito = document.getElementById('lista-carrito');
         this.subtotalCarrito = document.getElementById('subtotal-carrito');
+        this.envioCarrito = document.getElementById('envio-carrito');
         this.totalCarrito = document.getElementById('total-carrito');
         this.botonEnviar = document.getElementById('boton-enviar-pedido');
         this.botonCerrarCarrito = document.getElementById('cerrar-carrito');
@@ -163,6 +180,7 @@ class Carrito {
         if (this.items.length === 0) {
             this.listaCarrito.innerHTML = '<p style="text-align: center; color: #777; padding: 20px;">Tu pedido está vacío</p>';
             this.subtotalCarrito.textContent = '$0';
+            this.envioCarrito.textContent = '-';
             this.totalCarrito.textContent = '$0';
             return;
         }
@@ -216,11 +234,17 @@ class Carrito {
         
         // Actualizar totales del panel
         this.subtotalCarrito.textContent = formatearNumero(subtotal);
-        this.totalCarrito.textContent = formatearNumero(subtotal);
+        this.envioCarrito.textContent = formatearNumero(this.costoEnvio);
+        this.totalCarrito.textContent = formatearNumero(subtotal + this.costoEnvio);
 
         // Actualizar botones al final
         this.actualizarBotonesAgregar();
     }
+
+    async cargarCostoEnvio() {
+        this.costoEnvio = await obtenerCostoEnvio();
+        this.actualizarUI();
+    }    
 
     abrirCarrito() {
         this.panelCarrito.classList.add('abierto');
@@ -303,10 +327,12 @@ class Carrito {
             mensaje += `• ${item.titulo} - ${item.cantidad} x ${formatearNumero(item.precio)}${item.unidad ? ' ' + item.unidad : ''}%0A`;
         });
         
-        mensaje += `%0ATotal: ${formatearNumero(this.calcularSubtotal())}%0A%0A`;
+        const subtotal = this.calcularSubtotal();
+        mensaje += `%0ASubtotal: ${formatearNumero(subtotal)}%0A`;
+        mensaje += `Envío: ${formatearNumero(this.costoEnvio)}%0A`;
+        mensaje += `Total: ${formatearNumero(subtotal + this.costoEnvio)}%0A%0A`;
         mensaje += 'Mi nombre: [COMPLETAR]%0A';
         mensaje += 'Dirección de entrega: [COMPLETAR]%0A';
-        mensaje += 'Teléfono de contacto: [COMPLETAR]';
         
         const urlWhatsApp = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${mensaje}`;
         window.open(urlWhatsApp, '_blank');

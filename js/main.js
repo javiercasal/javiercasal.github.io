@@ -55,7 +55,7 @@ function deselectAllTags() {
 // Carga el archivo CSV desde GitHub, lo parsea y muestra los productos
 async function cargarYMostrarProductos() {
     try {
-        const urlCSV = 'https://raw.githubusercontent.com/dieteticaaxelyjavi/productos/main/lista.csv';
+        const urlCSV = 'https://raw.githubusercontent.com/dietetica/productos/main/lista.csv';
         const respuesta = await fetch(urlCSV);
         const textoCSV = await respuesta.text();
 

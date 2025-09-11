@@ -689,6 +689,13 @@ body {
     margin: 5px 0;
 }
 
+/* Estilo para el elemento de envío si necesitas diferenciarlo */
+.info-total.envio {
+    border-bottom: 1px dashed var(--color-gris-mas-clarito);
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
 /* === NUEVOS ESTILOS PARA EL CARRITO === */
 .contenido-item-carrito {
     flex: 1;
