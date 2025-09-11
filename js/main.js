@@ -351,6 +351,15 @@ function mostrarProductos(productos) {
             
             botonAgregar.addEventListener('click', (e) => {
                 e.stopPropagation();
+
+                // Si ya está en el carrito, abrir el carrito en lugar de agregar otro
+                if (botonAgregar.classList.contains('en-carrito')) {
+                    if (window.carrito) {
+                        window.carrito.abrirCarrito();
+                    }
+                    return;
+                }
+
                 agregarAlCarrito({
                     id: producto.id,
                     titulo: producto.titulo,

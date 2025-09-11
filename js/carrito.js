@@ -79,7 +79,7 @@ class Carrito {
         const productoExistente = this.items.find(item => item.id === producto.id);
         
         if (productoExistente) {
-            productoExistente.cantidad += 1;
+            //productoExistente.cantidad += 1;
         } else {
             this.items.push({
                 id: producto.id,
@@ -88,16 +88,16 @@ class Carrito {
                 unidad: producto.unidad,
                 cantidad: 1
             });
+            
+            // Mostrar confirmación de agregregado si se proporcionó un botón
+            if (botonAgregar) {
+                this.mostrarConfirmacionAgregado(producto.titulo, botonAgregar);
+            }
         }
         
         this.guardarEnLocalStorage();
         this.actualizarUI();
-        
-        // Mostrar confirmación si se proporcionó un botón
-        if (botonAgregar) {
-            this.mostrarConfirmacionAgregado(producto.titulo, botonAgregar);
-        }
-        
+
         // Actualizar el estado de los botones
         this.actualizarBotonesAgregar();
     }
