@@ -10,7 +10,7 @@
 :root {
     /* Colores base */
     --color-blanco: white;
-    --color-fondo: #fefdf9;
+    --color-fondo: white;
 
     /* Escala de grises (ordenados de oscuro a claro) */
     --color-casi-negro: #222;
