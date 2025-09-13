@@ -15,17 +15,20 @@ if (!NodeList.prototype.find) {
     };
 }
 
-async function obtenerCostoEnvio() {
+// Función para obtener configuración (costoEnvio y pedidoMinimo)
+async function obtenerConfiguracion() {
     try {
         const urlJSON = 'https://raw.githubusercontent.com/dietetica/datos/main/config.json';
         const respuesta = await fetch(urlJSON);
         const datos = await respuesta.json();
         
-        // Obtener el costo de envío desde la raíz del JSON
-        return parseInt(datos.costoEnvio) || 0;
+        return {
+            costoEnvio: parseInt(datos.costoEnvio) || 0,
+            pedidoMinimo: parseInt(datos.pedidoMinimo) || 0
+        };
     } catch (error) {
-        console.error('Error al cargar el costo de envío:', error);
-        return 0;
+        console.error('Error al cargar la configuración:', error);
+        return { costoEnvio: 0, pedidoMinimo: 0 };
     }
 }
 
@@ -33,10 +36,11 @@ class Carrito {
     constructor() {
         this.items = JSON.parse(localStorage.getItem('carrito')) || [];
         this.costoEnvio = 0;
+        this.pedidoMinimo = 0;
         this.inicializarElementos();
         this.inicializarEventos();
         this.actualizarUI();
-        this.cargarCostoEnvio();
+        this.cargarConfiguracion();
     }
 
     inicializarElementos() {
@@ -119,12 +123,17 @@ class Carrito {
         this.actualizarBotonesAgregar();
     }
 
-    eliminarProducto(id) {
-        this.items = this.items.filter(item => item.id !== id);
-        this.guardarEnLocalStorage();
-        this.actualizarUI();
-        this.actualizarBotonesAgregar();
-    }
+eliminarProducto(id) {
+    this.items = this.items.filter(item => item.id !== id);
+    this.guardarEnLocalStorage();
+    this.actualizarUI();
+    
+    // Actualizar específicamente el mensaje de pedido mínimo
+    const subtotal = this.calcularSubtotal();
+    this.actualizarBotonEnvio(subtotal);
+    
+    this.actualizarBotonesAgregar();
+}
 
     aumentarCantidad(id) {
         const producto = this.items.find(item => item.id === id);
@@ -132,22 +141,30 @@ class Carrito {
             producto.cantidad += 1;
             this.guardarEnLocalStorage();
             this.actualizarUI();
+            
+            // Actualizar específicamente el mensaje de pedido mínimo
+            const subtotal = this.calcularSubtotal();
+            this.actualizarBotonEnvio(subtotal);
         }
     }
 
-    disminuirCantidad(id) {
-        const producto = this.items.find(item => item.id === id);
-        if (producto) {
-            producto.cantidad -= 1;
-            if (producto.cantidad <= 0) {
-                this.eliminarProducto(id);
-            } else {
-                this.guardarEnLocalStorage();
-                this.actualizarUI();
-            }
+disminuirCantidad(id) {
+    const producto = this.items.find(item => item.id === id);
+    if (producto) {
+        producto.cantidad -= 1;
+        if (producto.cantidad <= 0) {
+            this.eliminarProducto(id);
+        } else {
+            this.guardarEnLocalStorage();
+            this.actualizarUI();
+            
+            // Actualizar específicamente el mensaje de pedido mínimo
+            const subtotal = this.calcularSubtotal();
+            this.actualizarBotonEnvio(subtotal);
         }
-        this.actualizarBotonesAgregar();
     }
+    this.actualizarBotonesAgregar();
+}
 
     calcularSubtotal() {
         return this.items.reduce((total, item) => total + (parseInt(item.precio) * item.cantidad), 0);
@@ -155,6 +172,13 @@ class Carrito {
 
     guardarEnLocalStorage() {
         localStorage.setItem('carrito', JSON.stringify(this.items));
+    }
+
+    async cargarConfiguracion() {
+        const config = await obtenerConfiguracion();
+        this.costoEnvio = config.costoEnvio;
+        this.pedidoMinimo = config.pedidoMinimo;
+        this.actualizarUI();
     }
 
     actualizarUI() {
@@ -215,13 +239,11 @@ class Carrito {
                     </div>
                     <div class="controles-precio-item-carrito">
                         <button class="eliminar">🗑️</button>
-                        <button class="disminuir">➖</button>
+                        <button class="disminuir">-</button>
                         <div class="controles-unidad-item-carrito"> 
-
                             <span class="unidad-item-carrito">${item.unidad || ''}</span>
-
                         </div>
-                        <button class="aumentar">➕</button>
+                        <button class="aumentar">+</button>
                     </div>
                     <div class="precio-item-carrito">
                         ${formatearNumero(item.precio * item.cantidad)}
@@ -237,8 +259,49 @@ class Carrito {
         this.envioCarrito.textContent = formatearNumero(this.costoEnvio);
         this.totalCarrito.textContent = formatearNumero(subtotal + this.costoEnvio);
 
+        this.actualizarBotonEnvio(subtotal);
+
         // Actualizar botones al final
         this.actualizarBotonesAgregar();
+    }
+
+    actualizarBotonEnvio(subtotal) {
+        const cumpleMinimo = subtotal >= this.pedidoMinimo;
+        
+        if (cumpleMinimo) {
+            this.botonEnviar.disabled = false;
+            this.botonEnviar.textContent = 'Enviar pedido por WhatsApp';
+            this.botonEnviar.classList.remove('boton-deshabilitado');
+            this.botonEnviar.classList.add('boton-habilitado');
+            
+            // Eliminar mensaje de pedido mínimo si existe
+            const mensajeMinimo = document.getElementById('mensaje-pedido-minimo');
+            if (mensajeMinimo) {
+                mensajeMinimo.remove();
+            }
+        } else {
+            this.botonEnviar.disabled = true;
+            this.botonEnviar.textContent = `Pedido mínimo: ${formatearNumero(this.pedidoMinimo)}`;
+            this.botonEnviar.classList.remove('boton-habilitado');
+            this.botonEnviar.classList.add('boton-deshabilitado');
+            
+            // Calcular monto faltante
+            const montoFaltante = this.pedidoMinimo - subtotal;
+            
+            // Agregar o actualizar mensaje informativo
+            let mensaje = document.getElementById('mensaje-pedido-minimo');
+            
+            if (!mensaje) {
+                mensaje = document.createElement('div');
+                mensaje.id = 'mensaje-pedido-minimo';
+                mensaje.className = 'mensaje-pedido-minimo';
+                
+                // Insertar después del botón de envío
+                this.botonEnviar.parentNode.insertBefore(mensaje, this.botonEnviar.nextSibling);
+            }
+            
+            mensaje.textContent = `Agregá productos por ${formatearNumero(montoFaltante)} para completar el pedido mínimo`;
+        }
     }
 
     async cargarCostoEnvio() {
@@ -319,6 +382,13 @@ class Carrito {
 
     enviarPedidoWhatsApp() {
         if (this.items.length === 0) return;
+
+        const subtotal = this.calcularSubtotal();
+
+        // Verificar que cumpla con el pedido mínimo
+        if (subtotal < this.pedidoMinimo) {
+            return; // No hacer nada si no cumple el mínimo
+        }
         
         const numeroWhatsApp = '5491133417868';
         let mensaje = '¡Hola! Quiero hacer el siguiente pedido:%0A%0A';
@@ -327,7 +397,6 @@ class Carrito {
             mensaje += `• ${item.titulo} - ${item.cantidad} x ${formatearNumero(item.precio)}${item.unidad ? ' ' + item.unidad : ''}%0A`;
         });
         
-        const subtotal = this.calcularSubtotal();
         mensaje += `%0ASubtotal: ${formatearNumero(subtotal)}%0A`;
         mensaje += `Envío: ${formatearNumero(this.costoEnvio)}%0A`;
         mensaje += `Total: ${formatearNumero(subtotal + this.costoEnvio)}%0A%0A`;
