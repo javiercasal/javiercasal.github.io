@@ -188,6 +188,40 @@ disminuirCantidad(id) {
     }
 
     actualizarUI() {
+        // Obtener productos actuales del DOM
+        const productosDOM = Array.from(document.querySelectorAll('.producto-item'));
+        
+        // Actualizar información de productos en el carrito con datos actuales
+        this.items = this.items.map(itemCarrito => {
+            const productoActual = productosDOM.find(producto => 
+                producto.dataset.id === itemCarrito.id
+            );
+            
+            if (productoActual) {
+                // Obtener datos actualizados del DOM
+                const titulo = productoActual.querySelector('.producto-titulo').textContent;
+                const precioTexto = productoActual.querySelector('.producto-precio').textContent;
+                
+                // Extraer precio numérico (eliminar "$" y puntos de miles)
+                const precioMatch = precioTexto.match(/\$?([\d.,]+)/);
+                const precio = precioMatch ? parseInt(precioMatch[1].replace(/\./g, '')) : itemCarrito.precio;
+                
+                // Extraer unidad si está presente
+                let unidad = itemCarrito.unidad;
+                
+                return {
+                    ...itemCarrito,
+                    titulo: titulo,
+                    precio: precio,
+                    unidad: unidad
+                };
+            }
+            
+            return itemCarrito; // Mantener datos originales si no se encuentra el producto
+        });
+        
+        this.guardarEnLocalStorage();
+
         // Actualizar contadores
         const totalItems = this.items.reduce((sum, item) => sum + item.cantidad, 0);
         const subtotal = this.calcularSubtotal();
