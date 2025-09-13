@@ -69,14 +69,20 @@ class Carrito {
         this.botonCarritoMinimalista.addEventListener('click', () => this.abrirCarrito());
         
         this.listaCarrito.addEventListener('click', (e) => {
-            if (e.target.classList.contains('disminuir')) {
-                const id = e.target.closest('.item-carrito').dataset.id;
+            // Detectar clics en los contenedores de botones
+            const contenedorBoton = e.target.closest('.contenedor-boton');
+            if (!contenedorBoton) return;
+            
+            const boton = contenedorBoton.querySelector('button');
+            if (!boton) return;
+            
+            const id = e.target.closest('.item-carrito').dataset.id;
+            
+            if (boton.classList.contains('disminuir')) {
                 this.disminuirCantidad(id);
-            } else if (e.target.classList.contains('aumentar')) {
-                const id = e.target.closest('.item-carrito').dataset.id;
+            } else if (boton.classList.contains('aumentar')) {
                 this.aumentarCantidad(id);
-            } else if (e.target.classList.contains('eliminar')) {
-                const id = e.target.closest('.item-carrito').dataset.id;
+            } else if (boton.classList.contains('eliminar')) {
                 this.eliminarProducto(id);
             }
         });
@@ -238,12 +244,18 @@ disminuirCantidad(id) {
                         <p>${item.titulo}</p>
                     </div>
                     <div class="controles-precio-item-carrito">
-                        <button class="eliminar">🗑️</button>
-                        <button class="disminuir">-</button>
+                        <div class="contenedor-boton contenedor-eliminar">
+                            <button class="eliminar">🗑️</button>
+                        </div>
+                        <div class="contenedor-boton contenedor-disminuir">
+                            <button class="disminuir">-</button>
+                        </div>
                         <div class="controles-unidad-item-carrito"> 
                             <span class="unidad-item-carrito">${item.unidad || ''}</span>
                         </div>
-                        <button class="aumentar">+</button>
+                        <div class="contenedor-boton contenedor-aumentar">
+                            <button class="aumentar">+</button>
+                        </div>
                     </div>
                     <div class="precio-item-carrito">
                         ${formatearNumero(item.precio * item.cantidad)}

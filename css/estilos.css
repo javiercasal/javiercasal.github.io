@@ -513,7 +513,6 @@ body {
     flex: 1;
     overflow-y: auto;
     padding-left: 13px;
-    padding-right: 15px;
     max-height: calc(100vh - 200px); /* Altura máxima */
 }
 
@@ -581,7 +580,6 @@ body {
 .imagen-item-carrito {
     width: 77px;
     height: 77px;
-    margin-right: 10px;
     flex-shrink: 0;
     align-self: center;
 }
@@ -702,11 +700,12 @@ body {
     display: flex;
     flex-direction: column;
     min-width: 0;
-    gap: 3px;
 }
 
 .titulo-item-carrito p {
     margin: 0;
+    margin-left: 10px;
+    margin-right: 15px;
     padding: 0;
     font-size: 0.85em;
     color: var(--color-casi-negro);
@@ -721,8 +720,29 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    margin-top: 5px;
+}
+
+/* Contenedores para botones con mayor superficie clickeable */
+.contenedor-boton {
+    padding: 8px 0px 8px 0px; /* Aumenta la superficie clickeable */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedor-boton button {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
 }
 
 .controles-unidad-item-carrito {
@@ -730,7 +750,8 @@ body {
     align-items: center;
     justify-content: space-between; /* Distribuye espacio entre elementos */
     background-color: var(--color-fondo);
-    margin: 0px 3px;
+    min-width: 26px;
+    text-align: center;
     border: 1px solid #ddd;
     border-radius: 15px;
     overflow: hidden;
@@ -741,13 +762,10 @@ body {
 }
 
 .controles-precio-item-carrito button {
-    height: 26px;
-    width: 26px;
+    height: 28px;
+    width: 28px;
     font-size: x-small;
-}
-
-.controles-precio-item-carrito button.disminuir {
-    margin-left: 3px;
+    background-color: var(--color-gris-muy-muy-clarito);
 }
 
 .unidad-item-carrito {
@@ -755,16 +773,16 @@ body {
     color: var(--color-casi-negro);
     text-align: center;
     margin: 0 auto; /* Centra el texto */
-    padding: 0 1px;
+    padding: 0 1px 1px 0;
     width: 100%;
     box-sizing: border-box;
 }
 
 .precio-item-carrito {
     align-self: flex-end;
+    margin-right: 15px;
     font-size: 0.85em;
     color: var(--color-casi-negro);
-    margin-top: 3px;
 }
 
 /* === NOTIFICACIÓN DE AGREGADO === */
@@ -865,7 +883,7 @@ body {
     color: var(--color-secundario);
 }
 
-/* === BARRA INFERIOR MINIMALISTA (OPCIÓN 1) === */
+/* === BARRA INFERIOR MINIMALISTA === */
 .barra-minimalista {
     position: fixed;
     bottom: 0;
@@ -951,10 +969,10 @@ body {
 /* === CORRECCIÓN PARA BOTONES DE CANTIDAD EN CARRITO === */
 .controles-precio-item-carrito button.disminuir,
 .controles-precio-item-carrito button.aumentar {
-    width: 26px !important;
-    height: 26px !important;
-    min-width: 26px !important;
-    min-height: 26px !important;
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
     border-radius: 50%;
     border: 1px solid var(--color-gris-mas-clarito);
     font-family: revert;
@@ -971,10 +989,26 @@ body {
 }
 
 .controles-precio-item-carrito button.eliminar {
-    width: 26px !important;
-    height: 26px !important;
-    min-width: 26px !important;
-    min-height: 26px !important;
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
     border-radius: 50%;
     border: 1px solid var(--color-gris-mas-clarito);
+}
+
+/* Estilos para los contenedores de botones específicos */
+.contenedor-eliminar {
+    padding-left: 10px;
+    padding-right: 1.5px;
+}
+
+.contenedor-disminuir {
+    padding-left: 1.5px;
+    padding-right: 3px;
+}
+
+.contenedor-aumentar {
+    padding-left: 3px;
+    padding-right: 15px;
 }
