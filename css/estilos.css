@@ -1024,3 +1024,8 @@ body {
     background-color: var(--color-gris-muy-muy-clarito);
     transform: none;
 }
+
+/* === ESTILOS PARA ENVÍO GRATIS === */
+#envio-carrito.envio-gratis {
+    color: #1dab61 !important; /* Mismo verde que usa para el carrito */
+}

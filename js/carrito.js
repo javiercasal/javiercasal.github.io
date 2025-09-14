@@ -338,12 +338,15 @@ eliminarProducto(id) {
         
         if (subtotal < this.pedidoMinimo) {
             this.envioCarrito.textContent = "-";
+            this.envioCarrito.classList.remove('envio-gratis'); // Remover clase si existe
             costoEnvio = 0;
         } else if (subtotal < this.envioGratisDesde) {
             this.envioCarrito.textContent = formatearNumero(this.costoEnvio);
+            this.envioCarrito.classList.remove('envio-gratis'); // Remover clase si existe
             costoEnvio = this.costoEnvio;
         } else {
             this.envioCarrito.textContent = "Gratis";
+            this.envioCarrito.classList.add('envio-gratis'); // Agregar clase para envío gratis
             costoEnvio = 0;
         }
         
@@ -486,7 +489,7 @@ eliminarProducto(id) {
             mensaje += `- ${item.unidad} de ${item.titulo}%0A`;
         });
         
-        mensaje += `%0ASubtotal: *${formatearNumero(subtotal)}%0A`;
+        mensaje += `%0ASubtotal: ${formatearNumero(subtotal)}%0A`;
         mensaje += `Envío: ${formatearNumero(this.costoEnvio)}%0A`;
         mensaje += `Total: ${formatearNumero(subtotal + this.costoEnvio)}`;
         
