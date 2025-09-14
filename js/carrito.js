@@ -477,10 +477,10 @@ eliminarProducto(id) {
         }
         
         const numeroWhatsApp = '5491133417868';
-        let mensaje = '¡Hola! Quiero hacer el siguiente pedido:%0A%0A';
+        let mensaje = 'Mi pedido:%0A%0A';
         
         this.items.forEach(item => {
-            mensaje += `• ${item.titulo} - ${item.cantidad} x ${formatearNumero(item.precio)}${item.unidad ? ' ' + item.unidad : ''}%0A`;
+            mensaje += `• ${item.titulo} - ${item.unidad}%0A`;
         });
         
         mensaje += `%0ASubtotal: ${formatearNumero(subtotal)}%0A`;
