@@ -483,12 +483,12 @@ eliminarProducto(id) {
         let mensaje = '';
         
         this.items.forEach(item => {
-            mensaje += `• ${item.unidad} de ${item.titulo}%0A`;
+            mensaje += `- ${item.unidad} de ${item.titulo}%0A`;
         });
         
-        mensaje += `%0ASubtotal: *${formatearNumero(subtotal)}*%0A`;
-        mensaje += `Envío: *${formatearNumero(this.costoEnvio)}*%0A`;
-        mensaje += `Total: *${formatearNumero(subtotal + this.costoEnvio)}*%0A%0A`;
+        mensaje += `%0ASubtotal: *${formatearNumero(subtotal)}%0A`;
+        mensaje += `Envío: ${formatearNumero(this.costoEnvio)}%0A`;
+        mensaje += `Total: ${formatearNumero(subtotal + this.costoEnvio)}`;
         
         const urlWhatsApp = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${mensaje}`;
         window.open(urlWhatsApp, '_blank');
