@@ -480,17 +480,15 @@ eliminarProducto(id) {
         }
         
         const numeroWhatsApp = '5491133417868';
-        let mensaje = 'Mi pedido:%0A%0A';
+        let mensaje = '';
         
         this.items.forEach(item => {
-            mensaje += `• ${item.titulo} - ${item.unidad}%0A`;
+            mensaje += `• ${item.unidad} de ${item.titulo}%0A`;
         });
         
-        mensaje += `%0ASubtotal: ${formatearNumero(subtotal)}%0A`;
-        mensaje += `Envío: ${formatearNumero(this.costoEnvio)}%0A`;
-        mensaje += `Total: ${formatearNumero(subtotal + this.costoEnvio)}%0A%0A`;
-        mensaje += 'Mi nombre: [COMPLETAR]%0A';
-        mensaje += 'Dirección de entrega: [COMPLETAR]%0A';
+        mensaje += `%0ASubtotal: *${formatearNumero(subtotal)}*%0A`;
+        mensaje += `Envío: *${formatearNumero(this.costoEnvio)}*%0A`;
+        mensaje += `Total: *${formatearNumero(subtotal + this.costoEnvio)}*%0A%0A`;
         
         const urlWhatsApp = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${mensaje}`;
         window.open(urlWhatsApp, '_blank');
