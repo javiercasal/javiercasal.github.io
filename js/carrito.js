@@ -24,7 +24,8 @@ async function obtenerConfiguracion() {
         
         return {
             costoEnvio: parseInt(datos.costoEnvio) || 0,
-            pedidoMinimo: parseInt(datos.pedidoMinimo) || 0
+            pedidoMinimo: parseInt(datos.pedidoMinimo) || 0,
+            envioGratisDesde: parseInt(datos.envioGratisDesde) || 0
         };
     } catch (error) {
         console.error('Error al cargar la configuración:', error);
@@ -113,6 +114,8 @@ class Carrito {
                 titulo: producto.titulo,
                 precio: producto.precio,
                 unidad: producto.unidad,
+                unidades_precios: producto.unidades_precios || [],
+                indiceUnidad: producto.indiceUnidad || 0,
                 cantidad: 1
             });
             
@@ -144,7 +147,17 @@ eliminarProducto(id) {
     aumentarCantidad(id) {
         const producto = this.items.find(item => item.id === id);
         if (producto) {
-            producto.cantidad += 1;
+            // Verificar si hay más opciones de unidades disponibles
+            if (producto.unidades_precios && producto.indiceUnidad < producto.unidades_precios.length - 1) {
+                // Cambiar a la siguiente unidad
+                producto.indiceUnidad += 1;
+                const nuevaUnidad = producto.unidades_precios[producto.indiceUnidad];
+                producto.precio = nuevaUnidad.precio;
+                producto.unidad = nuevaUnidad.unidad;
+            } else {
+                // Está en la última unidad
+            }
+            
             this.guardarEnLocalStorage();
             this.actualizarUI();
             
@@ -154,13 +167,24 @@ eliminarProducto(id) {
         }
     }
 
-disminuirCantidad(id) {
-    const producto = this.items.find(item => item.id === id);
-    if (producto) {
-        producto.cantidad -= 1;
-        if (producto.cantidad <= 0) {
-            this.eliminarProducto(id);
-        } else {
+    disminuirCantidad(id) {
+        const producto = this.items.find(item => item.id === id);
+        if (producto) {
+            // Verificar si hay unidades anteriores disponibles
+            if (producto.unidades_precios && producto.indiceUnidad > 0) {
+                // Cambiar a la unidad anterior
+                producto.indiceUnidad -= 1;
+                const nuevaUnidad = producto.unidades_precios[producto.indiceUnidad];
+                producto.precio = nuevaUnidad.precio;
+                producto.unidad = nuevaUnidad.unidad;
+            } else if (producto.cantidad > 1) {
+                // Está en la primera unidad
+            } else {
+                // Si la cantidad es 1 y está en la primera unidad, eliminar el producto
+                //this.eliminarProducto(id);
+                return;
+            }
+            
             this.guardarEnLocalStorage();
             this.actualizarUI();
             
@@ -168,12 +192,23 @@ disminuirCantidad(id) {
             const subtotal = this.calcularSubtotal();
             this.actualizarBotonEnvio(subtotal);
         }
+        this.actualizarBotonesAgregar();
     }
-    this.actualizarBotonesAgregar();
-}
 
     calcularSubtotal() {
         return this.items.reduce((total, item) => total + (parseInt(item.precio) * item.cantidad), 0);
+    }
+
+    calcularEnvio(subtotal) {
+        if (subtotal < this.pedidoMinimo) {
+            return 0;
+        }
+        
+        if (subtotal < this.envioGratisDesde) {
+            return this.costoEnvio;
+        }
+        
+        return 0;
     }
 
     guardarEnLocalStorage() {
@@ -184,6 +219,7 @@ disminuirCantidad(id) {
         const config = await obtenerConfiguracion();
         this.costoEnvio = config.costoEnvio;
         this.pedidoMinimo = config.pedidoMinimo;
+        this.envioGratisDesde = config.envioGratisDesde;
         this.actualizarUI();
     }
 
@@ -200,20 +236,11 @@ disminuirCantidad(id) {
             if (productoActual) {
                 // Obtener datos actualizados del DOM
                 const titulo = productoActual.querySelector('.producto-titulo').textContent;
-                const precioTexto = productoActual.querySelector('.producto-precio').textContent;
                 
-                // Extraer precio numérico (eliminar "$" y puntos de miles)
-                const precioMatch = precioTexto.match(/\$?([\d.,]+)/);
-                const precio = precioMatch ? parseInt(precioMatch[1].replace(/\./g, '')) : itemCarrito.precio;
-                
-                // Extraer unidad si está presente
-                let unidad = itemCarrito.unidad;
-                
+                // Mantener las unidades_precios e indiceUnidad existentes
                 return {
                     ...itemCarrito,
-                    titulo: titulo,
-                    precio: precio,
-                    unidad: unidad
+                    titulo: titulo
                 };
             }
             
@@ -292,7 +319,7 @@ disminuirCantidad(id) {
                         </div>
                     </div>
                     <div class="precio-item-carrito">
-                        ${formatearNumero(item.precio * item.cantidad)}
+                        ${formatearNumero(item.precio)}
                     </div>
                 </div>
             `;
@@ -300,15 +327,28 @@ disminuirCantidad(id) {
             this.listaCarrito.appendChild(elemento);
         });
         
-        // Actualizar totales del panel
+        // Actualizar totales
         this.subtotalCarrito.textContent = formatearNumero(subtotal);
-        this.envioCarrito.textContent = formatearNumero(this.costoEnvio);
-        this.totalCarrito.textContent = formatearNumero(subtotal + this.costoEnvio);
-
+        
+        // Calcular envío
+        let costoEnvio = 0;
+        
+        if (subtotal < this.pedidoMinimo) {
+            this.envioCarrito.textContent = "-";
+            costoEnvio = 0;
+        } else if (subtotal < this.envioGratisDesde) {
+            this.envioCarrito.textContent = formatearNumero(this.costoEnvio);
+            costoEnvio = this.costoEnvio;
+        } else {
+            this.envioCarrito.textContent = "Gratis";
+            costoEnvio = 0;
+        }
+        
+        const total = subtotal + costoEnvio;
+        this.totalCarrito.textContent = formatearNumero(total);
+        
+        // Actualizar botón de envío
         this.actualizarBotonEnvio(subtotal);
-
-        // Actualizar botones al final
-        this.actualizarBotonesAgregar();
     }
 
     actualizarBotonEnvio(subtotal) {
@@ -351,7 +391,7 @@ disminuirCantidad(id) {
     }
 
     async cargarCostoEnvio() {
-        this.costoEnvio = await obtenerCostoEnvio();
+        this.costoEnvio = await obtenerConfiguracion();
         this.actualizarUI();
     }    
 

@@ -55,7 +55,7 @@ function deselectAllTags() {
 // Carga el archivo CSV desde GitHub, lo parsea y muestra los productos
 async function cargarYMostrarProductos() {
     try {
-        const urlCSV = 'https://raw.githubusercontent.com/dietetica/productos/main/lista.csv';
+        const urlCSV = 'https://raw.githubusercontent.com/dietetica/productos/main/prueba.csv';
         const respuesta = await fetch(urlCSV);
         const textoCSV = await respuesta.text();
 
@@ -135,8 +135,33 @@ function parsearCSV(csv) {
             producto[columna.trim()] = valores[i]?.trim().replaceAll(';', ',') || '';
         });
 
+        // Parsear las unidades y precios
+        if (producto.unidades_precios) {
+            producto.unidades_precios = parseUnidadesPrecios(producto.unidades_precios);
+        }
+
         return producto;
     });
+}
+
+// Función para parsear el formato de unidades y precios
+function parseUnidadesPrecios(unidadesPreciosStr) {
+    if (!unidadesPreciosStr || unidadesPreciosStr === '') return [];
+    
+    const unidadesPrecios = [];
+    const partes = unidadesPreciosStr.split('|');
+    
+    partes.forEach(parte => {
+        const [unidad, precio] = parte.split(':');
+        if (unidad && precio) {
+            unidadesPrecios.push({
+                unidad: unidad.trim(),
+                precio: parseInt(precio.trim())
+            });
+        }
+    });
+    
+    return unidadesPrecios;
 }
 
 // Filtra los productos por texto ingresado en el input
@@ -292,7 +317,7 @@ function mostrarProductos(productos) {
         // Precio
         const precio = document.createElement('p');
         precio.className = 'producto-precio';
-        precio.textContent = formatearNumero(producto.precio);
+        precio.textContent = producto.precio_resumen || formatearNumero(producto.precio);
 
         if (producto.unidad) {
             precio.textContent += ' ' + producto.unidad;
@@ -360,11 +385,22 @@ function mostrarProductos(productos) {
                     return;
                 }
 
+                // Obtener la primera unidad y precio por defecto
+                let unidadSeleccionada = '';
+                let precioSeleccionado = 0;
+                
+                if (producto.unidades_precios && producto.unidades_precios.length > 0) {
+                    unidadSeleccionada = producto.unidades_precios[0].unidad;
+                    precioSeleccionado = producto.unidades_precios[0].precio;
+                }
+
                 agregarAlCarrito({
                     id: producto.id,
                     titulo: producto.titulo,
-                    precio: producto.precio,
-                    unidad: producto.unidad
+                    precio: precioSeleccionado,
+                    unidad: unidadSeleccionada,
+                    unidades_precios: producto.unidades_precios || [],
+                    indiceUnidad: 0 // Índice de la unidad seleccionada
                 }, botonAgregar); // Pasar el botón como segundo parámetro
             });
             item.appendChild(botonAgregar);
