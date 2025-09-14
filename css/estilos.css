@@ -1012,3 +1012,15 @@ body {
     padding-left: 3px;
     padding-right: 15px;
 }
+
+/* === ESTILOS PARA BOTONES DESHABILITADOS EN CARRITO === */
+.controles-precio-item-carrito button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background-color: var(--color-gris-muy-muy-clarito);
+}
+
+.controles-precio-item-carrito button:disabled:hover {
+    background-color: var(--color-gris-muy-muy-clarito);
+    transform: none;
+}

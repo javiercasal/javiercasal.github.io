@@ -75,7 +75,7 @@ class Carrito {
             if (!contenedorBoton) return;
             
             const boton = contenedorBoton.querySelector('button');
-            if (!boton) return;
+            if (!boton || boton.disabled) return; // No hacer nada si el botón está deshabilitado
             
             const id = e.target.closest('.item-carrito').dataset.id;
             
@@ -154,17 +154,21 @@ eliminarProducto(id) {
                 const nuevaUnidad = producto.unidades_precios[producto.indiceUnidad];
                 producto.precio = nuevaUnidad.precio;
                 producto.unidad = nuevaUnidad.unidad;
+                
+                this.guardarEnLocalStorage();
+                this.actualizarUI();
+                
+                // Actualizar específicamente el mensaje de pedido mínimo
+                const subtotal = this.calcularSubtotal();
+                this.actualizarBotonEnvio(subtotal);
+                
+                return true; // Operación exitosa
             } else {
-                // Está en la última unidad
+                // No hay más unidades disponibles
+                return false;
             }
-            
-            this.guardarEnLocalStorage();
-            this.actualizarUI();
-            
-            // Actualizar específicamente el mensaje de pedido mínimo
-            const subtotal = this.calcularSubtotal();
-            this.actualizarBotonEnvio(subtotal);
         }
+        return false;
     }
 
     disminuirCantidad(id) {
@@ -177,22 +181,21 @@ eliminarProducto(id) {
                 const nuevaUnidad = producto.unidades_precios[producto.indiceUnidad];
                 producto.precio = nuevaUnidad.precio;
                 producto.unidad = nuevaUnidad.unidad;
-            } else if (producto.cantidad > 1) {
-                // Está en la primera unidad
+                
+                this.guardarEnLocalStorage();
+                this.actualizarUI();
+                
+                // Actualizar específicamente el mensaje de pedido mínimo
+                const subtotal = this.calcularSubtotal();
+                this.actualizarBotonEnvio(subtotal);
+                
+                return true; // Operación exitosa
             } else {
-                // Si la cantidad es 1 y está en la primera unidad, eliminar el producto
-                //this.eliminarProducto(id);
-                return;
+                // No hay unidades anteriores disponibles
+                return false;
             }
-            
-            this.guardarEnLocalStorage();
-            this.actualizarUI();
-            
-            // Actualizar específicamente el mensaje de pedido mínimo
-            const subtotal = this.calcularSubtotal();
-            this.actualizarBotonEnvio(subtotal);
         }
-        this.actualizarBotonesAgregar();
+        return false;
     }
 
     calcularSubtotal() {
@@ -309,13 +312,13 @@ eliminarProducto(id) {
                             <button class="eliminar">🗑️</button>
                         </div>
                         <div class="contenedor-boton contenedor-disminuir">
-                            <button class="disminuir">-</button>
+                            <button class="disminuir" ${item.unidades_precios && item.indiceUnidad <= 0 ? 'disabled' : ''}>-</button>
                         </div>
                         <div class="controles-unidad-item-carrito"> 
                             <span class="unidad-item-carrito">${item.unidad || ''}</span>
                         </div>
                         <div class="contenedor-boton contenedor-aumentar">
-                            <button class="aumentar">+</button>
+                            <button class="aumentar" ${item.unidades_precios && item.indiceUnidad >= item.unidades_precios.length - 1 ? 'disabled' : ''}>+</button>
                         </div>
                     </div>
                     <div class="precio-item-carrito">
