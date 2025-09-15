@@ -314,14 +314,11 @@ function mostrarProductos(productos) {
         titulo.className = 'producto-titulo';
         titulo.textContent = producto.titulo;
 
-        // Precio
-        const precio = document.createElement('p');
-        precio.className = 'producto-precio';
-        precio.textContent = producto.precio_resumen || formatearNumero(producto.precio);
-
-        if (producto.unidad) {
-            precio.textContent += ' ' + producto.unidad;
-        }
+        // Precio y unidad de referencia
+        const precio_unidad_refe = document.createElement('p');
+        precio_unidad_refe.className = 'producto-precio-unidad-refe';
+        precio_unidad_refe.textContent = producto.precio_refe;
+        precio_unidad_refe.textContent += ' ' + producto.unidad_refe;
 
         // Descripción del producto
         const descripcion = document.createElement('p');
@@ -408,7 +405,7 @@ function mostrarProductos(productos) {
 
         contenidoDiv.appendChild(titulo);
         contenidoDiv.appendChild(descripcion);
-        contenidoDiv.appendChild(precio);
+        contenidoDiv.appendChild(precio_unidad_refe);
         contenidoDiv.appendChild(tags);
 
         // Ensamblar la imagen y el contenido

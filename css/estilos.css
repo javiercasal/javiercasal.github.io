@@ -349,20 +349,12 @@ body {
     max-height: calc(1.2em * 3); /* 3 líneas */
 }
 
-/* Precio del producto */
-.producto-precio {
+/* Precio y unidad de referencia del producto */
+.producto-precio-unidad-refe {
     font-size: 0.85em;
     color: var(--color-negro-oliva);
     margin: 0px 0 0 0;
     line-height: 1.2;
-}
-
-/* Unidad de medida del producto */
-.producto-unidad {
-    font-size: 0.85em;
-    margin-left: 5px;
-    line-height: 1;
-    color: var(--color-secundario);
 }
 
 /* Etiquetas ocultas del producto (usadas para filtrado) */
@@ -429,7 +421,7 @@ body {
 /* Estilos de texto para productos sin stock */
 .producto-item.sin-stock .producto-titulo,
 .producto-item.sin-stock .producto-descripcion,
-.producto-item.sin-stock .producto-precio {
+.producto-item.sin-stock .producto-precio-unidad-refe {
     color: var(--color-gris-clarito);
     position: relative;
     z-index: 3; /* Para que el texto del producto quede sobre el fondo */
