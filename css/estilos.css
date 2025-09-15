@@ -513,6 +513,16 @@ body {
     padding: 15px;
 }
 
+.lista-carrito > div:has(> p) {
+    margin-left: -13px;
+    width: calc(100% + 13px);
+}
+
+.lista-carrito > div > p {
+    text-align: center;
+    width: 100%;
+}
+
 .item-carrito {
     display: flex;
     align-items: flex-start;
