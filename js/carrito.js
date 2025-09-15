@@ -272,7 +272,15 @@ eliminarProducto(id) {
         this.listaCarrito.innerHTML = '';
         
         if (this.items.length === 0) {
-            this.listaCarrito.innerHTML = '<p style="text-align: center; color: #777; padding: 20px;">Tu pedido está vacío</p>';
+            this.listaCarrito.innerHTML = `
+                <div style="position: relative; height: 100%; padding: 0px;">
+                    <p style="text-align: center; color: #777; padding: 20px 0px 100px 0px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%;">
+                        Tu pedido está vacío
+                    </p>
+                    <img style="position: absolute; bottom: 0px; right: 0px; width: 75px; height: auto;" 
+                        src="img/gatitos.png" alt="Gatitos">
+                </div>
+            `;
             this.subtotalCarrito.textContent = '$0';
             this.envioCarrito.textContent = '-';
             this.totalCarrito.textContent = '$0';

@@ -427,21 +427,19 @@ function mostrarMensajeSinResultados(mostrar) {
             mensaje = document.createElement('li');
             mensaje.id = 'no-results-message';
             mensaje.style.textAlign = 'center';
-            mensaje.style.color = '#555';
-            mensaje.style.padding = '10px';
-            mensaje.style.paddingBottom = '0px';
-            mensaje.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Ningún producto coincide con la búsqueda</p>`;
+            mensaje.style.color = '#777';
+            mensaje.style.paddingTop = '15px';
+            mensaje.innerHTML = `<p>Ningún producto coincide con la búsqueda</p>`;
             contenedor.appendChild(mensaje);
         }
         if (!imagen) {
             imagen = document.createElement('img');
             imagen.id = 'no-results-image';
-            imagen.src = 'img/flork.png';
+            imagen.src = 'img/tecito.png';
             imagen.alt = 'Nada por aquí';
             imagen.style.display = 'block';
-            imagen.style.margin = '0 auto';
-            imagen.style.margin = '-60px auto 0px 20px';
-            imagen.style.width = '75vw';
+            imagen.style.margin = '0 auto'; // Esto centra horizontalmente
+            imagen.style.width = '30vw';
             imagen.style.height = 'auto';
             contenedor.appendChild(imagen);
         }
