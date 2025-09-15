@@ -430,7 +430,7 @@ function mostrarMensajeSinResultados(mostrar) {
             mensaje.style.color = '#555';
             mensaje.style.padding = '10px';
             mensaje.style.paddingBottom = '0px';
-            mensaje.innerHTML = `<p>Ningún elemento coincide con la búsqueda</p>`;
+            mensaje.innerHTML = `<p style="text-align: center; color: #777; padding: 20px;">Ningún producto coincide con la búsqueda</p>`;
             contenedor.appendChild(mensaje);
         }
         if (!imagen) {
@@ -443,6 +443,7 @@ function mostrarMensajeSinResultados(mostrar) {
             imagen.style.marginTop = '-30px';
             imagen.style.width = '50vw'; // 50% del ancho de la ventana
             imagen.style.height = 'auto';
+            imagen.style.opacity = 0.8;
             contenedor.appendChild(imagen);
         }
     } else {
