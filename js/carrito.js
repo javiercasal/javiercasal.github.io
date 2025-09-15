@@ -428,7 +428,7 @@ eliminarProducto(id) {
         
         const notificacion = document.createElement('div');
         notificacion.className = 'notificacion-agregado';
-        notificacion.textContent = 'Agregado!';
+        notificacion.textContent = '¡Agregado!';
         notificacion.style.position = 'absolute';
         
         // Calcular posición centrada verticalmente respecto al botón
