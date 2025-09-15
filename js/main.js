@@ -436,14 +436,13 @@ function mostrarMensajeSinResultados(mostrar) {
         if (!imagen) {
             imagen = document.createElement('img');
             imagen.id = 'no-results-image';
-            imagen.src = 'img/pava.png';
+            imagen.src = 'img/flork.png';
             imagen.alt = 'Nada por aquí';
             imagen.style.display = 'block';
             imagen.style.margin = '0 auto';
-            imagen.style.marginTop = '-30px';
-            imagen.style.width = '50vw'; // 50% del ancho de la ventana
+            imagen.style.margin = '-60px auto 0px 20px';
+            imagen.style.width = '75vw';
             imagen.style.height = 'auto';
-            imagen.style.opacity = 0.8;
             contenedor.appendChild(imagen);
         }
     } else {
