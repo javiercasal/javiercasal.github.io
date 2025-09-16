@@ -317,7 +317,7 @@ function mostrarProductos(productos) {
         // Precio y unidad de referencia
         const precio_unidad_refe = document.createElement('p');
         precio_unidad_refe.className = 'producto-precio-unidad-refe';
-        precio_unidad_refe.textContent = producto.precio_refe;
+        precio_unidad_refe.textContent = formatearNumero(producto.precio_refe);
         precio_unidad_refe.textContent += ' ' + producto.unidad_refe;
 
         // Descripción del producto
