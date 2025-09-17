@@ -494,7 +494,7 @@ eliminarProducto(id) {
         let mensaje = '';
         
         this.items.forEach(item => {
-            mensaje += `\`\`\`-\`\`\` ${item.unidad} de ${item.titulo}%0A`;
+            mensaje += `• ${item.unidad} de ${item.titulo}%0A`;
         });
         
         mensaje += `%0ASubtotal: ${formatearNumero(subtotal)}%0A`;
