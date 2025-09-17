@@ -4,6 +4,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     cargarYMostrarProductos().then(() => {
         inicializarAutocomplete();
+        // Actualizar el carrito después de que los productos se hayan cargado
+        if (window.carrito) {
+            setTimeout(() => {
+                window.carrito.actualizarUI();
+            }, 300);
+        }
     });
     cargarEtiquetasDesdeCSV();
     inicializarSistemaDeFiltrado();
@@ -49,7 +55,7 @@ function deselectAllTags() {
 // Carga el archivo CSV desde GitHub, lo parsea y muestra los productos
 async function cargarYMostrarProductos() {
     try {
-        const urlCSV = 'https://raw.githubusercontent.com/dieteticaaxelyjavi/productos/main/lista.csv';
+        const urlCSV = 'https://raw.githubusercontent.com/dietetica/productos/main/prueba.csv';
         const respuesta = await fetch(urlCSV);
         const textoCSV = await respuesta.text();
 
@@ -75,7 +81,7 @@ function inicializarAutocomplete() {
         suggestionsContainer.innerHTML = '';
         suggestionsContainer.style.display = 'none';
 
-        if (value.length < 2) return; // Mostrar sugerencias solo después de 2 caracteres
+        if (value.length < 3) return; // Mostrar sugerencias solo después de 3 caracteres
 
         const terminosBusqueda = ['Aceite de oliva', 'Aceite de coco', 'Aceite de lino', 'Aceite de nuéz pecán', 'Aceite de sésamo', 'Ají molido', 'Ajo granulado', 'Ajo en polvo', 'Almendras', 'Ambay', 'Anis estrellado', 'Arroz yamaní', 'Arroz integral largo fino', 'Arveja seca partida', 'Avellanas', 'Avellanas con chocolate', 'Avena instantánea', 'Avena instantánea sin TACC', 'Avena arrollada', 'Azúcar mascabo', 'Barrita de cereal', 'Bicarbonato de sodio', 'Boldo', 'Bolsita para hacer leches vegetales', 'Burrito', 'Cacao amargo', 'Café de algarroba', 'Caléndula', 'Canela en polvo', 'Galletitas', 'Carqueja', 'Castañas de cajú', 'Cedrón hojas', 'Chimichurri', 'Chocolate 60%', 'Chocolate 70%', 'Chocolate 80%', 'Chocolate sin azúcar agregada', 'Coco rallado', 'Cola de caballo', 'Comino', 'Creatina', 'Cúrcuma en polvo', 'Curry de la india', 'Dátiles', 'Espirulina', 'Extracto natural de vainilla', 'Fécula de mandioca', 'Fideos de arroz', 'Tallarines integrales', 'Fideos codito con harina de garbanzos', 'Galletas de arroz', 'Garbanzos', 'Ghee', 'Harina integral', 'Harina integral orgánica', 'Harina de centeno orgánica', 'Harina de garbanzo', 'Harina de garbanzo sin TACC', 'Harina para arepas', 'Harina de almendras', 'Harina de chía', 'Harina de lino', 'Harina de arroz', 'Harina de arroz sin TACC', 'Harina de algarroba', 'Harina de coco', 'Harina integral de trigo', 'Hibiscus', 'Higos blancos', 'Hongos de pino', 'Hongos adaptógenos', 'Melena de león doble extracto', 'Reishi doble extracto', 'Cordy doble extracto', 'Shiitake doble extracto', 'Cola de pavo doble extracto', 'Huevos de gallinas felices', 'Jengibre en polvo', 'Laurel hojas', 'Lavanda flores', 'Leche de nuez pecan sin azúcar', 'Leche de almendras protéica sin azúcar', 'Leche de almendras sin azúcar', 'Lentejas', 'Nutrileva | Levadura nutricional', 'Llantén', 'Maca', 'Maicena', 'Fécula de maíz', 'Fécula de maíz sin TACC', 'Maíz piscingallo', 'Maní tostado sin sal', 'Maní tostado con sal', 'Maní crudo', 'Maní con chocolate', 'Manzanilla', 'Marcela', 'Menta', 'Merkén', 'Mermelada de frutos rojos', 'Miel', 'Miel con jengibre', 'Miel con menta', 'Semillas de Mijo', 'Mix de frutos secos', 'Nuez moscada', 'Nuez mariposa', 'Nuez pecán', 'Orégano', 'Pasas de uva morochas', 'Pasas de uva rubias', 'Pasas de uva con chocolate', 'Pasta de maní', 'Tahini', 'Peperina hojas', 'Peras deshidratadas', 'Pimenton ahumado', 'Pimenton dulce', 'Pimienta negra molida', 'Pimienta blanca molida', 'Poleo', 'Polvo de hornear', 'Porotos Mung', 'Porotos Negros', 'Porotos Aduki', 'Porotos Alubia', 'Proteína vegetal', 'Provenzal', 'Quinoa', 'Romero', 'Sahumerios', 'Sal marina fina', 'Sal marina gruesa', 'Sal rosa del himalaya', 'Semillas de chía', 'Semillas de girasol', 'Semillas de lino marrón', 'Semillas de sésamo blanco', 'Semillas de sésamo integral', 'Semillas de sésamo negro', 'Semillas de zapallo', 'Semillas de lino dorado', 'Soja texturizada orgánica', 'Soja texturizada', 'Stevia en hojas', 'Pasta de dientes Sudanta', 'Té negro', 'Té rojo', 'Té verde', 'Tilo', 'Tofu', 'Tomates secos', 'Tomate triturado', 'Tomillo', 'Yerba', 'Barbacuá'];
 
@@ -129,8 +135,33 @@ function parsearCSV(csv) {
             producto[columna.trim()] = valores[i]?.trim().replaceAll(';', ',') || '';
         });
 
+        // Parsear las unidades y precios
+        if (producto.unidades_precios) {
+            producto.unidades_precios = parseUnidadesPrecios(producto.unidades_precios);
+        }
+
         return producto;
     });
+}
+
+// Función para parsear el formato de unidades y precios
+function parseUnidadesPrecios(unidadesPreciosStr) {
+    if (!unidadesPreciosStr || unidadesPreciosStr === '') return [];
+    
+    const unidadesPrecios = [];
+    const partes = unidadesPreciosStr.split('|');
+    
+    partes.forEach(parte => {
+        const [unidad, precio] = parte.split(':');
+        if (unidad && precio) {
+            unidadesPrecios.push({
+                unidad: unidad.trim(),
+                precio: parseInt(precio.trim())
+            });
+        }
+    });
+    
+    return unidadesPrecios;
 }
 
 // Filtra los productos por texto ingresado en el input
@@ -235,6 +266,7 @@ function mostrarProductos(productos) {
     productosOrdenados.forEach(producto => {
         const item = document.createElement('li');
         item.className = 'producto-item';
+        item.dataset.id = producto.id;
 
         // Añadir clase sin-stock si no hay stock
         if (producto.hay_stock && producto.hay_stock.toLowerCase() === "no") {
@@ -282,14 +314,11 @@ function mostrarProductos(productos) {
         titulo.className = 'producto-titulo';
         titulo.textContent = producto.titulo;
 
-        // Precio
-        const precio = document.createElement('p');
-        precio.className = 'producto-precio';
-        precio.textContent = formatearNumero(producto.precio);
-
-        if (producto.unidad) {
-            precio.textContent += ' ' + producto.unidad;
-        }
+        // Precio y unidad de referencia
+        const precio_unidad_refe = document.createElement('p');
+        precio_unidad_refe.className = 'producto-precio-unidad-refe';
+        precio_unidad_refe.textContent = formatearNumero(producto.precio_refe);
+        precio_unidad_refe.textContent += ' ' + producto.unidad_refe;
 
         // Descripción del producto
         const descripcion = document.createElement('p');
@@ -329,9 +358,54 @@ function mostrarProductos(productos) {
             tags.textContent = tags.textContent + '|ofertas'
         }
 
+        // Botón para agregar al carrito
+        if (producto.hay_stock && producto.hay_stock.toLowerCase() !== "no") {
+            const botonAgregar = document.createElement('button');
+            botonAgregar.className = 'boton-agregar';
+            botonAgregar.innerHTML = '+';
+            botonAgregar.title = 'Agregar al carrito';
+            botonAgregar.dataset.id = producto.id;
+
+            // Verificar si el producto ya está en el carrito
+            if (window.carrito && window.carrito.items.find(item => item.id === producto.id)) {
+                botonAgregar.classList.add('en-carrito');
+            }
+            
+            botonAgregar.addEventListener('click', (e) => {
+                e.stopPropagation();
+
+                // Si ya está en el carrito, abrir el carrito en lugar de agregar otro
+                if (botonAgregar.classList.contains('en-carrito')) {
+                    if (window.carrito) {
+                        window.carrito.abrirCarrito();
+                    }
+                    return;
+                }
+
+                // Obtener la primera unidad y precio por defecto
+                let unidadSeleccionada = '';
+                let precioSeleccionado = 0;
+                
+                if (producto.unidades_precios && producto.unidades_precios.length > 0) {
+                    unidadSeleccionada = producto.unidades_precios[0].unidad;
+                    precioSeleccionado = producto.unidades_precios[0].precio;
+                }
+
+                agregarAlCarrito({
+                    id: producto.id,
+                    titulo: producto.titulo,
+                    precio: precioSeleccionado,
+                    unidad: unidadSeleccionada,
+                    unidades_precios: producto.unidades_precios || [],
+                    indiceUnidad: 0 // Índice de la unidad seleccionada
+                }, botonAgregar); // Pasar el botón como segundo parámetro
+            });
+            item.appendChild(botonAgregar);
+        }
+
         contenidoDiv.appendChild(titulo);
         contenidoDiv.appendChild(descripcion);
-        contenidoDiv.appendChild(precio);
+        contenidoDiv.appendChild(precio_unidad_refe);
         contenidoDiv.appendChild(tags);
 
         // Ensamblar la imagen y el contenido
@@ -353,21 +427,19 @@ function mostrarMensajeSinResultados(mostrar) {
             mensaje = document.createElement('li');
             mensaje.id = 'no-results-message';
             mensaje.style.textAlign = 'center';
-            mensaje.style.color = '#555';
-            mensaje.style.padding = '10px';
-            mensaje.style.paddingBottom = '0px';
-            mensaje.innerHTML = `<p>Ningún elemento coincide con la búsqueda</p>`;
+            mensaje.style.color = '#777';
+            mensaje.style.paddingTop = '15px';
+            mensaje.innerHTML = `<p>Ningún producto coincide con la búsqueda</p>`;
             contenedor.appendChild(mensaje);
         }
         if (!imagen) {
             imagen = document.createElement('img');
             imagen.id = 'no-results-image';
-            imagen.src = 'img/pava.png';
+            imagen.src = 'img/tecito.png';
             imagen.alt = 'Nada por aquí';
             imagen.style.display = 'block';
-            imagen.style.margin = '0 auto';
-            imagen.style.marginTop = '-30px';
-            imagen.style.width = '50vw'; // 50% del ancho de la ventana
+            imagen.style.margin = '0 auto'; // Esto centra horizontalmente
+            imagen.style.width = '30vw';
             imagen.style.height = 'auto';
             contenedor.appendChild(imagen);
         }
@@ -603,3 +675,12 @@ function inicializarEventosTags() {
     recalcular();
     window.addEventListener('resize', recalcular);
 }
+
+// ===== FUNCIÓN GLOBAL PARA AGREGAR AL CARRITO =====
+window.agregarAlCarrito = function(producto) {
+    if (window.carrito) {
+        window.carrito.agregarProducto(producto);
+    } else {
+        console.error('El carrito no está inicializado');
+    }
+};
