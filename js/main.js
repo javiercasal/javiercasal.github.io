@@ -516,7 +516,7 @@ function createToggleButton() {
 // ===== FUNCIONES DE GESTIÓN DE ETIQUETAS =====
 
 async function cargarEtiquetasDesdeCSV() {
-    const urlCSV = 'https://raw.githubusercontent.com/dietetica/productos/main/etiquetas';
+    const urlCSV = 'https://raw.githubusercontent.com/dietetica/datos/main/etiquetas';
     try {
         const respuesta = await fetch(urlCSV);
         const texto = await respuesta.text();
