@@ -498,8 +498,24 @@ eliminarProducto(id) {
         });
         
         mensaje += `%0ASubtotal: ${formatearNumero(subtotal)}%0A`;
-        mensaje += `Envío: ${formatearNumero(this.costoEnvio)}%0A`;
-        mensaje += `Total: ${formatearNumero(subtotal + this.costoEnvio)}`;
+        
+        // Calcular el costo de envío para WhatsApp (igual que en la UI)
+        let costoEnvioWhatsApp = 0;
+        let textoEnvio = '';
+        
+        if (subtotal < this.pedidoMinimo) {
+            textoEnvio = "-";
+            costoEnvioWhatsApp = 0;
+        } else if (subtotal < this.envioGratisDesde) {
+            textoEnvio = formatearNumero(this.costoEnvio);
+            costoEnvioWhatsApp = this.costoEnvio;
+        } else {
+            textoEnvio = "Gratis";
+            costoEnvioWhatsApp = 0;
+        }
+        
+        mensaje += `Envío: ${textoEnvio}%0A`;
+        mensaje += `Total: ${formatearNumero(subtotal + costoEnvioWhatsApp)}`;
         
         const urlWhatsApp = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${mensaje}`;
         window.open(urlWhatsApp, '_blank');
