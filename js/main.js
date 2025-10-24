@@ -516,10 +516,33 @@ function createToggleButton() {
 // ===== FUNCIONES DE GESTIÓN DE ETIQUETAS =====
 
 async function cargarEtiquetasDesdeCSV() {
-    const urlCSV = 'https://raw.githubusercontent.com/dietetica/datos/main/etiquetas';
+    //const urlCSV = 'https://raw.githubusercontent.com/dietetica/datos/main/etiquetas';
     try {
-        const respuesta = await fetch(urlCSV);
-        const texto = await respuesta.text();
+        //const respuesta = await fetch(urlCSV);
+        //const texto = await respuesta.text();
+        const texto = `Ofertas🔥
+Novedades✨
+Sin TACC
+Frutos secos
+Yerba🧉
+Chocolate🍫
+Miel🍯
+Yuyitos🌿
+Aceite
+Cereales🍚
+Leches vegetales
+Suplementos🚀
+Legumbres🫘
+Harina
+Semillas
+Especias
+Tecitos🍵
+Snacks🍪
+Hongos🍄
+Orgánico🌱
+Agroecológico🌱
+Mermeladas/Dulces
+Vegano💚`;
 
         const lineas = texto.trim().split('\n');
         const etiquetas = lineas.map(l => l.trim());
