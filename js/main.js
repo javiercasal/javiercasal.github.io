@@ -55,7 +55,7 @@ function deselectAllTags() {
 // Carga el archivo CSV desde GitHub, lo parsea y muestra los productos
 async function cargarYMostrarProductos() {
     try {
-        const urlCSV = 'https://raw.githubusercontent.com/dietetica/datos/main/productos.csv';
+        const urlCSV = 'https://matecitodev.github.io/productos/';
         const respuesta = await fetch(urlCSV);
         const textoCSV = await respuesta.text();
 
