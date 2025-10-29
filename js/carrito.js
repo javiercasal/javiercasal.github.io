@@ -15,24 +15,23 @@ if (!NodeList.prototype.find) {
     };
 }
 
-// Función para obtener configuración (costoEnvio y pedidoMinimo)
 async function obtenerConfiguracion() {
     try {
         const costoEnvioDefault = 5000;
         const pedidoMinimoDefault = 25000;
         const envioGratisDesdeDefault = 60000;
 
-        //const urlJSON = 'https://raw.githubusercontent.com/dietetica/datos/main/config.json';
-        //const respuesta = await fetch(urlJSON);
-        //const datos = await respuesta.json();
-        
-        return { costoEnvio: costoEnvioDefault, pedidoMinimo: pedidoMinimoDefault, envioGratisDesde: envioGratisDesdeDefault };
+        const urlJSON = 'https://javiercasal.github.io/data/config.json';
+        const respuesta = await fetch(urlJSON);
+        const datos = await respuesta.json();
 
-        //return {
-        //    costoEnvio: parseInt(datos.costoEnvio) || costoEnvioDefault,
-        //    pedidoMinimo: parseInt(datos.pedidoMinimo) || pedidoMinimoDefault,
-        //    envioGratisDesde: parseInt(datos.envioGratisDesde) || envioGratisDesdeDefault
-        //};
+        console.info(`Configuración 👇\nCosto de envío: $${datos.costoEnvio}\nPedido mínimo: $${datos.pedidoMinimo}\nEnvío gratis desde: $${datos.envioGratisDesde}`);
+        
+        return {
+            costoEnvio: parseInt(datos.costoEnvio) || costoEnvioDefault,
+            pedidoMinimo: parseInt(datos.pedidoMinimo) || pedidoMinimoDefault,
+            envioGratisDesde: parseInt(datos.envioGratisDesde) || envioGratisDesdeDefault
+        };
     } catch (error) {
         console.error('Error al cargar la configuración:', error);
         return { costoEnvio: costoEnvioDefault, pedidoMinimo: pedidoMinimoDefault, envioGratisDesde: envioGratisDesdeDefault };
