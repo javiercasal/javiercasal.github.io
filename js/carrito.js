@@ -21,7 +21,7 @@ async function obtenerConfiguracion() {
         const pedidoMinimoDefault = 25000;
         const envioGratisDesdeDefault = 60000;
 
-        const urlJSON = 'https://javiercasal.github.io/data/config.json';
+        const urlJSON = 'https://dietetica.github.io/data/config.json';
         const respuesta = await fetch(urlJSON);
         const datos = await respuesta.json();
 
