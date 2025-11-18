@@ -131,19 +131,17 @@ body {
     border-bottom: none;
 }
 
-/* === TAGS CONTAINER MEJORADO === */
+/* === TAGS === */
 .tags-container {
     display: flex;
     flex-wrap: wrap;
-    padding: 10px 0;
+    gap: 6.5px;
+    padding: 10px 0; /* Simplificado de 10px 0 10px 0 */
     line-height: 1.5em;
-    max-height: calc(3em + 19px);
+    max-height: calc(3em + 19px); /* 2 líneas (1.5em cada una) + padding */
     overflow: hidden;
     transition: max-height 0.3s ease;
-    align-content: flex-start;
-    
-    /* SOLUCIÓN PARA SAFARI: Eliminar gap y usar márgenes */
-    gap: 0; /* Reset para navegadores modernos */
+    align-content: flex-start; /* Alinear líneas arriba */
 }
 
 /* Estado expandido del contenedor de etiquetas */
@@ -151,7 +149,7 @@ body {
     max-height: none;
 }
 
-/* === TAGS INDIVIDUALES MEJORADOS === */
+/* Estilos base para cada etiqueta individual */
 .tag {
     background-color: var(--color-gris-muy-muy-clarito);
     color: var(--color-negro-oliva);
@@ -168,28 +166,6 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    
-    /* SOLUCIÓN PARA SAFARI: Márgenes en lugar de gap */
-    margin: 0 3.25px 6.5px 3.25px; /* Simula el gap de 6.5px */
-    
-    /* Asegurar consistencia en el box model */
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-}
-
-/* Ajuste específico para Safari iOS */
-@supports (-webkit-touch-callout: none) {
-    .tags-container {
-        /* Asegurar que Safari respete el comportamiento */
-        -webkit-flex-wrap: wrap;
-        flex-wrap: wrap;
-    }
-    
-    .tag {
-        /* Ajustes específicos para Safari */
-        -webkit-appearance: none;
-        margin: 0 3px 6px 3px; /* Ajuste ligeramente más preciso para Safari */
-    }
 }
 
 /* === TAGS SELECCIONADOS === */
@@ -197,17 +173,6 @@ body {
     background-color: var(--color-azul-francia);
     color: var(--color-blanco);
     border-color: var(--color-azul-francia);
-}
-
-/* SOLUCIÓN PARA SAFARI (IPHONE) - Mantener el padding extra */
-@supports (-webkit-touch-callout: none) {
-  .tags-container {
-    padding-bottom: 20px !important;
-  }
-  
-  .tags-container.expandido {
-    padding-bottom: 10px !important;
-  }
 }
 
 /* === PRODUCTOS === */
