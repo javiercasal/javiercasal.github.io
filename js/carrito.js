@@ -15,6 +15,21 @@ if (!NodeList.prototype.find) {
     };
 }
 
+async function obtenerNumeroWhatsApp() {
+    const FALLBACK = '5491131919307';
+    try {
+        const respuesta = await fetch('https://matecitodev.github.io/config/');
+        if (!respuesta.ok) {
+            throw new Error(`HTTP ${respuesta.status} ${respuesta.statusText}`);
+        }
+        const datos = await respuesta.json();
+        return datos.telefono || FALLBACK;
+    } catch (error) {
+        console.error('Error al obtener el número de WhatsApp, usando valor por defecto:', error);
+        return FALLBACK;
+    }
+}
+
 async function obtenerConfiguracion() {
     try {
         const costoEnvioDefault = 5000;
@@ -485,7 +500,7 @@ class Carrito {
         }, 1000);
     }
 
-    enviarPedidoWhatsApp() {
+    async enviarPedidoWhatsApp() {
         if (this.items.length === 0) return;
 
         const subtotal = this.calcularSubtotal();
@@ -495,7 +510,7 @@ class Carrito {
             return; // No hacer nada si no cumple el mínimo
         }
 
-        const numeroWhatsApp = '5491131919307';
+        const numeroWhatsApp = await obtenerNumeroWhatsApp();
         let mensaje = '';
 
         this.items.forEach(item => {
