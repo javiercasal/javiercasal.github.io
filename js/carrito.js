@@ -3,14 +3,14 @@
 // Función helper para buscar elementos por texto (similar a :contains de jQuery)
 function encontrarElementoPorTexto(selector, texto) {
     const elementos = document.querySelectorAll(selector);
-    return Array.from(elementos).find(el => 
+    return Array.from(elementos).find(el =>
         el.textContent.trim().toLowerCase() === texto.toLowerCase()
     );
 }
 
 // Extender NodeList para incluir método find (para compatibilidad)
 if (!NodeList.prototype.find) {
-    NodeList.prototype.find = function(callback) {
+    NodeList.prototype.find = function (callback) {
         return Array.from(this).find(callback);
     };
 }
@@ -21,12 +21,12 @@ async function obtenerConfiguracion() {
         const pedidoMinimoDefault = 25000;
         const envioGratisDesdeDefault = 60000;
 
-        const urlJSON = 'https://dietetica.github.io/data/config.json';
+        const urlJSON = 'https://matecitodev.github.io/config';
         const respuesta = await fetch(urlJSON);
         const datos = await respuesta.json();
 
         console.info(`Configuración 👇\nCosto de envío: $${datos.costoEnvio}\nPedido mínimo: $${datos.pedidoMinimo}\nEnvío gratis desde: $${datos.envioGratisDesde}`);
-        
+
         return {
             costoEnvio: parseInt(datos.costoEnvio) || costoEnvioDefault,
             pedidoMinimo: parseInt(datos.pedidoMinimo) || pedidoMinimoDefault,
@@ -58,7 +58,7 @@ class Carrito {
         this.totalCarrito = document.getElementById('total-carrito');
         this.botonEnviar = document.getElementById('boton-enviar-pedido');
         this.botonCerrarCarrito = document.getElementById('cerrar-carrito');
-        
+
         // Barra minimalista
         this.barraMinimalista = document.getElementById('barra-minimalista');
         this.botonCarritoMinimalista = document.getElementById('boton-carrito-minimalista');
@@ -70,20 +70,20 @@ class Carrito {
         this.overlayCarrito.addEventListener('click', () => this.cerrarCarrito());
         this.botonCerrarCarrito.addEventListener('click', () => this.cerrarCarrito());
         this.botonEnviar.addEventListener('click', () => this.enviarPedidoWhatsApp());
-        
+
         // Evento para el botón de la barra minimalista
         this.botonCarritoMinimalista.addEventListener('click', () => this.abrirCarrito());
-        
+
         this.listaCarrito.addEventListener('click', (e) => {
             // Detectar clics en los contenedores de botones
             const contenedorBoton = e.target.closest('.contenedor-boton');
             if (!contenedorBoton) return;
-            
+
             const boton = contenedorBoton.querySelector('button');
             if (!boton || boton.disabled) return; // No hacer nada si el botón está deshabilitado
-            
+
             const id = e.target.closest('.item-carrito').dataset.id;
-            
+
             if (boton.classList.contains('disminuir')) {
                 this.disminuirCantidad(id);
             } else if (boton.classList.contains('aumentar')) {
@@ -99,7 +99,7 @@ class Carrito {
         botones.forEach(boton => {
             const productoId = boton.dataset.id;
             const enCarrito = this.items.find(item => item.id === productoId);
-            
+
             if (enCarrito) {
                 boton.classList.add('en-carrito');
             } else {
@@ -110,7 +110,7 @@ class Carrito {
 
     agregarProducto(producto, botonAgregar = null) {
         const productoExistente = this.items.find(item => item.id === producto.id);
-        
+
         if (productoExistente) {
             //productoExistente.cantidad += 1;
         } else {
@@ -123,13 +123,13 @@ class Carrito {
                 indiceUnidad: producto.indiceUnidad || 0,
                 cantidad: 1
             });
-            
+
             // Mostrar confirmación de agregregado si se proporcionó un botón
             if (botonAgregar) {
                 this.mostrarConfirmacionAgregado(producto.titulo, botonAgregar);
             }
         }
-        
+
         this.guardarEnLocalStorage();
         this.actualizarUI();
 
@@ -137,17 +137,17 @@ class Carrito {
         this.actualizarBotonesAgregar();
     }
 
-eliminarProducto(id) {
-    this.items = this.items.filter(item => item.id !== id);
-    this.guardarEnLocalStorage();
-    this.actualizarUI();
-    
-    // Actualizar específicamente el mensaje de pedido mínimo
-    const subtotal = this.calcularSubtotal();
-    this.actualizarBotonEnvio(subtotal);
-    
-    this.actualizarBotonesAgregar();
-}
+    eliminarProducto(id) {
+        this.items = this.items.filter(item => item.id !== id);
+        this.guardarEnLocalStorage();
+        this.actualizarUI();
+
+        // Actualizar específicamente el mensaje de pedido mínimo
+        const subtotal = this.calcularSubtotal();
+        this.actualizarBotonEnvio(subtotal);
+
+        this.actualizarBotonesAgregar();
+    }
 
     aumentarCantidad(id) {
         const producto = this.items.find(item => item.id === id);
@@ -159,14 +159,14 @@ eliminarProducto(id) {
                 const nuevaUnidad = producto.unidades_precios[producto.indiceUnidad];
                 producto.precio = nuevaUnidad.precio;
                 producto.unidad = nuevaUnidad.unidad;
-                
+
                 this.guardarEnLocalStorage();
                 this.actualizarUI();
-                
+
                 // Actualizar específicamente el mensaje de pedido mínimo
                 const subtotal = this.calcularSubtotal();
                 this.actualizarBotonEnvio(subtotal);
-                
+
                 return true; // Operación exitosa
             } else {
                 // No hay más unidades disponibles
@@ -186,14 +186,14 @@ eliminarProducto(id) {
                 const nuevaUnidad = producto.unidades_precios[producto.indiceUnidad];
                 producto.precio = nuevaUnidad.precio;
                 producto.unidad = nuevaUnidad.unidad;
-                
+
                 this.guardarEnLocalStorage();
                 this.actualizarUI();
-                
+
                 // Actualizar específicamente el mensaje de pedido mínimo
                 const subtotal = this.calcularSubtotal();
                 this.actualizarBotonEnvio(subtotal);
-                
+
                 return true; // Operación exitosa
             } else {
                 // No hay unidades anteriores disponibles
@@ -211,11 +211,11 @@ eliminarProducto(id) {
         if (subtotal < this.pedidoMinimo) {
             return 0;
         }
-        
+
         if (subtotal < this.envioGratisDesde) {
             return this.costoEnvio;
         }
-        
+
         return 0;
     }
 
@@ -234,37 +234,37 @@ eliminarProducto(id) {
     actualizarUI() {
         // Obtener productos actuales del DOM
         const productosDOM = Array.from(document.querySelectorAll('.producto-item'));
-        
+
         // Actualizar información de productos en el carrito con datos actuales
         this.items = this.items.map(itemCarrito => {
-            const productoActual = productosDOM.find(producto => 
+            const productoActual = productosDOM.find(producto =>
                 producto.dataset.id === itemCarrito.id
             );
-            
+
             if (productoActual) {
                 // Obtener datos actualizados del DOM
                 const titulo = productoActual.querySelector('.producto-titulo').textContent;
-                
+
                 // Mantener las unidades_precios e indiceUnidad existentes
                 return {
                     ...itemCarrito,
                     titulo: titulo
                 };
             }
-            
+
             return itemCarrito; // Mantener datos originales si no se encuentra el producto
         });
-        
+
         this.guardarEnLocalStorage();
 
         // Actualizar contadores
         const totalItems = this.items.reduce((sum, item) => sum + item.cantidad, 0);
         const subtotal = this.calcularSubtotal();
-        
+
         // Actualizar información de la barra minimalista
         this.totalPedido.textContent = formatearNumero(subtotal);
         this.detallesPedido.textContent = `${totalItems} producto${totalItems !== 1 ? 's' : ''}`;
-        
+
         // Mostrar/ocultar barra minimalista según si hay productos
         const barraMinimalista = document.getElementById('barra-minimalista');
         if (totalItems > 0) {
@@ -272,10 +272,10 @@ eliminarProducto(id) {
         } else {
             barraMinimalista.style.display = 'none';
         }
-        
+
         // Resto de la actualización de UI (lista de carrito, etc.)
         this.listaCarrito.innerHTML = '';
-        
+
         if (this.items.length === 0) {
             this.listaCarrito.innerHTML = `
 <div style="position: relative; height: 100%; padding: 0px;">
@@ -291,12 +291,12 @@ eliminarProducto(id) {
             this.totalCarrito.textContent = '$0';
             return;
         }
-        
+
         this.items.forEach(item => {
             const elemento = document.createElement('div');
             elemento.className = 'item-carrito';
             elemento.dataset.id = item.id;
-            
+
             // Buscar la imagen del producto
             let imagenSrc = 'img/sin-imagen.png';
             const productos = document.querySelectorAll('.producto-item');
@@ -311,7 +311,7 @@ eliminarProducto(id) {
                     }
                 }
             }
-            
+
             elemento.innerHTML = `
                 <div class="imagen-item-carrito">
                     <img src="${imagenSrc}" alt="${item.titulo}" onerror="this.src='img/sin-imagen.png'">
@@ -339,16 +339,16 @@ eliminarProducto(id) {
                     </div>
                 </div>
             `;
-            
+
             this.listaCarrito.appendChild(elemento);
         });
-        
+
         // Actualizar totales
         this.subtotalCarrito.textContent = formatearNumero(subtotal);
-        
+
         // Calcular envío
         let costoEnvio = 0;
-        
+
         if (subtotal < this.pedidoMinimo) {
             this.envioCarrito.textContent = "-";
             this.envioCarrito.classList.remove('envio-gratis'); // Remover clase si existe
@@ -362,23 +362,23 @@ eliminarProducto(id) {
             this.envioCarrito.classList.add('envio-gratis'); // Agregar clase para envío gratis
             costoEnvio = 0;
         }
-        
+
         const total = subtotal + costoEnvio;
         this.totalCarrito.textContent = formatearNumero(total);
-        
+
         // Actualizar botón de envío
         this.actualizarBotonEnvio(subtotal);
     }
 
     actualizarBotonEnvio(subtotal) {
         const cumpleMinimo = subtotal >= this.pedidoMinimo;
-        
+
         if (cumpleMinimo) {
             this.botonEnviar.disabled = false;
             this.botonEnviar.textContent = 'Enviar pedido por WhatsApp';
             this.botonEnviar.classList.remove('boton-deshabilitado');
             this.botonEnviar.classList.add('boton-habilitado');
-            
+
             // Eliminar mensaje de pedido mínimo si existe
             const mensajeMinimo = document.getElementById('mensaje-pedido-minimo');
             if (mensajeMinimo) {
@@ -389,22 +389,22 @@ eliminarProducto(id) {
             this.botonEnviar.textContent = `Pedido mínimo: ${formatearNumero(this.pedidoMinimo)}`;
             this.botonEnviar.classList.remove('boton-habilitado');
             this.botonEnviar.classList.add('boton-deshabilitado');
-            
+
             // Calcular monto faltante
             const montoFaltante = this.pedidoMinimo - subtotal;
-            
+
             // Agregar o actualizar mensaje informativo
             let mensaje = document.getElementById('mensaje-pedido-minimo');
-            
+
             if (!mensaje) {
                 mensaje = document.createElement('div');
                 mensaje.id = 'mensaje-pedido-minimo';
                 mensaje.className = 'mensaje-pedido-minimo';
-                
+
                 // Insertar después del botón de envío
                 this.botonEnviar.parentNode.insertBefore(mensaje, this.botonEnviar.nextSibling);
             }
-            
+
             mensaje.textContent = `Agregá productos por ${formatearNumero(montoFaltante)} para completar el pedido mínimo`;
         }
     }
@@ -412,7 +412,7 @@ eliminarProducto(id) {
     async cargarCostoEnvio() {
         this.costoEnvio = await obtenerConfiguracion();
         this.actualizarUI();
-    }    
+    }
 
     abrirCarrito() {
         this.panelCarrito.classList.add('abierto');
@@ -430,53 +430,53 @@ eliminarProducto(id) {
         const botonRect = botonAgregar.getBoundingClientRect();
         const scrollY = window.scrollY || window.pageYOffset;
         const scrollX = window.scrollX || window.pageXOffset;
-        
+
         const notificacion = document.createElement('div');
         notificacion.className = 'notificacion-agregado';
         notificacion.textContent = '¡Agregado!';
         notificacion.style.position = 'absolute';
-        
+
         // Calcular posición centrada verticalmente respecto al botón
         const leftPosition = botonRect.left + scrollX - 10;
         const topPosition = botonRect.top + scrollY + (botonRect.height / 2) - (15); // 15px es la mitad de la altura estimada de la notificación
-        
+
         notificacion.style.left = `${leftPosition}px`;
         notificacion.style.top = `${topPosition}px`;
         notificacion.style.opacity = '0';
         notificacion.style.zIndex = '500';
         notificacion.style.transform = 'translateX(-95%)';
-        
+
         document.body.appendChild(notificacion);
-        
+
         // Asegurar que la notificación no se salga de la pantalla
         const notifRect = notificacion.getBoundingClientRect();
-        
+
         // Ajustar si se sale por la izquierda
         if (notifRect.left < 10) {
             notificacion.style.left = '10px';
             notificacion.style.transform = 'none';
         }
-        
+
         // Ajustar si se sale por arriba
         if (notifRect.top < 10) {
             notificacion.style.top = `${scrollY + 10}px`;
         }
-        
+
         // Ajustar si se sale por abajo
         if (notifRect.bottom > window.innerHeight - 10) {
             notificacion.style.top = `${window.innerHeight - notifRect.height - 10 + scrollY}px`;
         }
-        
+
         // Animación de entrada
         setTimeout(() => {
             notificacion.style.opacity = '1';
             notificacion.style.transition = 'opacity 0.3s ease';
         }, 10);
-        
+
         // Animación de salida después de 1.5 segundos
         setTimeout(() => {
             notificacion.style.opacity = '0';
-            
+
             setTimeout(() => {
                 if (notificacion.parentNode) {
                     notificacion.parentNode.removeChild(notificacion);
@@ -494,20 +494,20 @@ eliminarProducto(id) {
         if (subtotal < this.pedidoMinimo) {
             return; // No hacer nada si no cumple el mínimo
         }
-        
+
         const numeroWhatsApp = '5491131919307';
         let mensaje = '';
-        
+
         this.items.forEach(item => {
             mensaje += `• ${item.unidad} de ${item.titulo.charAt(0).toLowerCase() + item.titulo.slice(1)}%0A`;
         });
-        
+
         mensaje += `%0ASubtotal: ${formatearNumero(subtotal)}%0A`;
-        
+
         // Calcular el costo de envío para WhatsApp (igual que en la UI)
         let costoEnvioWhatsApp = 0;
         let textoEnvio = '';
-        
+
         if (subtotal < this.pedidoMinimo) {
             textoEnvio = "-";
             costoEnvioWhatsApp = 0;
@@ -518,10 +518,10 @@ eliminarProducto(id) {
             textoEnvio = "Gratis";
             costoEnvioWhatsApp = 0;
         }
-        
+
         mensaje += `Envío: ${textoEnvio}%0A`;
         mensaje += `Total: ${formatearNumero(subtotal + costoEnvioWhatsApp)}`;
-        
+
         const urlWhatsApp = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${mensaje}`;
         window.open(urlWhatsApp, '_blank');
     }
