@@ -495,7 +495,7 @@ eliminarProducto(id) {
             return; // No hacer nada si no cumple el mínimo
         }
         
-        const numeroWhatsApp = '5491161688747';
+        const numeroWhatsApp = '5491131919307';
         let mensaje = '';
         
         this.items.forEach(item => {

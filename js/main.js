@@ -542,7 +542,8 @@ Hongos🍄
 Orgánico🌱
 Agroecológico🌱
 Mermeladas/Dulces
-Vegano💚`;
+Vegano💚
+Prueba💜`;
 
         const lineas = texto.trim().split('\n');
         const etiquetas = lineas.map(l => l.trim());
