@@ -1,10 +1,113 @@
 
-				<!DOCTYPE html>
+				
 				<html>
 					<head>
-						<meta charset="UTF-8">
-						<meta name="viewport" content="width=device-width, initial-scale=1" />
-						<link rel="stylesheet" href="pluginAssets/highlight.js/atom-one-light.css">
+						<meta charset="UTF-8"/>
+						<meta name="viewport" content="width=device-width, initial-scale=1"/>
+						<style>pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+}
+
+code.hljs {
+  padding: 3px 5px;
+}
+
+/*
+
+Atom One Light by Daniel Gamage
+Original One Light Syntax theme from https://github.com/atom/one-light-syntax
+
+base:    #fafafa
+mono-1:  #383a42
+mono-2:  #686b77
+mono-3:  #a0a1a7
+hue-1:   #0184bb
+hue-2:   #4078f2
+hue-3:   #a626a4
+hue-4:   #50a14f
+hue-5:   #e45649
+hue-5-2: #c91243
+hue-6:   #986801
+hue-6-2: #c18401
+
+*/
+
+.hljs {
+  color: #383a42;
+  background: #fafafa;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #a0a1a7;
+  font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #a626a4;
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e45649;
+}
+
+.hljs-literal {
+  color: #0184bb;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta .hljs-string {
+  color: #50a14f;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #986801;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #4078f2;
+}
+
+.hljs-built_in,
+.hljs-title.class_,
+.hljs-class .hljs-title {
+  color: #c18401;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-link {
+  text-decoration: underline;
+}</style>
 						<title>SE ME HIZO TARDE (Conociendo Rusia)</title>
 					</head>
 					<body>
@@ -530,61 +633,61 @@ pre.mermaid[data-processed=true] { white-space: unset; }
 					aspect-ratio: 16 / 9;
 				}
 			</style><div id="rendered-md"><p>Intro: A - Amaj7 - A7 - Dmaj7 (x2)</p>
-<img src="../_resources/e494b70e957d45769953ca246713335c.png" alt="qgAAAABJRU5ErkJggg==.png" width="94" height="106" class="jop-noMdConv"/>
-<img src="../_resources/a3e75d13435c4e06a8c9dd5e284b5957.png" alt="images.png" width="94" height="106" class="jop-noMdConv"/>
-<p>A           Amaj         A7   Dmaj7<br>
-Se me hizo tarde poco a poco<br>
-A       Amaj             A7   Dmaj7<br>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALwAAADUCAMAAAARMLmuAAAAz1BMVEX///8AAABPjdumpqbX19fz8/PLy8sWFhYkJCR7e3vs7Ox+fn6/v7+GhoYcHBxMTEy3t7crKytAQEARERFRUVFwcHCwsLBfX19Zk91Mh9HH2PI6OjpBhtkyMjL5+flIf8QpfNdFeLnk6fHg4OCVlZU9aaJ5peLw9fsvYZ5LdKnCzd8jW5x7lr1jmN5si7eSp8dcf7AAUJbd5/emrLYlMUM3X5Kjs8wyaay6z+/U3Om0wtiTteccGA5PS0VBXIFiepwgQm2iv+pLUlx8g4wAESZBxN/hAAAHaUlEQVR4nO2de3uiRhTGMd7QKAhqiIIYkNFRFNRtvbbdpu33/0xFLjrISbthieLznPePrJ59M/4cz9zBcBwKhUKhUCgUCvXlGpXDB/X61X+U6gnzT0vPtlRBCejrvMKGG52BpHZHGb7QSS/iQBp0y/9v/EFZ7c6pLka89MJGBf7Z6kpCI7PX8aR3C/KzpfBCKbMiLUEZcSVZajGxhqqc3lFJVLOs+2Khear0Ft/RMyvT4rtekrD1rjf5ALohvMC/k0q8EuS7JWVXql5UJZGtd26khHnpPciukuqFZlh89CALVWSpE0uPkfIctuIs4c/M9QzhSx2xqypsD1avicHTitzMDp4rdIN/G4KVVZEjUW2VLaHDdmBF3i++3CxUsnoZT8rAT05dlrPqbuoDv/lYbYWhrytCbVSvdNvN7Ppkr9S2ao3qDaWdWcW3w6ZvFdhByqOvVgWhme0gO5KrQlUoZMbONaNxyCrG4pVmzcpuMInU8Er9glkHCoVCfa3KBQkUz8Phz0TBcCHDNUK5IHcgySoUFWXILaoiZFZBb5YLnHLhGYw/S9BgMupAE8IWD06BCjUgWKxmOF36CL7GQ/AlEYSHaxPh/1MIj/AphPAIn0I/D6+b3375NgHM+Yc3D+58+etyvpkl+PMOP9k4lG4Nw9jaZD67Mucc3nTIdtjrPT099XoGnbrxys83vDmlxok8UI/QOH2u4SdLOnxiZdANuzuYZ3h9bsfZT3XP5n2e4fcrI4R+XYwXAT2dM4mTZ3gnTBrtdcdx/dcgcez9xZxjeN0OKl4b97kzfM92L1mfY/goa15N741E8E/G8pI3OYY/hM1VW+u7yQWePgT8xg66eG0xHjPwq4eCP2X9w8HPbAOCJw8Bb64A+N7WeYjehqMkCT+0DxdznuE30ezgAt8ziHkx5xl+QrZhk309HsdhxTNjVK7hvZ4+mhBrmuaz0yVT8fmG112bmc6f2ElsMZVreG7irshlVmxQeoiZ8w3vZQ6hZDjs+U2VLvdxc97hOXM+Jb6m08O1OffwXu7MXOfX+WGfND8AvKfWbw+7Y/bQ2313hYevmXrmoWucRiB8Q4AP1KBqyRherHWTqokqEO0qsghFVQUyD6CSlWyPMlUBkqryQFRSB8kwP5AlwMvLUMmDrM9h9aS4Z2mUjHOlThMwv/ANoAyu0AWC2GAjITzCp9An4X9/WHhz5v7xPXn2BMKbh82f3/fJge5O8AdiU2/uS+3l9eFTAn6yIZTSk9e5nm3eBX5PV8QY9no9wyDXSFfw+ozavnforVBW8/gndQd4fePhROvVnnG1WI3D6+zicOh52UX5HeD1DSGxpTaJ0cfh3dXVsnzK0t8efjbdsjzXRDH4w3kP8+x1mMy5Obw5p71ofybYofGI5jC8OQ0+I+1Ne3rTwm2FzR3hZ8Hpk7bYrdf795Bodal6Ft4N8/24Xq/7R9/bI87Fe2v4SVjxY//T1wP6oe1C8ObS337V3n3vJKAfksvOwq3hzbCj8eDNtUf05lctIRD8bBp2NOb63fPugu6JXrYwbw2/j06fxse3NzOCZzaEGfgNuWxfLjz4IG+287P31vCz8162ph0nXD+CP49UDLxLo05mt9P183mJc394fyd+stB+CN5LevN4PuA8e++VNh67GbXBj9LGpdGAsNt5Of8ePN7er+b3NBx2PPb1OOy8vQZ7boSxnA/e6Kv29jbmuPUiaLCXCc7Ne5ulEbFz692uHwCR5dkb6218r7brvx/7HBd6mVHq1vB6eOT6Hj4da0/xozMGXl/6Sa/1Of1U2cGYYNyxn+dm5FSdXk/jy1z4Fb+6eNkR9hB617qur8dBT8lObm4Or7t+k/XS2JdfmTYzX4lNzJZ+kw28Wtg6mCno7WeVpnN9QZbtMN4YvEkSF2+5jPcOi5H9kg6ZS+EM6rB3PMbn8zMS99pzdiV7j2Xg3rFJiDQcbuk8tjq6WgbOltQIvN5CcEvd2Cr8LmtYczO1T1d/ejS2c4ivS68X4HuXhF6bOldHVffZPdD3B//wbOnOzCtvYvfA91JCnKT3bvs2k0nlr78nyb0YYN9Gn5jmP5AXt/siITzCp9CHt9fx0I33uYNXWi9JtZRBEQhbsgJEm4MmEH3hgZJbNfjYMy38oA1poApAlFcBd1WSJcBblaGSMz4N7JYqSZW6g0YyXmqJkNuSikC01Aa8JQsbbCiER/gUQniETyGER/gUQniETyGER/gUQniETyGER/gUQniETyGER/gUQniETyGEzxs8fKD2we11H3xf5Q1ur5M/IVVVP2EGo9meSYkKJFEFwzLk7qgdyDuQIe/Xfc2pfv4Rfs2pHj0PdLq9LhY4PQ5ur2OLCJ4EOa/Hf2CDjYTwCJ9CCI/wKYTwCJ9CCI/wKYTwCJ9CCI/wKYTwCJ9CCI/wKYTwCJ9CCI/wKVQudEelpEZdqQKEG50aEC1KRSBagkoeWdneasQXIPESHIbcVakNeSXIK2T51+t0q3hbWVn/cXEUCoVCoVAoFAqFQqFQKBQKhfpa/QsG3Dd5LI0/qgAAAABJRU5ErkJggg==" alt="qgAAAABJRU5ErkJggg==.png" width="94" height="106" class="jop-noMdConv"/>
+<img src="data:image/png;base64,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" alt="images.png" width="94" height="106" class="jop-noMdConv"/>
+<p>A           Amaj         A7   Dmaj7<br/>
+Se me hizo tarde poco a poco<br/>
+A       Amaj             A7   Dmaj7<br/>
 Se me prende fuego el coco</p>
-<p>D                        E<br>
-Pasan los minutos ya no sé bien qué hacer<br>
-A                                F#m<br>
-Pero siento que algo está por pasar<br>
-D                     E<br>
-Justo estaba por salir<br>
-A<br>
+<p>D                        E<br/>
+Pasan los minutos ya no s&eacute; bien qu&eacute; hacer<br/>
+A                                F#m<br/>
+Pero siento que algo est&aacute; por pasar<br/>
+D                     E<br/>
+Justo estaba por salir<br/>
+A<br/>
 Lo que pasa es que</p>
-<p>A        Amaj       A7             Dmaj7<br>
-Una melodía me vino a buscar, mi amor<br>
-A          Amaj        A7               Dmaj7<br>
-Estaba perdido y otra vez vuelvo a ser yo<br>
-Bm7                        F​#m7 E<br>
-No te asustes si llego muy tarde<br>
-Bm7                 E A<br>
+<p>A        Amaj       A7             Dmaj7<br/>
+Una melod&iacute;a me vino a buscar, mi amor<br/>
+A          Amaj        A7               Dmaj7<br/>
+Estaba perdido y otra vez vuelvo a ser yo<br/>
+Bm7                        F&NegativeMediumSpace;#m7 E<br/>
+No te asustes si llego muy tarde<br/>
+Bm7                 E A<br/>
 No te asustes, mi amor</p>
 <p>A - Amaj7 - A7 - Dmaj7</p>
-<p>A       Amaj             A7   Dmaj7<br>
-Tanto tiempo haciendo foco<br>
-A          Amaj          A7   Dmaj7<br>
-Esto me está volviendo loco</p>
-<p>D                       E<br>
-Todos estos días sin saber bien qué hacer<br>
-A                                F#m<br>
-Pero siento que algo está por pasar<br>
-D                     E<br>
-Justo estaba por salir<br>
-A<br>
+<p>A       Amaj             A7   Dmaj7<br/>
+Tanto tiempo haciendo foco<br/>
+A          Amaj          A7   Dmaj7<br/>
+Esto me est&aacute; volviendo loco</p>
+<p>D                       E<br/>
+Todos estos d&iacute;as sin saber bien qu&eacute; hacer<br/>
+A                                F#m<br/>
+Pero siento que algo est&aacute; por pasar<br/>
+D                     E<br/>
+Justo estaba por salir<br/>
+A<br/>
 Lo que pasa es que</p>
-<p>A        Amaj       A7             Dmaj7<br>
-Una melodía me vino a buscar, mi amor<br>
-A          Amaj        A7               Dmaj7<br>
-Estaba perdido y otra vez vuelvo a ser yo<br>
-Bm7                        F​#m7 E<br>
-No te asustes si llego muy tarde<br>
-Bm7                 E A<br>
+<p>A        Amaj       A7             Dmaj7<br/>
+Una melod&iacute;a me vino a buscar, mi amor<br/>
+A          Amaj        A7               Dmaj7<br/>
+Estaba perdido y otra vez vuelvo a ser yo<br/>
+Bm7                        F&NegativeMediumSpace;#m7 E<br/>
+No te asustes si llego muy tarde<br/>
+Bm7                 E A<br/>
 No te asustes, mi amor</p>
 <p>(Solo)</p>
-<p>A        Amaj       A7             Dmaj7<br>
-Una melodía me vino a buscar, mi amor<br>
-A          Amaj        A7               Dmaj7<br>
+<p>A        Amaj       A7             Dmaj7<br/>
+Una melod&iacute;a me vino a buscar, mi amor<br/>
+A          Amaj        A7               Dmaj7<br/>
 Estaba perdido y otra vez vuelvo a ser yo</p>
-<p>A        Amaj       A7             Dmaj7<br>
-Una melodía me vino a buscar, mi amor<br>
-A          Amaj        A7               Dmaj7<br>
-Estaba perdido y otra vez vuelvo a ser yo<br>
-Bm7                        F​#m7 E<br>
-No te asustes si llego muy tarde<br>
-Bm7                 E A<br>
+<p>A        Amaj       A7             Dmaj7<br/>
+Una melod&iacute;a me vino a buscar, mi amor<br/>
+A          Amaj        A7               Dmaj7<br/>
+Estaba perdido y otra vez vuelvo a ser yo<br/>
+Bm7                        F&NegativeMediumSpace;#m7 E<br/>
+No te asustes si llego muy tarde<br/>
+Bm7                 E A<br/>
 No te asustes, mi amor</p>
 </div></div>
 					</body>
